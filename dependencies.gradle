@@ -101,15 +101,21 @@ ext {
     presentationDependencies.addAll(kodeinDependencies)
 
     // Data Module
-    dataDependencies = [
-            "com.orhanobut:hawk:2.0.1"
-    ]
+    dataDependencies = []
 
     dataDependencies.addAll(kotlinDependencies)
     dataDependencies.addAll(rxJavaAndroidDependencies)
     dataDependencies.addAll(retrofitDependencies)
     dataDependencies.addAll(twitterKitDependencies)
     dataDependencies.addAll(kodeinDependencies)
+
+    // Device Module
+    deviceDependencies = [
+            "com.orhanobut:hawk:2.0.1"
+    ]
+
+    deviceDependencies.addAll(rxJavaAndroidDependencies)
+    deviceDependencies.addAll(kodeinDependencies)
 
     // Domain Module
     domainDependencies = []
