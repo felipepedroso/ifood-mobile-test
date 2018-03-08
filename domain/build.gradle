@@ -1,0 +1,22 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    def libs = rootProject.ext
+
+    libs.domainDependencies.each { implementation it }
+
+    libs.testDependencies.each { testImplementation it }
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = rootProject.ext.kotlinJVMTarget
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = rootProject.ext.kotlinJVMTarget
+    }
+}

@@ -1,7 +1,8 @@
-package br.pedroso.tweetsentiment
+package br.pedroso.tweetsentiment.app
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import br.pedroso.tweetsentiment.R
 
 class MainActivity : AppCompatActivity() {
 
