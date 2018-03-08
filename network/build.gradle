@@ -51,7 +51,7 @@ dependencies {
 
     def libs = rootProject.ext
 
-    libs.dataDependencies.each { implementation it }
+    libs.networkDependencies.each { implementation it }
 
     libs.testDependencies.each { testImplementation it }
     libs.androidTestDependencies.each { androidTestImplementation it }

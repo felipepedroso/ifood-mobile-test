@@ -100,14 +100,14 @@ ext {
     presentationDependencies.addAll(rxJavaAndroidDependencies)
     presentationDependencies.addAll(kodeinDependencies)
 
-    // Data Module
-    dataDependencies = []
+    // Network Module
+    networkDependencies = []
 
-    dataDependencies.addAll(kotlinDependencies)
-    dataDependencies.addAll(rxJavaAndroidDependencies)
-    dataDependencies.addAll(retrofitDependencies)
-    dataDependencies.addAll(twitterKitDependencies)
-    dataDependencies.addAll(kodeinDependencies)
+    networkDependencies.addAll(kotlinDependencies)
+    networkDependencies.addAll(rxJavaAndroidDependencies)
+    networkDependencies.addAll(retrofitDependencies)
+    networkDependencies.addAll(twitterKitDependencies)
+    networkDependencies.addAll(kodeinDependencies)
 
     // Device Module
     deviceDependencies = [
