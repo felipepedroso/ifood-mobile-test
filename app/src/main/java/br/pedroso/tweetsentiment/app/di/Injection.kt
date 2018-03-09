@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.app.di
 
 import android.app.Application
-import br.pedroso.tweetsentiment.data.di.NetworkModule
+import br.pedroso.tweetsentiment.network.di.NetworkModule
 import br.pedroso.tweetsentiment.device.di.DeviceModule
 import br.pedroso.tweetsentiment.presentation.di.PresentationModule
 import br.pedroso.tweetsentiment.app.di.schedulers.RxSchedulersModule

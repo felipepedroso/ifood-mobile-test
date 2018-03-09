@@ -1,4 +1,4 @@
-package br.pedroso.tweetsentiment.data;
+package br.pedroso.tweetsentiment.network;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
