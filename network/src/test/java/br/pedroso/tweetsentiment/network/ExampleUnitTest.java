@@ -1,4 +1,4 @@
-package br.pedroso.tweetsentiment.data;
+package br.pedroso.tweetsentiment.network;
 
 import org.junit.Test;
 
