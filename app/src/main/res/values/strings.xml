@@ -7,7 +7,7 @@
     <string name="format_last_24_hours_date">%dh</string>
     <string name="format_last_week_date">%d d</string>
     <string name="analyse_sentiment">Analyze Sentiment</string>
-    <string name="search_user_tweets">Search User Tweets</string>
+    <string name="search_user_tweets">Search</string>
     <string name="hint_type_twitter_account">Type the Twitter account</string>
     <string name="error_empty_twitter_account">This field cannot be empty.</string>
     <string name="error_generic">Unfortunately we couldn\'t reach the information you requested. Please try again later.</string>
