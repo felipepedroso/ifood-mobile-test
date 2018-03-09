@@ -25,6 +25,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation project(':device')
     implementation project(':network')
     implementation project(':domain')
     implementation project(':presentation')
