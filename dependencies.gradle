@@ -56,6 +56,11 @@ ext {
             "com.twitter.sdk.android:twitter-core:${twitterKitVersion}"
     ]
 
+    // Timber
+    timberDependencies = [
+            "com.jakewharton.timber:timber:4.6.1"
+    ]
+
     //  Test
     jUnitVersion = '4.12'
     mockitoKotlinVersion = '1.5.0'
@@ -92,6 +97,8 @@ ext {
     appDependencies.addAll(kotlinDependencies)
     appDependencies.addAll(kodeinDependencies)
     appDependencies.addAll(rxJavaAndroidDependencies)
+    appDependencies.addAll(timberDependencies)
+
 
     //  Presentation Module
     presentationDependencies = []
@@ -99,6 +106,7 @@ ext {
     presentationDependencies.addAll(kotlinDependencies)
     presentationDependencies.addAll(rxJavaAndroidDependencies)
     presentationDependencies.addAll(kodeinDependencies)
+    presentationDependencies.addAll(timberDependencies)
 
     // Network Module
     networkDependencies = []
@@ -108,6 +116,7 @@ ext {
     networkDependencies.addAll(retrofitDependencies)
     networkDependencies.addAll(twitterKitDependencies)
     networkDependencies.addAll(kodeinDependencies)
+    networkDependencies.addAll(timberDependencies)
 
     // Device Module
     deviceDependencies = [
@@ -116,6 +125,7 @@ ext {
 
     deviceDependencies.addAll(rxJavaAndroidDependencies)
     deviceDependencies.addAll(kodeinDependencies)
+    deviceDependencies.addAll(timberDependencies)
 
     // Domain Module
     domainDependencies = []
