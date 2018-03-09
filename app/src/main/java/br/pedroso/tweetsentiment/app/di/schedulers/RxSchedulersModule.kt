@@ -1,4 +1,4 @@
-package br.pedroso.tweetsentiment.presentation.di.schedulers
+package br.pedroso.tweetsentiment.app.di.schedulers
 
 import br.pedroso.tweetsentiment.domain.di.DependenciesTags.Companion.UI_SCHEDULER
 import br.pedroso.tweetsentiment.domain.di.DependenciesTags.Companion.WORKER_SCHEDULER

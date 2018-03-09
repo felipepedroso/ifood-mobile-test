@@ -3,8 +3,8 @@ package br.pedroso.tweetsentiment.app.di
 import android.app.Application
 import br.pedroso.tweetsentiment.data.di.NetworkModule
 import br.pedroso.tweetsentiment.device.di.DeviceModule
-import br.pedroso.tweetsentiment.presentation.di.schedulers.PresentationModule
-import br.pedroso.tweetsentiment.presentation.di.schedulers.RxSchedulersModule
+import br.pedroso.tweetsentiment.presentation.di.PresentationModule
+import br.pedroso.tweetsentiment.app.di.schedulers.RxSchedulersModule
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.android.androidActivityScope
 import com.github.salomonbrys.kodein.lazy
