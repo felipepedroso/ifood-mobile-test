@@ -1,4 +1,4 @@
-package br.pedroso.tweetsentiment.presentation.di.schedulers
+package br.pedroso.tweetsentiment.presentation.di
 
 import com.github.salomonbrys.kodein.Kodein
 
