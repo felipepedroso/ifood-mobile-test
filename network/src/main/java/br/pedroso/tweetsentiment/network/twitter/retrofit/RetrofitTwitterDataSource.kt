@@ -28,12 +28,14 @@ class RetrofitTwitterDataSource(
     override fun getTweetsSinceTweet(user: User, tweet: Tweet): Observable<Tweet> {
         return ensureAuthenticationBeforeApiCall()
                 .flatMap { twitterService.statusesUserTimeline(user.userName, tweet.id) }
+                .flatMap { Observable.fromIterable(it) }
                 .map { TweetMapper.mapTwitterApiToDomain(it) }
     }
 
     override fun getLatestTweetsFromUser(user: User): Observable<Tweet> {
         return ensureAuthenticationBeforeApiCall()
                 .flatMap { twitterService.statusesUserTimeline(user.userName) }
+                .flatMap { Observable.fromIterable(it) }
                 .map { TweetMapper.mapTwitterApiToDomain(it) }
     }
 
