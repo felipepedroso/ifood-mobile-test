@@ -35,13 +35,8 @@ class RoomDataSource(val tweetSentimentDao: TweetSentimentDao) : DatabaseDataSou
         tweetSentimentDao.registerTweet(roomTweet)
     }
 
-    override fun getUser(username: String): Maybe<User> {
+    override fun getUser(username: String): Flowable<User> {
         return tweetSentimentDao.getUser(username)
-                .map { RoomUserMapper.mapRoomToDomain(it) }
-    }
-
-    override fun getFlowableUser(username: String): Flowable<User> {
-        return tweetSentimentDao.getFlowableUser(username)
                 .map { RoomUserMapper.mapRoomToDomain(it) }
     }
 

@@ -25,5 +25,6 @@ class SyncUserTweets(
                     }
                 }
                 .doOnNext { registerTweetOnDatabase.execute(user, it) }
+                .subscribeOn(scheduler)
     }
 }

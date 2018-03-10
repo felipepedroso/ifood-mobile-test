@@ -10,8 +10,7 @@ import io.reactivex.Maybe
  * Created by felip on 08/03/2018.
  */
 interface DatabaseDataSource {
-    fun getUser(username: String): Maybe<User>
-    fun getFlowableUser(username: String): Flowable<User>
+    fun getUser(username: String): Flowable<User>
     fun registerUser(user: User)
     fun registerTweet(user: User, tweet: Tweet)
     fun getTweetsFromUser(user: User): Flowable<Tweet>
