@@ -33,5 +33,18 @@ class HawkApplicationPreferences(context: Context) : ApplicationPreferences {
     companion object {
         const val CURRENT_USERNAME = "current_user"
         const val RECURRENT_SYNC_TIME_INTERVAL = "recurrent_syn_time_interval"
+        const val TWITTER_ACCESS_TOKEN = "twitter_access_token"
+    }
+
+    override fun storeTwitterAccessToken(accessToken: String) {
+        Hawk.put(TWITTER_ACCESS_TOKEN, accessToken)
+    }
+
+    override fun hasTwitterAccessToken(): Boolean {
+        return Hawk.contains(TWITTER_ACCESS_TOKEN)
+    }
+
+    override fun retrieveTwitterAccessToken(): String {
+        return Hawk.get(TWITTER_ACCESS_TOKEN)
     }
 }
