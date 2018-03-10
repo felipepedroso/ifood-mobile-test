@@ -4,9 +4,11 @@ import br.pedroso.tweetsentiment.domain.di.DependenciesTags.Companion.UI_SCHEDUL
 import br.pedroso.tweetsentiment.domain.di.DependenciesTags.Companion.WORKER_SCHEDULER
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListPresenter
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.AnalyseTweetSentimentBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.FirstSyncBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserFlowableBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserTweetsFlowableBehaviorCoordinator
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.AnalyseTweetSentiment
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.FirstSync
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetUserFlowableFromDatabase
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetUserTweetsFlowableFromDatabase
@@ -29,7 +31,9 @@ class TweetsListModule {
                     getUserFlowableFromDatabase = instance(),
                     getUserTweetsFlowableFromDatabase = instance(),
                     userFlowableBehaviorCoordinator = instance(),
-                    userTweetsFlowableBehaviorCoordinator = instance()
+                    userTweetsFlowableBehaviorCoordinator = instance(),
+                    analyseTweetSentiment = instance(),
+                    analyseTweetSentimentBehaviorCoordinator = instance()
             )
         }
 
@@ -73,6 +77,21 @@ class TweetsListModule {
 
         bind<UserTweetsFlowableBehaviorCoordinator>() with autoScopedSingleton(androidActivityScope) {
             UserTweetsFlowableBehaviorCoordinator(
+                    uiScheduler = instance(UI_SCHEDULER),
+                    view = it as TweetsListView
+            )
+        }
+
+        bind<AnalyseTweetSentiment>() with singleton {
+            AnalyseTweetSentiment(
+                    scheduler = instance(WORKER_SCHEDULER),
+                    sentimentAnalysisDataSource = instance(),
+                    databaseDataSource = instance()
+            )
+        }
+
+        bind<AnalyseTweetSentimentBehaviorCoordinator>() with autoScopedSingleton(androidActivityScope) {
+            AnalyseTweetSentimentBehaviorCoordinator(
                     uiScheduler = instance(UI_SCHEDULER),
                     view = it as TweetsListView
             )

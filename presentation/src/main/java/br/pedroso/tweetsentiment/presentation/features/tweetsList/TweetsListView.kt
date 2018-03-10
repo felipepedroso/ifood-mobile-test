@@ -1,5 +1,6 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList
 
+import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.presentation.shared.behaviors.emptyState.EmptyStateView
@@ -14,7 +15,7 @@ import io.reactivex.functions.Action
 interface TweetsListView : LoadingContentView, EmptyStateView, ErrorStateView, UserNotFoundStateView {
     fun showUserProfile(user: User): Action
     fun showTweet(tweet: Tweet): Action
-    fun displayAnalyzingTweetScreen(tweet: Tweet)
+    fun displaySentimentAnalysisResult(sentiment: Sentiment): Action
     fun askConfirmationToSelectOtherUser()
     fun navigateToApplicationHome()
 }

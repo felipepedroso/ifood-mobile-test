@@ -3,10 +3,10 @@ package br.pedroso.tweetsentiment.app.features.tweetsList
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -14,6 +14,7 @@ import android.view.View
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.features.home.HomeActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.utils.ToolbarAnimationCoordinator
+import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListPresenter
@@ -158,8 +159,7 @@ class TweetsListActivity : AppCompatActivity(), TweetsListView {
         tweetsListAdapter.addTweed(tweet)
     }
 
-    override fun displayAnalyzingTweetScreen(tweet: Tweet) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun displaySentimentAnalysisResult(sentiment: Sentiment) = Action {
     }
 
     override fun askConfirmationToSelectOtherUser() {
