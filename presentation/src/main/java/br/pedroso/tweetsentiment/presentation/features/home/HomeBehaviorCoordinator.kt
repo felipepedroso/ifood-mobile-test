@@ -2,7 +2,7 @@ package br.pedroso.tweetsentiment.presentation.features.home
 
 import br.pedroso.tweetsentiment.presentation.features.home.behaviors.HomeErrorStateBehavior
 import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingBehavior
-import br.pedroso.tweetsentiment.presentation.shared.behaviors.userNotFoundState.UserNotFoundStateBehavior
+import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingContentView
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.ObservableTransformer
@@ -16,8 +16,7 @@ class HomeBehaviorCoordinator(
         private val view: Any) : ObservableTransformer<Any, Any> {
     override fun apply(upstream: Observable<Any>): ObservableSource<Any> {
         return upstream
-                .compose(HomeErrorStateBehavior(uiScheduler, view))
-                .compose(UserNotFoundStateBehavior(uiScheduler, view))
-                .compose(LoadingBehavior(uiScheduler, view))
+                .compose(HomeErrorStateBehavior(uiScheduler, view as HomeView))
+                .compose(LoadingBehavior(uiScheduler, view as LoadingContentView))
     }
 }
