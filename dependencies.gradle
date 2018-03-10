@@ -61,6 +61,17 @@ ext {
             "com.jakewharton.timber:timber:4.6.1"
     ]
 
+    // Room
+    architectureComponentsVersion = '1.0.0'
+
+    roomDependencies = [
+            "android.arch.persistence.room:runtime:$architectureComponentsVersion",
+            "android.arch.persistence.room:common:$architectureComponentsVersion",
+            "android.arch.persistence.room:rxjava2:$architectureComponentsVersion"
+    ]
+
+    roomCompiler = "android.arch.persistence.room:compiler:$architectureComponentsVersion"
+
     //  Test
     jUnitVersion = '4.12'
     mockitoKotlinVersion = '1.5.0'
@@ -126,6 +137,7 @@ ext {
     deviceDependencies.addAll(rxJavaAndroidDependencies)
     deviceDependencies.addAll(kodeinDependencies)
     deviceDependencies.addAll(timberDependencies)
+    deviceDependencies.addAll(roomDependencies)
 
     // Domain Module
     domainDependencies = []

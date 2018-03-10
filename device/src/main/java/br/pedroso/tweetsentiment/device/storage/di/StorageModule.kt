@@ -1,6 +1,8 @@
 package br.pedroso.tweetsentiment.device.storage.di
 
 import android.content.Context
+import br.pedroso.tweetsentiment.device.storage.database.di.DatabaseModule
+import br.pedroso.tweetsentiment.device.storage.database.room.di.RoomModule
 import com.github.salomonbrys.kodein.Kodein
 
 /**
@@ -8,5 +10,6 @@ import com.github.salomonbrys.kodein.Kodein
  */
 class StorageModule(private val context: Context) {
     val graph = Kodein.Module {
+        import(DatabaseModule(context).graph)
     }
 }
