@@ -2,12 +2,14 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList
 
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.AnalyseTweetSentimentBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.FirstSyncBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserFlowableBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserTweetsFlowableBehaviorCoordinator
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.AnalyseTweetSentiment
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.FirstSync
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetUserTweetsFlowableFromDatabase
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetUserFlowableFromDatabase
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetUserTweetsFlowableFromDatabase
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
@@ -24,7 +26,9 @@ class TweetsListPresenter(
         private val getUserFlowableFromDatabase: GetUserFlowableFromDatabase,
         private val userFlowableBehaviorCoordinator: UserFlowableBehaviorCoordinator,
         private val getUserTweetsFlowableFromDatabase: GetUserTweetsFlowableFromDatabase,
-        private val userTweetsFlowableBehaviorCoordinator: UserTweetsFlowableBehaviorCoordinator) {
+        private val userTweetsFlowableBehaviorCoordinator: UserTweetsFlowableBehaviorCoordinator,
+        private val analyseTweetSentiment: AnalyseTweetSentiment,
+        private val analyseTweetSentimentBehaviorCoordinator: AnalyseTweetSentimentBehaviorCoordinator) {
 
     private val compositeDisposable by lazy { CompositeDisposable() }
 
@@ -66,7 +70,15 @@ class TweetsListPresenter(
     }
 
     fun clickedOnAnalyzeTweet(tweet: Tweet) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val subscription = analyseTweetSentiment.execute(tweet)
+                .compose(analyseTweetSentimentBehaviorCoordinator)
+                .observeOn(uiScheduler)
+                .subscribe(
+                        { Timber.d("Analysed sentiment: ${it.name}") },
+                        { Timber.e(it) }
+                )
+
+        compositeDisposable.add(subscription)
     }
 
     fun clickedOnSelectOtherUser() {
