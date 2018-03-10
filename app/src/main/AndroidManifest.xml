@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.pedroso.tweetsentiment">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".app.TweetSentimentApplication"
         android:allowBackup="true"

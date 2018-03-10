@@ -1,5 +1,7 @@
 package br.pedroso.tweetsentiment.app.features.home
 
+import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -74,5 +76,12 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
     override fun openTweetListScreen() {
         TweetsListActivity.navigateHere(this)
+    }
+
+    companion object {
+        fun navigateHere(context: Context) {
+            val intent = Intent(context, HomeActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }

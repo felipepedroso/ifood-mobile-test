@@ -23,6 +23,7 @@ class TweetsListModule {
             TweetsListPresenter(
                     uiScheduler = instance(UI_SCHEDULER),
                     view = it as TweetsListView,
+                    applicationPreferences = instance(),
                     firstSync = instance(),
                     firstSyncBehaviorCoordinator = instance(),
                     getUserFlowableFromDatabase = instance(),

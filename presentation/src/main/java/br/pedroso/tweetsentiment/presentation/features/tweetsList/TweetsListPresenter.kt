@@ -1,5 +1,7 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList
 
+import br.pedroso.tweetsentiment.domain.Tweet
+import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.FirstSyncBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserFlowableBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserTweetsFlowableBehaviorCoordinator
@@ -16,6 +18,7 @@ import timber.log.Timber
 class TweetsListPresenter(
         private val uiScheduler: Scheduler,
         private val view: TweetsListView,
+        private val applicationPreferences: ApplicationPreferences,
         private val firstSync: FirstSync,
         private val firstSyncBehaviorCoordinator: FirstSyncBehaviorCoordinator,
         private val getUserFlowableFromDatabase: GetUserFlowableFromDatabase,
@@ -60,5 +63,18 @@ class TweetsListPresenter(
 
     fun releaseSubscriptions() {
         compositeDisposable.clear()
+    }
+
+    fun clickedOnAnalyzeTweet(tweet: Tweet) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun clickedOnSelectOtherUser() {
+        view.askConfirmationToSelectOtherUser()
+    }
+
+    fun confirmedToChangeUser() {
+        applicationPreferences.cleanUsernameToSync()
+        view.navigateToApplicationHome()
     }
 }
