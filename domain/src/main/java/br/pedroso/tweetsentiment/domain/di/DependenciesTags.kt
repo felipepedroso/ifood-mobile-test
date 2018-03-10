@@ -13,7 +13,7 @@ class DependenciesTags {
         const val NATURAL_LANGUAGE_RETROFIT = "retrofit-nla"
         const val TWITTER_RETROFIT: String = "retrofit-twitter"
         const val TWITTER_OKHTTP_CLIENT: String = "okHttpClient-twitter"
-        const val TWITTER_AUTH_RETROFIT: String = "retrofit-twitter"
+        const val TWITTER_AUTH_RETROFIT: String = "retrofit-twitter-auth"
         const val TWITTER_AUTH_OKHTTP_CLIENT: String = "okHttpClient-twitter-auth"
     }
 }
