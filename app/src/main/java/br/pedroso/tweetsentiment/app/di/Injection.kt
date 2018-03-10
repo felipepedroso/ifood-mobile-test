@@ -1,6 +1,7 @@
 package br.pedroso.tweetsentiment.app.di
 
 import android.app.Application
+import br.pedroso.tweetsentiment.app.di.cacheDir.CacheDirModule
 import br.pedroso.tweetsentiment.network.di.NetworkModule
 import br.pedroso.tweetsentiment.device.di.DeviceModule
 import br.pedroso.tweetsentiment.presentation.di.PresentationModule
@@ -19,6 +20,7 @@ class Injection(private val application: Application) {
 
     val graph = Kodein.lazy {
         import(RxSchedulersModule().graph)
+        import(CacheDirModule(application).graph)
         import(DeviceModule(application).graph)
         import(NetworkModule().graph)
         import(PresentationModule().graph)

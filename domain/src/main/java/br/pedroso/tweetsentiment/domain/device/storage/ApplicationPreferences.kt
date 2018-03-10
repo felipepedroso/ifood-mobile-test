@@ -8,4 +8,7 @@ interface ApplicationPreferences {
     fun retrieveUsernameToSync() : String
     fun cleanUsernameToSync()
     fun retrieveRecurrentSyncTimeInterval(): Int
+    fun storeTwitterAccessToken(accessToken: String)
+    fun hasTwitterAccessToken(): Boolean
+    fun retrieveTwitterAccessToken(): String
 }
