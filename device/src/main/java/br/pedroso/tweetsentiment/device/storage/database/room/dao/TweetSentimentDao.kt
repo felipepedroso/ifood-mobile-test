@@ -22,10 +22,7 @@ interface TweetSentimentDao {
     fun getAllTweetsFromUser(userId: Long): Flowable<List<RoomTweet>>
 
     @Query("SELECT * FROM users WHERE userName = :userName")
-    fun getUser(userName: String): Maybe<RoomUser>
-
-    @Query("SELECT * FROM users WHERE userName = :userName")
-    fun getFlowableUser(userName: String): Flowable<RoomUser>
+    fun getUser(userName: String): Flowable<RoomUser>
 
     @Query("SELECT * FROM tweets WHERE userId = :userId ORDER BY createdAtTimestamp DESC LIMIT 1")
     fun getLatestTweetFromUser(userId: Long): Maybe<RoomTweet>
