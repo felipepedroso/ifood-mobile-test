@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -40,6 +41,7 @@ dependencies {
     def libs = rootProject.ext
 
     libs.deviceDependencies.each { implementation it }
+    kapt libs.roomCompiler
 
     libs.testDependencies.each { testImplementation it }
     libs.androidTestDependencies.each { androidTestImplementation it }
