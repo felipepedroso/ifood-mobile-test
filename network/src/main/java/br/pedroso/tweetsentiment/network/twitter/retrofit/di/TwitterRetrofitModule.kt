@@ -16,6 +16,7 @@ import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -37,6 +38,13 @@ class TwitterRetrofitModule {
 
             val twitterRequestBearerInterceptor: TwitterRequestBearerInterceptor = instance()
             builder.addInterceptor(twitterRequestBearerInterceptor)
+
+            if (BuildConfig.DEBUG) {
+                val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+                    this.level = HttpLoggingInterceptor.Level.BODY
+                }
+                builder.addInterceptor(loggingInterceptor)
+            }
 
             val cache: Cache = instance()
             builder.cache(cache)
@@ -70,6 +78,13 @@ class TwitterRetrofitModule {
 
             val interceptor: TwitterCredentialsAuthInterceptor = instance()
             builder.addInterceptor(interceptor)
+
+            if (BuildConfig.DEBUG) {
+                val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+                    this.level = HttpLoggingInterceptor.Level.BODY
+                }
+                builder.addInterceptor(loggingInterceptor)
+            }
 
             val cache: Cache = instance()
             builder.cache(cache)
