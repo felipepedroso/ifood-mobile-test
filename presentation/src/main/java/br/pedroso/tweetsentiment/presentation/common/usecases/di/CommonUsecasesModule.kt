@@ -57,7 +57,8 @@ class CommonUsecasesModule {
             SyncUser(
                     scheduler = instance(DependenciesTags.WORKER_SCHEDULER),
                     registerUserOnDatabase = instance(),
-                    getUserFromApi = instance()
+                    getUserFromApi = instance(),
+                    getUserFromDatabase = instance()
             )
         }
 
