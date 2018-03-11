@@ -49,13 +49,6 @@ ext {
             "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
     ]
 
-    //  TwitterKit
-    twitterKitVersion = '3.1.1'
-
-    twitterKitDependencies = [
-            "com.twitter.sdk.android:twitter-core:${twitterKitVersion}"
-    ]
-
     // Timber
     timberDependencies = [
             "com.jakewharton.timber:timber:4.6.1"
@@ -110,7 +103,6 @@ ext {
     appDependencies.addAll(rxJavaAndroidDependencies)
     appDependencies.addAll(timberDependencies)
 
-
     //  Presentation Module
     presentationDependencies = []
 
@@ -125,7 +117,6 @@ ext {
     networkDependencies.addAll(kotlinDependencies)
     networkDependencies.addAll(rxJavaAndroidDependencies)
     networkDependencies.addAll(retrofitDependencies)
-    networkDependencies.addAll(twitterKitDependencies)
     networkDependencies.addAll(kodeinDependencies)
     networkDependencies.addAll(timberDependencies)
 
