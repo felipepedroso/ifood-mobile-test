@@ -46,7 +46,8 @@ ext {
     retrofitDependencies = [
             "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
-            "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+            "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            "com.squareup.okhttp3:logging-interceptor:3.6.0"
     ]
 
     // Timber
