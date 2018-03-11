@@ -2,6 +2,7 @@ package br.pedroso.tweetsentiment.presentation.shared.usecases.di
 
 import br.pedroso.tweetsentiment.domain.di.DependenciesTags
 import br.pedroso.tweetsentiment.domain.di.DependenciesTags.Companion.WORKER_SCHEDULER
+import br.pedroso.tweetsentiment.presentation.common.usecases.GetUserRecordOnDatabase
 import br.pedroso.tweetsentiment.presentation.common.usecases.StoreUserToSyncOnPreferences
 import br.pedroso.tweetsentiment.presentation.common.usecases.SyncUser
 import br.pedroso.tweetsentiment.presentation.shared.usecases.*
@@ -58,7 +59,14 @@ class CommonUsecasesModule {
                     scheduler = instance(DependenciesTags.WORKER_SCHEDULER),
                     registerUserOnDatabase = instance(),
                     getUserFromApi = instance(),
-                    getUserFromDatabase = instance()
+                    getUserRecordOnDatabase = instance()
+            )
+        }
+
+        bind<GetUserRecordOnDatabase>() with singleton {
+            GetUserRecordOnDatabase(
+                    scheduler = instance(WORKER_SCHEDULER),
+                    databaseDataSource = instance()
             )
         }
 
