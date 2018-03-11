@@ -28,7 +28,8 @@ class HomeModule {
                     uiScheduler = instance(UI_SCHEDULER),
                     view = it as HomeView,
                     homeBehaviorCoordinator = instance(),
-                    homeSync = instance()
+                    homeSync = instance(),
+                    applicationPreferences = instance()
             )
         }
 

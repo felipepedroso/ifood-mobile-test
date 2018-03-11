@@ -31,6 +31,11 @@ class HomeActivity : AppCompatActivity(), HomeView {
         presenter.releaseSubscriptions()
     }
 
+    override fun onResume() {
+        super.onResume()
+        presenter.viewResumed()
+    }
+
     private fun setupView() {
         setContentView(R.layout.activity_home)
 
