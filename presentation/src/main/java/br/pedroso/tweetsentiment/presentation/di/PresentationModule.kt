@@ -1,5 +1,6 @@
 package br.pedroso.tweetsentiment.presentation.di
 
+import br.pedroso.tweetsentiment.presentation.features.backgroundSync.di.BackgroundSyncModule
 import br.pedroso.tweetsentiment.presentation.features.home.di.HomeModule
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.di.TweetsListModule
 import br.pedroso.tweetsentiment.presentation.shared.usecases.di.CommonUsecasesModule
@@ -13,5 +14,6 @@ class PresentationModule {
         import(CommonUsecasesModule().graph)
         import(HomeModule().graph)
         import(TweetsListModule().graph)
+        import(BackgroundSyncModule().graph)
     }
 }

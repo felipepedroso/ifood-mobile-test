@@ -65,6 +65,13 @@ ext {
 
     roomCompiler = "android.arch.persistence.room:compiler:$architectureComponentsVersion"
 
+    // Firebase JobDispatcher
+    firebaseJobDispatcherVersion = '0.8.5'
+
+    firebaseJobDispatcherDependencies = [
+            "com.firebase:firebase-jobdispatcher:$firebaseJobDispatcherVersion"
+    ]
+
     //  Test
     jUnitVersion = '4.12'
     mockitoKotlinVersion = '1.5.0'
@@ -129,6 +136,7 @@ ext {
     deviceDependencies.addAll(kodeinDependencies)
     deviceDependencies.addAll(timberDependencies)
     deviceDependencies.addAll(roomDependencies)
+    deviceDependencies.addAll(firebaseJobDispatcherDependencies)
 
     // Domain Module
     domainDependencies = []
