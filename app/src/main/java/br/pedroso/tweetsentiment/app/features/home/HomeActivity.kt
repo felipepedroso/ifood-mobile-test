@@ -2,8 +2,8 @@ package br.pedroso.tweetsentiment.app.features.home
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
@@ -24,6 +24,11 @@ class HomeActivity : AppCompatActivity(), HomeView {
         super.onCreate(savedInstanceState)
 
         setupView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.releaseSubscriptions()
     }
 
     private fun setupView() {
