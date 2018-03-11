@@ -6,6 +6,7 @@ import com.firebase.jobdispatcher.Constraint
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.Lifetime
 import com.firebase.jobdispatcher.Trigger
+import timber.log.Timber
 
 /**
  * Created by felip on 11/03/2018.
@@ -21,16 +22,17 @@ class FirebaseBackgroundSyncScheduler(val firebaseJobDispatcher: FirebaseJobDisp
                 .build()
 
         firebaseJobDispatcher.mustSchedule(job)
+        Timber.d("Scheduled ")
     }
 
-    override fun scheduleRecurringSync(timeAmountBetweenExecutionsInSeconds: Int) {
+    override fun scheduleRecurringSync(timeInterval: Int) {
         val recurringJob = firebaseJobDispatcher.newJobBuilder()
                 .setService(BackgroundSyncJobService::class.java)
                 .setTag(JOB_TAG_RECURRING)
                 .setRecurring(true)
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 .setLifetime(Lifetime.FOREVER)
-                .setTrigger(Trigger.executionWindow(timeAmountBetweenExecutionsInSeconds - 5, timeAmountBetweenExecutionsInSeconds + 5))
+                .setTrigger(Trigger.executionWindow(timeInterval - 5, timeInterval + 5))
                 .setReplaceCurrent(true)
                 .build()
 

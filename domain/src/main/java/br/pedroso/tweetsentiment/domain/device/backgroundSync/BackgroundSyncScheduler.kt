@@ -5,6 +5,6 @@ package br.pedroso.tweetsentiment.domain.device.backgroundSync
  */
 interface BackgroundSyncScheduler {
     fun executeSyncNow()
-    fun scheduleRecurringSync(timeAmountBetweenExecutionsInSeconds: Int)
+    fun scheduleRecurringSync(timeInterval: Int)
     fun stopAllJobs()
 }

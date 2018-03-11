@@ -33,7 +33,8 @@ class TweetsListModule {
                     userFlowableBehaviorCoordinator = instance(),
                     userTweetsFlowableBehaviorCoordinator = instance(),
                     analyseTweetSentiment = instance(),
-                    analyseTweetSentimentBehaviorCoordinator = instance()
+                    analyseTweetSentimentBehaviorCoordinator = instance(),
+                    backgroundSyncScheduler = instance()
             )
         }
 

@@ -1,6 +1,7 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList
 
 import br.pedroso.tweetsentiment.domain.Tweet
+import br.pedroso.tweetsentiment.domain.device.backgroundSync.BackgroundSyncScheduler
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.AnalyseTweetSentimentBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.FirstSyncBehaviorCoordinator
@@ -28,7 +29,8 @@ class TweetsListPresenter(
         private val getUserTweetsFlowableFromDatabase: GetUserTweetsFlowableFromDatabase,
         private val userTweetsFlowableBehaviorCoordinator: UserTweetsFlowableBehaviorCoordinator,
         private val analyseTweetSentiment: AnalyseTweetSentiment,
-        private val analyseTweetSentimentBehaviorCoordinator: AnalyseTweetSentimentBehaviorCoordinator) {
+        private val analyseTweetSentimentBehaviorCoordinator: AnalyseTweetSentimentBehaviorCoordinator,
+        private val backgroundSyncScheduler: BackgroundSyncScheduler) {
 
     private val compositeDisposable by lazy { CompositeDisposable() }
 
@@ -46,6 +48,7 @@ class TweetsListPresenter(
 
     private fun completedFirstSync() {
         Timber.d("Completed first sync.")
+        scheduleRecurrentSync()
         loadUserData()
     }
 
@@ -87,6 +90,12 @@ class TweetsListPresenter(
 
     fun confirmedToChangeUser() {
         applicationPreferences.cleanUsernameToSync()
+        backgroundSyncScheduler.stopAllJobs()
         view.navigateToApplicationHome()
+    }
+
+    private fun scheduleRecurrentSync() {
+        val timeInterval = applicationPreferences.retrieveRecurrentSyncTimeInterval()
+        backgroundSyncScheduler.scheduleRecurringSync(timeInterval)
     }
 }

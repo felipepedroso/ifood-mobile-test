@@ -22,5 +22,6 @@ class FirstSync(
                 .flatMap { syncUserTweets.execute(it) }
                 .ignoreElements()
                 .subscribeOn(scheduler)
+
     }
 }
