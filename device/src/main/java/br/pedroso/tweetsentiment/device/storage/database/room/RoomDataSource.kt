@@ -14,6 +14,11 @@ import io.reactivex.Maybe
  * Created by felipe on 09/03/2018.
  */
 class RoomDataSource(val tweetSentimentDao: TweetSentimentDao) : DatabaseDataSource {
+    override fun getUserRecordOnDatabase(username: String): Maybe<User> {
+        return tweetSentimentDao.getUserRecord(username)
+                .map { RoomUserMapper.mapRoomToDomain(it) }
+    }
+
     override fun updateTweetSentiment(tweet: Tweet, sentiment: Sentiment) {
         val updatedRoomTweet = tweetSentimentDao.getTweetById(tweet.id).copy(sentiment = sentiment.name)
         tweetSentimentDao.updateTweet(updatedRoomTweet)

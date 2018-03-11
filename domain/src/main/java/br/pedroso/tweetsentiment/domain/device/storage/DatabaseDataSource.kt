@@ -16,4 +16,5 @@ interface DatabaseDataSource {
     fun getTweetsFromUser(user: User): Flowable<Tweet>
     fun getLatestTweetFromUser(user: User): Maybe<Tweet>
     fun updateTweetSentiment(tweet: Tweet, sentiment: Sentiment)
+    fun getUserRecordOnDatabase(username: String): Maybe<User>
 }
