@@ -7,12 +7,14 @@
     <string name="format_last_24_hours_date">%dh</string>
     <string name="format_last_week_date">%d d</string>
     <string name="analyse_sentiment">Analyze Sentiment</string>
-    <string name="search_user_tweets">Search</string>
-    <string name="hint_type_twitter_account">Type the Twitter account</string>
+    <string name="continue_button">Continue</string>
+    <string name="hint_type_twitter_account">Twitter account</string>
     <string name="error_empty_twitter_account">This field cannot be empty.</string>
     <string name="error_generic">Unfortunately we couldn\'t reach the information you requested. Please try again later.</string>
     <string name="select_other_user">Select Other User...</string>
     <string name="select_other_user_dialog_message">Do you want to select another Twitter user?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="onboarding_introduction">Select a Twitter user and tap on CONTINUE to analyse their tweets </string>
+    <string name="welcome_tweet_sentiment">Welcome to TweetSentiment</string>
 </resources>

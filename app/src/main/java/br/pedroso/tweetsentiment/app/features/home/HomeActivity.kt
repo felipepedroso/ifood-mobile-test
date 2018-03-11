@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
 import br.pedroso.tweetsentiment.presentation.features.home.HomePresenter
@@ -41,6 +42,16 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
         buttonCheckUserTweets.setOnClickListener {
             presenter.clickedCheckUserTweets()
+        }
+
+        editTextTwitterAccount.setOnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_NEXT -> {
+                    presenter.clickedCheckUserTweets()
+                    true
+                }
+                else -> false
+            }
         }
     }
 
