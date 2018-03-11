@@ -1,6 +1,7 @@
 package br.pedroso.tweetsentiment.device.di
 
 import android.content.Context
+import br.pedroso.tweetsentiment.device.backgroundSync.di.BackgroundSyncModule
 import br.pedroso.tweetsentiment.device.storage.di.StorageModule
 import com.github.salomonbrys.kodein.Kodein
 
@@ -10,5 +11,6 @@ import com.github.salomonbrys.kodein.Kodein
 class DeviceModule(private val context: Context) {
     val graph = Kodein.Module {
         import(StorageModule(context).graph)
+        import(BackgroundSyncModule(context).graph)
     }
 }
