@@ -14,7 +14,7 @@ class UserMapper {
                         id = id,
                         name = name,
                         userName = userName,
-                        bannerUrl = bannerUrl ?: "",
+                        bannerUrl = bannerUrl ?: "http://lorempixel.com/1500/500/nature/",
                         profilePictureUrl = profilePictureUrl?.replace("_normal", "") ?: ""
                 )
             }
