@@ -9,6 +9,6 @@
     <dimen name="sixty_four_dp">64dp</dimen>
     <dimen name="tweet_text_size">16sp</dimen>
     <dimen name="tweet_timestamp_size">14sp</dimen>
-    <dimen name="text_size_welcome">36sp</dimen>
+    <dimen name="text_size_welcome">30sp</dimen>
     <dimen name="twelve_dp">12dp</dimen>
 </resources>

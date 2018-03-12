@@ -51,10 +51,22 @@ class TweetsListActivity : AppCompatActivity(), TweetsListView {
         setupTweetsList()
 
         setupToolbar()
+
+        setupGoBackButton()
+    }
+
+    private fun setupGoBackButton() {
+        buttonGoBack.setOnClickListener {
+            presenter.confirmedToChangeUser()
+        }
     }
 
     override fun onBackPressed() {
-        presenter.clickedOnSelectOtherUser()
+        if (linearLayoutErrorContainer.visibility == View.VISIBLE) {
+            presenter.confirmedToChangeUser()
+        } else {
+            presenter.clickedOnSelectOtherUser()
+        }
     }
 
     private fun setupTweetsList() {
@@ -98,20 +110,22 @@ class TweetsListActivity : AppCompatActivity(), TweetsListView {
         linearLayoutErrorContainer.visibility = View.VISIBLE
         imageViewError.setImageResource(errorImageResource)
         textViewErrorMessage.text = getString(errorStringResource)
+        coordinatorLayoutTweetsListContent.visibility = View.GONE
     }
 
     private fun resetErrorContainerState() = Action {
         linearLayoutErrorContainer.visibility = View.GONE
         textViewErrorMessage.text = ""
         imageViewError.setImageResource(0)
+        coordinatorLayoutTweetsListContent.visibility = View.VISIBLE
     }
 
     override fun showEmptyState() = Action {
-        showErrorFeedback(R.drawable.ic_error_sad, R.string.empty_tweet_timeline)
+        showErrorFeedback(R.drawable.ic_feedback_neutral, R.string.empty_tweet_timeline)
     }
 
     override fun showErrorState(it: Throwable) = Action {
-        showErrorFeedback(R.drawable.ic_error_sad, R.string.error_loading_timeline)
+        showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_loading_timeline)
     }
 
     override fun showLoading() = Action {
@@ -125,7 +139,7 @@ class TweetsListActivity : AppCompatActivity(), TweetsListView {
     }
 
     override fun showUserNotFoundState() = Action {
-        showErrorFeedback(R.drawable.ic_error_sad, R.string.error_user_not_found)
+        showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_user_not_found)
     }
 
     override fun hideLoading() = Action {
