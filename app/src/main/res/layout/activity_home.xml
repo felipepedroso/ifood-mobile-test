@@ -26,9 +26,9 @@
         android:textAlignment="center"
         android:textAppearance="?android:textAppearanceLarge"
         android:textSize="@dimen/text_size_welcome"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
         app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop"
-        app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"/>
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop" />
 
     <TextView
         android:id="@+id/textViewWelcomeSubtitle"
@@ -119,15 +119,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="@dimen/twenty_four_dp" />
 
-    <ProgressBar
-        android:id="@+id/progressBarLoadingUser"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="@dimen/sixty_four_dp"
-        android:layout_height="@dimen/sixty_four_dp"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="296dp" />
-
+    <include
+        layout="@layout/view_loading_feedback" />
 
 </android.support.constraint.ConstraintLayout>

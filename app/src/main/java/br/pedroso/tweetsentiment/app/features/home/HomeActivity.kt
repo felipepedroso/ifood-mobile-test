@@ -16,6 +16,7 @@ import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.with
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.view_loading_feedback.*
 
 class HomeActivity : AppCompatActivity(), HomeView {
     private val kodein by lazy { LazyKodein(appKodein) }
@@ -72,7 +73,18 @@ class HomeActivity : AppCompatActivity(), HomeView {
     override fun showErrorState(it: Throwable) = displayErrorMessage(R.string.error_generic)
 
     override fun showLoading() = Action {
-        progressBarLoadingUser.visibility = View.VISIBLE
+        loadingHolder.visibility = View.VISIBLE
+        disableControls()
+    }
+
+    private fun disableControls() {
+        buttonCheckUserTweets.isEnabled = false
+        textInputLayoutTwitterAccount.isEnabled = false
+    }
+
+    private fun enableControls() {
+        buttonCheckUserTweets.isEnabled = true
+        textInputLayoutTwitterAccount.isEnabled = true
     }
 
     override fun showUserNotFoundState() = displayErrorMessage(R.string.error_user_not_found)
@@ -83,7 +95,8 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun hideLoading() = Action {
-        progressBarLoadingUser.visibility = View.GONE
+        loadingHolder.visibility = View.GONE
+        enableControls()
     }
 
     override fun hideErrorState() = resetErrorMessageState()
