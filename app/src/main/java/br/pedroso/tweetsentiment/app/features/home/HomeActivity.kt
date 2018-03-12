@@ -47,7 +47,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
 
         editTextTwitterAccount.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
-                EditorInfo.IME_ACTION_NEXT -> {
+                EditorInfo.IME_ACTION_DONE -> {
                     presenter.clickedCheckUserTweets()
                     true
                 }
