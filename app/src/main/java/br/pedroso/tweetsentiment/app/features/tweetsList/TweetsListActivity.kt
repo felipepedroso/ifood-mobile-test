@@ -193,7 +193,7 @@ class TweetsListActivity : AppCompatActivity(), TweetsListView {
     }
 
     override fun navigateToApplicationHome() {
-        HomeActivity.navigateHere(this)
+        finish()
     }
 
     companion object {
