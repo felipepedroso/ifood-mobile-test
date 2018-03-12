@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
@@ -78,13 +79,12 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     private fun disableControls() {
-        buttonCheckUserTweets.isEnabled = false
-        textInputLayoutTwitterAccount.isEnabled = false
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     private fun enableControls() {
-        buttonCheckUserTweets.isEnabled = true
-        textInputLayoutTwitterAccount.isEnabled = true
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     override fun showUserNotFoundState() = displayErrorMessage(R.string.error_user_not_found)
