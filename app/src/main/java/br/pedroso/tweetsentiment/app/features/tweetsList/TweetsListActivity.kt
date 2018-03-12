@@ -194,9 +194,6 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
         tweetsListAdapter.addTweed(tweet)
     }
 
-    override fun displaySentimentAnalysisResult(sentiment: Sentiment) = Action {
-    }
-
     override fun askConfirmationToSelectOtherUser() {
         val dialogBuilder = AlertDialog.Builder(this)
 
