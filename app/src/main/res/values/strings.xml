@@ -15,6 +15,6 @@
     <string name="select_other_user_dialog_message">Do you want to select another Twitter user?</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    <string name="onboarding_introduction">Select a Twitter user and tap on CONTINUE to analyse their tweets </string>
+    <string name="onboarding_introduction">Type a Twitter user to analyse the sentiment of their tweets</string>
     <string name="welcome_tweet_sentiment">Welcome to TweetSentiment</string>
 </resources>
