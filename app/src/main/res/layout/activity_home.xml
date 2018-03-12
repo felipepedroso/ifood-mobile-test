@@ -15,8 +15,8 @@
         app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
         app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintVertical_bias="0.76"
+        app:srcCompat="@drawable/ic_feedback_happy" />
 
     <TextView
         android:id="@+id/textViewWelcome"

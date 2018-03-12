@@ -17,4 +17,6 @@
     <string name="cancel">Cancel</string>
     <string name="onboarding_introduction">Type a Twitter user to analyse the sentiment of their tweets</string>
     <string name="welcome_tweet_sentiment">Welcome to TweetSentiment</string>
+    <string name="return_home">Go Back</string>
+    <string name="sorry">Sorry!</string>
 </resources>
