@@ -4,8 +4,8 @@
     <color name="colorPrimaryDark">#00adb5</color>
     <color name="colorAccent">#0288D1</color>
     <color name="colorTweetText">#292f33</color>
-    <color name="colorSentimentHappy">#388E3C</color>
-    <color name="colorSentimentSad">#FF5252</color>
+    <color name="colorSentimentHappy">#ffeb3b</color>
+    <color name="colorSentimentSad">#3f51b5</color>
     <color name="colorSentimentNeutral">#757575</color>
 
     <color name="primary">#03A9F4</color>
