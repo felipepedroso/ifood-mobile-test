@@ -11,6 +11,7 @@ import android.support.v7.graphics.Palette
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.features.home.HomeActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.utils.ToolbarAnimationCoordinator
@@ -26,8 +27,9 @@ import com.github.salomonbrys.kodein.with
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import io.reactivex.functions.Action
-import kotlinx.android.synthetic.main.activity_tweets_list.*
+import kotlinx.android.synthetic.main.activity_tweets_list_content.*
 import kotlinx.android.synthetic.main.view_error_feedback.*
+import kotlinx.android.synthetic.main.view_loading_feedback.*
 
 class TweetsListActivity : AppCompatActivity(), TweetsListView {
 
@@ -113,7 +115,13 @@ class TweetsListActivity : AppCompatActivity(), TweetsListView {
     }
 
     override fun showLoading() = Action {
-        progressBarLoadingTweets.visibility = View.VISIBLE
+        loadingHolder.visibility = View.VISIBLE
+        disableComponents()
+    }
+
+    private fun disableComponents() {
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     override fun showUserNotFoundState() = Action {
@@ -121,7 +129,12 @@ class TweetsListActivity : AppCompatActivity(), TweetsListView {
     }
 
     override fun hideLoading() = Action {
-        progressBarLoadingTweets.visibility = View.GONE
+        loadingHolder.visibility = View.GONE
+        enableComponents()
+    }
+
+    private fun enableComponents() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     override fun hideEmptyState() = resetErrorContainerState()
