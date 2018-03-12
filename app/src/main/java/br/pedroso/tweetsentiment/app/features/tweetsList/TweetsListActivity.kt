@@ -13,7 +13,7 @@ import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import br.pedroso.tweetsentiment.R
-import br.pedroso.tweetsentiment.app.features.home.HomeActivity
+import br.pedroso.tweetsentiment.app.base.BaseActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.utils.ToolbarAnimationCoordinator
 import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.Tweet
@@ -31,13 +31,17 @@ import kotlinx.android.synthetic.main.activity_tweets_list_content.*
 import kotlinx.android.synthetic.main.view_error_feedback.*
 import kotlinx.android.synthetic.main.view_loading_feedback.*
 
-class TweetsListActivity : AppCompatActivity(), TweetsListView {
+class TweetsListActivity : BaseActivity(), TweetsListView {
 
     private val kodein by lazy { LazyKodein(appKodein) }
     val presenter by kodein.with(this).instance<TweetsListPresenter>()
 
     private val tweetsListAdapter = TweetsListAdapter {
         presenter.clickedOnAnalyzeTweet(it)
+    }
+
+    override fun startActivity(intent: Intent?) {
+        super.startActivity(intent)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
