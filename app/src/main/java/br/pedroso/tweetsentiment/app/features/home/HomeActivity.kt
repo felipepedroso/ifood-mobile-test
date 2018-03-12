@@ -3,11 +3,11 @@ package br.pedroso.tweetsentiment.app.features.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import br.pedroso.tweetsentiment.R
+import br.pedroso.tweetsentiment.app.base.BaseActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
 import br.pedroso.tweetsentiment.presentation.features.home.HomePresenter
 import br.pedroso.tweetsentiment.presentation.features.home.HomeView
@@ -19,7 +19,7 @@ import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.view_loading_feedback.*
 
-class HomeActivity : AppCompatActivity(), HomeView {
+class HomeActivity : BaseActivity(), HomeView {
     private val kodein by lazy { LazyKodein(appKodein) }
     private val presenter by kodein.with(this).instance<HomePresenter>()
 
