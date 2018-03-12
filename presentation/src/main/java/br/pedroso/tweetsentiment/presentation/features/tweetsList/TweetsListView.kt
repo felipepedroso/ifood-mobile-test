@@ -15,7 +15,6 @@ import io.reactivex.functions.Action
 interface TweetsListView : LoadingContentView, EmptyStateView, ErrorStateView, UserNotFoundStateView {
     fun showUserProfile(user: User): Action
     fun showTweet(tweet: Tweet): Action
-    fun displaySentimentAnalysisResult(sentiment: Sentiment): Action
     fun askConfirmationToSelectOtherUser()
     fun navigateToApplicationHome()
 }

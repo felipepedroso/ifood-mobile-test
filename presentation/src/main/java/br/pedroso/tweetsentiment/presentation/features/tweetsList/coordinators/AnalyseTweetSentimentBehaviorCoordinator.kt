@@ -2,7 +2,6 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators
 
 import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.DisplaySentimentAnalysisBehavior
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.TweetsListErrorStateBehavior
 import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingBehavior
 import io.reactivex.Observable
@@ -20,6 +19,5 @@ class AnalyseTweetSentimentBehaviorCoordinator(
         return upstream
                 .compose(LoadingBehavior(uiScheduler, view))
                 .compose(TweetsListErrorStateBehavior(uiScheduler, view))
-                .compose(DisplaySentimentAnalysisBehavior(uiScheduler, view))
     }
 }
