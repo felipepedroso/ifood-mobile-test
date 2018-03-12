@@ -51,6 +51,10 @@ class TweetsListActivity : AppCompatActivity(), TweetsListView {
         setupToolbar()
     }
 
+    override fun onBackPressed() {
+        presenter.clickedOnSelectOtherUser()
+    }
+
     private fun setupTweetsList() {
         var manager = LinearLayoutManager(this)
 
