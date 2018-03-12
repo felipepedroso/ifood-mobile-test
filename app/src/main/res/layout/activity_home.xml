@@ -45,8 +45,6 @@
         android:id="@+id/textInputLayoutTwitterAccount"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
         app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textViewWelcomeSubtitle">
@@ -56,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_type_twitter_account"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             android:inputType="textNoSuggestions|text"
             android:maxLines="1" />
 
@@ -66,10 +64,7 @@
         android:id="@+id/buttonCheckUserTweets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/eight_dp"
         android:paddingHorizontal="@dimen/twenty_four_dp"
         android:text="@string/continue_button"
         app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineBottom"
