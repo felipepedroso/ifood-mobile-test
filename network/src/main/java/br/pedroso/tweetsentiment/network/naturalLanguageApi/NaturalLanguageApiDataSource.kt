@@ -2,11 +2,13 @@ package br.pedroso.tweetsentiment.network.naturalLanguageApi
 
 import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.network.dataSources.SentimentAnalysisDataSource
+import br.pedroso.tweetsentiment.domain.network.errors.NaturalLanguageApiError
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.NaturalLanguageApiService
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.entities.request.Document
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.entities.request.NaturalLanguageApiRequestBody
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.mappers.RetrofitResponseMapper
 import io.reactivex.Observable
+import io.reactivex.functions.Function
 
 /**
  * Created by felip on 10/03/2018.
@@ -17,5 +19,12 @@ class NaturalLanguageApiDataSource(val naturalLanguageApiService: NaturalLanguag
         val requestBody = NaturalLanguageApiRequestBody(document)
         return naturalLanguageApiService.analyzeSentiment(requestBody)
                 .map { RetrofitResponseMapper.retrofitResponseToDomain(it) }
+                .onErrorResumeNext(NaturalLanguageErrorMapper())
+    }
+
+    private class NaturalLanguageErrorMapper<T> : Function<Throwable, Observable<T>> {
+        override fun apply(error: Throwable): Observable<T> {
+            return Observable.error(NaturalLanguageApiError())
+        }
     }
 }
