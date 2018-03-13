@@ -1,5 +1,6 @@
 package br.pedroso.tweetsentiment.app.features.tweetsList
 
+import android.graphics.drawable.GradientDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import br.pedroso.tweetsentiment.app.tweetsList.utils.resourceIcon
 import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.Tweet
 import kotlinx.android.synthetic.main.item_tweet.view.*
+import kotlinx.android.synthetic.main.sentiment_chip.view.*
 
 /**
  * Created by felipe on 10/03/18.
@@ -62,22 +64,21 @@ class TweetsListAdapter(private val buttonAnalyzeSentimentClickListener: (Tweet)
 
                 val color = ContextCompat.getColor(view.context, sentiment.resourceColor)
 
+                val chipRootDrawable = view.chipRoot.background as GradientDrawable
+                chipRootDrawable.setColor(color)
+
                 view.textViewSentiment.text = sentiment.name
-                view.textViewSentiment.setTextColor(color)
 
                 view.imageViewSentiment.setImageResource(sentiment.resourceIcon)
-                view.imageViewSentiment.drawable.setTint(color)
 
                 if (sentiment == Sentiment.NotAnalyzed) {
                     view.buttonAnalyzeSentiment.setOnClickListener { buttonAnalyzeSentimentClickListener(tweet) }
                     view.buttonAnalyzeSentiment.visibility = View.VISIBLE
 
-                    view.imageViewSentiment.visibility = View.INVISIBLE
-                    view.textViewSentiment.visibility = View.INVISIBLE
+                    view.chipRoot.visibility = View.INVISIBLE
                 } else {
                     view.buttonAnalyzeSentiment.visibility = View.INVISIBLE
-                    view.imageViewSentiment.visibility = View.VISIBLE
-                    view.textViewSentiment.visibility = View.VISIBLE
+                    view.chipRoot.visibility =  View.VISIBLE
                 }
             }
         }
