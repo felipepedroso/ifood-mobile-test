@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/coordinatorLayoutTweetsListContent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayoutTweetsList"
@@ -15,30 +15,40 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayoutTweetsList"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:fitsSystemWindows="true">
+            android:layout_height="250dp"
+            android:fitsSystemWindows="true"
+
+            app:expandedTitleGravity="center_horizontal|bottom"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
             ​
 
             <ImageView
                 android:id="@+id/imageViewProfileBackground"
-                app:layout_collapseMode="parallax"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:alpha="220"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />
 
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbarTweetsList"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewProfilePicture"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center"
+                android:elevation="8dp"
+                app:civ_border_color="#FFFFFFFF"
+                app:civ_border_width="4dp" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -46,72 +56,18 @@
     </android.support.design.widget.AppBarLayout>
     ​
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scroll"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewTweetsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false">
+        android:layout_marginBottom="@dimen/eight_dp"
+        android:layout_marginEnd="@dimen/eight_dp"
+        android:layout_marginStart="@dimen/eight_dp"
+        android:layout_marginTop="@dimen/eight_dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutUserDetailsContainer"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="32dp">
-                ​
-
-                <TextView
-                    android:id="@+id/textViewName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
-                ​
-
-                <TextView
-                    android:id="@+id/textViewUsername"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginTop="4dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle" />
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewTweetsList"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linearLayoutUserDetailsContainer"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/eight_dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp" />
-        </android.support.constraint.ConstraintLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageViewProfilePicture"
-        app:layout_anchor="@id/textViewName"
-        app:layout_anchorGravity="top|center_horizontal"
-        app:layout_scrollFlags="scroll"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_gravity="center_horizontal"
-        android:elevation="8dp" />
 </android.support.design.widget.CoordinatorLayout>

@@ -2,11 +2,12 @@ package br.pedroso.tweetsentiment.app.features.tweetsList
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.graphics.Palette
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
@@ -14,8 +15,6 @@ import android.view.View
 import android.view.WindowManager
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
-import br.pedroso.tweetsentiment.app.features.tweetsList.utils.ToolbarAnimationCoordinator
-import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListPresenter
@@ -95,9 +94,6 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
                 else -> super.onOptionsItemSelected(item)
             }
         }
-
-        val toolbarAnimationCoordinator = ToolbarAnimationCoordinator(imageViewProfilePicture, textViewName, collapsingToolbarLayoutTweetsList, linearLayoutUserDetailsContainer)
-        appBarLayoutTweetsList.addOnOffsetChangedListener(toolbarAnimationCoordinator)
     }
 
     override fun onResume() {
@@ -162,14 +158,16 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
     override fun hideUserNotFoundState() = resetErrorContainerState()
 
     override fun showUserProfile(user: User) = Action {
-        textViewUsername.text = "@" + user.userName
-        textViewName.text = user.name
+
+
+        collapsingToolbarLayoutTweetsList.title = user.name
 
         Picasso.with(this).load(user.profilePictureUrl).into(imageViewProfilePicture)
         if (!TextUtils.isEmpty(user.bannerUrl)) {
             Picasso.with(this).load(user.bannerUrl).into(imageViewProfileBackground, object : Callback {
                 override fun onSuccess() {
                     val bitmap = (imageViewProfileBackground.drawable as BitmapDrawable).bitmap
+
                     Palette.from(bitmap).generate { palette -> applyPalette(palette) }
                 }
 
@@ -188,6 +186,8 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
 
         collapsingToolbarLayoutTweetsList.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark))
         supportStartPostponedEnterTransition()
+        imageViewProfileBackground.drawable.colorFilter = PorterDuffColorFilter(darkMutedColor, PorterDuff.Mode.MULTIPLY)
+
     }
 
     override fun showTweet(tweet: Tweet) = Action {
