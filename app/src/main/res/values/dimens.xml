@@ -11,4 +11,10 @@
     <dimen name="tweet_timestamp_size">14sp</dimen>
     <dimen name="text_size_welcome">30sp</dimen>
     <dimen name="twelve_dp">12dp</dimen>
+    <dimen name="two_dp">2dp</dimen>
+    <dimen name="sentiment_text_size">16sp</dimen>
+    <dimen name="sentiment_icon_size">28dp</dimen>
+    <dimen name="chip_padding_vertical">4dp</dimen>
+    <dimen name="chip_padding_left">8dp</dimen>
+    <dimen name="chip_padding_right">10dp</dimen>
 </resources>
