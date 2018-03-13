@@ -3,6 +3,8 @@ package br.pedroso.tweetsentiment.app.features.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
@@ -47,6 +49,12 @@ class HomeActivity : BaseActivity(), HomeView {
             presenter.clickedCheckUserTweets()
         }
 
+        setupEditTextTwitterAccount()
+
+
+    }
+
+    private fun setupEditTextTwitterAccount() {
         editTextTwitterAccount.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
@@ -57,6 +65,27 @@ class HomeActivity : BaseActivity(), HomeView {
                 else -> false
             }
         }
+
+        editTextTwitterAccount.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                when (s.toString().trim().length) {
+                    0 -> disableContinueButton()
+                    else -> enableContinueButton()
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+    }
+
+    private fun enableContinueButton() {
+        buttonCheckUserTweets.isEnabled = true
+    }
+
+    private fun disableContinueButton() {
+        buttonCheckUserTweets.isEnabled = false
     }
 
     private fun hideSoftInputWindow() {
