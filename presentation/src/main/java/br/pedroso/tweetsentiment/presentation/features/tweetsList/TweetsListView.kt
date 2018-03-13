@@ -1,6 +1,5 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList
 
-import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.presentation.shared.behaviors.emptyState.EmptyStateView
@@ -17,4 +16,5 @@ interface TweetsListView : LoadingContentView, EmptyStateView, ErrorStateView, U
     fun showTweet(tweet: Tweet): Action
     fun askConfirmationToSelectOtherUser()
     fun navigateToApplicationHome()
+    fun showNaturalLanguageApiError(): Action
 }

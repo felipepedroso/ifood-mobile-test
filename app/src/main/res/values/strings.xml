@@ -19,4 +19,6 @@
     <string name="welcome_tweet_sentiment">Welcome to TweetSentiment</string>
     <string name="return_home">Go Back</string>
     <string name="sorry">Sorry!</string>
+    <string name="natural_language_api_error_title">Sorry...</string>
+    <string name="natural_language_api_error_message">We couldn\'t analyse this tweet now. Please try again later.</string>
 </resources>

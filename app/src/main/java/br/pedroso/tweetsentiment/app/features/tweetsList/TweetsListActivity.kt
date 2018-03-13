@@ -32,6 +32,7 @@ import kotlinx.android.synthetic.main.view_loading_feedback.*
 
 class TweetsListActivity : BaseActivity(), TweetsListView {
 
+
     private val kodein by lazy { LazyKodein(appKodein) }
     val presenter by kodein.with(this).instance<TweetsListPresenter>()
 
@@ -194,6 +195,18 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
                 .setMessage(R.string.select_other_user_dialog_message)
                 .setPositiveButton(R.string.ok, { _, _ -> presenter.confirmedToChangeUser() })
                 .setNegativeButton(R.string.cancel, null)
+
+        val dialog = dialogBuilder.create()
+        dialog.show()
+    }
+
+    override fun showNaturalLanguageApiError() = Action {
+        val dialogBuilder = AlertDialog.Builder(this)
+
+        dialogBuilder
+                .setTitle(R.string.natural_language_api_error_title)
+                .setMessage(R.string.natural_language_api_error_message)
+                .setPositiveButton(R.string.ok, null)
 
         val dialog = dialogBuilder.create()
         dialog.show()

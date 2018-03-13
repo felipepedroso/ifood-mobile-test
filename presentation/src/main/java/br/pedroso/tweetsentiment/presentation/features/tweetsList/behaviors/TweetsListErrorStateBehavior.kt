@@ -1,5 +1,6 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors
 
+import br.pedroso.tweetsentiment.domain.network.errors.NaturalLanguageApiError
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
 import br.pedroso.tweetsentiment.presentation.common.behaviors.ErrorStateBehavior
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
@@ -15,6 +16,7 @@ class TweetsListErrorStateBehavior<T>(
         when (error) {
             is TwitterError.UserNotFound -> subscribeAndFireAction(view.showUserNotFoundState())
             is TwitterError.EmptyResponse -> subscribeAndFireAction(view.showEmptyState())
+            is NaturalLanguageApiError -> subscribeAndFireAction(view.showNaturalLanguageApiError())
             else -> subscribeAndFireAction(view.showErrorState(error))
         }
     }
