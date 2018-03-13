@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
@@ -50,11 +51,17 @@ class HomeActivity : BaseActivity(), HomeView {
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     presenter.clickedCheckUserTweets()
+                    hideSoftInputWindow()
                     true
                 }
                 else -> false
             }
         }
+    }
+
+    private fun hideSoftInputWindow() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
     }
 
     override fun getUsernameFromInput(): String {

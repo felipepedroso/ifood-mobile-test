@@ -19,8 +19,6 @@
             android:layout_height="230dp"
             android:fitsSystemWindows="true"
             app:expandedTitleGravity="center_horizontal|bottom"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             ​
@@ -46,7 +44,9 @@
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:layout_gravity="center"
-                android:elevation="8dp" />
+                android:elevation="8dp"
+                app:civ_border_width="4dp"
+                app:civ_border_color="#FF000000"/>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
     ​

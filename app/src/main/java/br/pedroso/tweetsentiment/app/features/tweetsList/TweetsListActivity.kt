@@ -180,6 +180,7 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
         collapsingToolbarLayoutTweetsList.setContentScrimColor(darkMutedColor)
         imageViewProfileBackground.drawable.colorFilter = PorterDuffColorFilter(darkMutedColor, PorterDuff.Mode.MULTIPLY)
         collapsingToolbarLayoutTweetsList.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark))
+        imageViewProfilePicture.borderColor = darkMutedColor
         supportStartPostponedEnterTransition()
     }
 
