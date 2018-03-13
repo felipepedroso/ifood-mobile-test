@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textViewTweetContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TweetTextStyle"
+        android:textColor="#DE000000"
+        android:lines="5"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineBottomBar"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop"
+        tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque interdum rutrum sodales. Nullam mattis fermentum libero, non volutpat." />
+
+
+    <TextView
+        android:id="@+id/textViewTweetTimestamp"
+        style="@style/TweetTimestampStyle"
+        android:layout_gravity="center_horizontal"
+        android:text="timestamp"
+        android:textSize="@dimen/sentiment_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineBottom"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineBottomBar" />
+
+    <include
+        layout="@layout/sentiment_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineBottom"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineBottomBar" />
+
+    <Button
+        android:id="@+id/buttonAnalyzeSentiment"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/analyse_sentiment"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineBottom"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineBottomBar" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/sixteen_dp" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineBottomBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/sixty_four_dp" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="@dimen/eight_dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verticalGuidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/sixteen_dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verticalGuidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/sixteen_dp" />
+</android.support.constraint.ConstraintLayout>

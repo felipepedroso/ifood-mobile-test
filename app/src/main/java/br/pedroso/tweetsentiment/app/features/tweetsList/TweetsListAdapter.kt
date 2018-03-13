@@ -13,6 +13,7 @@ import br.pedroso.tweetsentiment.app.tweetsList.utils.resourceIcon
 import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.Tweet
 import kotlinx.android.synthetic.main.item_tweet.view.*
+import kotlinx.android.synthetic.main.item_tweet_content.view.*
 import kotlinx.android.synthetic.main.sentiment_chip.view.*
 
 /**
