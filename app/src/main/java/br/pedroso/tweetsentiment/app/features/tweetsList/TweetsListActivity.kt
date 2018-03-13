@@ -39,10 +39,6 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
         presenter.clickedOnAnalyzeTweet(it)
     }
 
-    override fun startActivity(intent: Intent?) {
-        super.startActivity(intent)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
@@ -158,16 +154,14 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
     override fun hideUserNotFoundState() = resetErrorContainerState()
 
     override fun showUserProfile(user: User) = Action {
-
-
         collapsingToolbarLayoutTweetsList.title = user.name
+
 
         Picasso.with(this).load(user.profilePictureUrl).into(imageViewProfilePicture)
         if (!TextUtils.isEmpty(user.bannerUrl)) {
             Picasso.with(this).load(user.bannerUrl).into(imageViewProfileBackground, object : Callback {
                 override fun onSuccess() {
                     val bitmap = (imageViewProfileBackground.drawable as BitmapDrawable).bitmap
-
                     Palette.from(bitmap).generate { palette -> applyPalette(palette) }
                 }
 
@@ -183,11 +177,9 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
 
         val darkMutedColor = palette.getMutedColor(primary)
         collapsingToolbarLayoutTweetsList.setContentScrimColor(darkMutedColor)
-
+        imageViewProfileBackground.drawable.colorFilter = PorterDuffColorFilter(darkMutedColor, PorterDuff.Mode.MULTIPLY)
         collapsingToolbarLayoutTweetsList.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark))
         supportStartPostponedEnterTransition()
-        imageViewProfileBackground.drawable.colorFilter = PorterDuffColorFilter(darkMutedColor, PorterDuff.Mode.MULTIPLY)
-
     }
 
     override fun showTweet(tweet: Tweet) = Action {
