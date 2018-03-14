@@ -24,6 +24,7 @@ import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.with
 import com.squareup.picasso.Callback
+import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_tweets_list_content.*
@@ -160,7 +161,7 @@ class TweetsListActivity : BaseActivity(), TweetsListView {
 
         Picasso.with(this).load(user.profilePictureUrl).into(imageViewProfilePicture)
         if (!TextUtils.isEmpty(user.bannerUrl)) {
-            Picasso.with(this).load(user.bannerUrl).into(imageViewProfileBackground, object : Callback {
+            Picasso.with(this).load(user.bannerUrl).memoryPolicy(MemoryPolicy.NO_CACHE).into(imageViewProfileBackground, object : Callback {
                 override fun onSuccess() {
                     val bitmap = (imageViewProfileBackground.drawable as BitmapDrawable).bitmap
                     Palette.from(bitmap).generate { palette -> applyPalette(palette) }
