@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.presentation.common.usecases
 
-import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
+import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 
@@ -9,10 +9,10 @@ import io.reactivex.Scheduler
  */
 class StoreUserToSyncOnPreferences(
         private val scheduler: Scheduler,
-        private val applicationPreferences: ApplicationPreferences) {
+        private val applicationSettings: ApplicationSettings) {
 
     fun execute(username: String) {
-        Completable.fromAction { applicationPreferences.storeUsernameToSync(username) }
+        Completable.fromAction { applicationSettings.storeUsernameToSync(username) }
                 .subscribeOn(scheduler)
                 .observeOn(scheduler)
                 .subscribe()

@@ -94,7 +94,7 @@ class CommonUsecasesModule {
         bind<StoreUserToSyncOnPreferences>() with singleton {
             StoreUserToSyncOnPreferences(
                     scheduler = instance(WORKER_SCHEDULER),
-                    applicationPreferences = instance()
+                    applicationSettings = instance()
             )
         }
     }

@@ -3,7 +3,7 @@ package br.pedroso.tweetsentiment.domain.device.storage
 /**
  * Created by felip on 08/03/2018.
  */
-interface ApplicationPreferences {
+interface ApplicationSettings {
     fun storeUsernameToSync(username: String)
     fun retrieveUsernameToSync() : String
     fun cleanUsernameToSync()

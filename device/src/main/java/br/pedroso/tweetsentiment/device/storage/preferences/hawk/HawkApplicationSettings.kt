@@ -1,13 +1,13 @@
 package br.pedroso.tweetsentiment.device.storage.preferences.hawk
 
 import android.content.Context
-import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
+import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import com.orhanobut.hawk.Hawk
 
 /**
  * Created by felip on 09/03/2018.
  */
-class HawkApplicationPreferences(context: Context) : ApplicationPreferences {
+class HawkApplicationSettings(context: Context) : ApplicationSettings {
     init {
         Hawk.init(context).build()
     }

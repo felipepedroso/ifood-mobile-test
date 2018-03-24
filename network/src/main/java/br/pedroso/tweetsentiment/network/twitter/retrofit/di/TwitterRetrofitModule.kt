@@ -29,7 +29,7 @@ class TwitterRetrofitModule {
 
         bind<TwitterRequestBearerInterceptor>() with singleton {
             TwitterRequestBearerInterceptor(
-                    applicationPreferences = instance()
+                    applicationSettings = instance()
             )
         }
 

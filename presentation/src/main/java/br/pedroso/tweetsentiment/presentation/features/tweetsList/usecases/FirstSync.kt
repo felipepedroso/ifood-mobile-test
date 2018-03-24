@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases
 
-import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
+import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.presentation.common.usecases.SyncUser
 import br.pedroso.tweetsentiment.presentation.shared.usecases.SyncUserTweets
 import io.reactivex.Completable
@@ -14,10 +14,10 @@ class FirstSync(
         private val scheduler: Scheduler,
         private val syncUser: SyncUser,
         private val syncUserTweets: SyncUserTweets,
-        private val applicationPreferences: ApplicationPreferences) {
+        private val applicationSettings: ApplicationSettings) {
 
     fun execute(): Completable {
-        return Observable.just(applicationPreferences.retrieveUsernameToSync())
+        return Observable.just(applicationSettings.retrieveUsernameToSync())
                 .flatMap { syncUser.execute(it) }
                 .flatMap { syncUserTweets.execute(it) }
                 .ignoreElements()
