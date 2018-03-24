@@ -15,7 +15,7 @@ class BootSyncSchedulerModule {
         bind<BootSyncScheduler>() with scopedSingleton(androidBroadcastReceiverScope) {
             BootSyncScheduler(
                     backgroundSyncScheduler = instance(),
-                    applicationPreferences = instance()
+                    applicationSettings = instance()
             )
         }
     }

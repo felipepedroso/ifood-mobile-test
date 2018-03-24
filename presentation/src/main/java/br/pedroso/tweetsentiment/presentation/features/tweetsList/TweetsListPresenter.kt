@@ -2,7 +2,7 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList
 
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.device.backgroundSync.BackgroundSyncScheduler
-import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
+import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.AnalyseTweetSentimentBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.FirstSyncBehaviorCoordinator
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserFlowableBehaviorCoordinator
@@ -21,7 +21,7 @@ import timber.log.Timber
 class TweetsListPresenter(
         private val uiScheduler: Scheduler,
         private val view: TweetsListView,
-        private val applicationPreferences: ApplicationPreferences,
+        private val applicationSettings: ApplicationSettings,
         private val firstSync: FirstSync,
         private val firstSyncBehaviorCoordinator: FirstSyncBehaviorCoordinator,
         private val getUserFlowableFromDatabase: GetUserFlowableFromDatabase,
@@ -89,13 +89,13 @@ class TweetsListPresenter(
     }
 
     fun confirmedToChangeUser() {
-        applicationPreferences.cleanUsernameToSync()
+        applicationSettings.cleanUsernameToSync()
         backgroundSyncScheduler.stopAllJobs()
         view.navigateToApplicationHome()
     }
 
     private fun scheduleRecurrentSync() {
-        val timeInterval = applicationPreferences.retrieveRecurrentSyncTimeInterval()
+        val timeInterval = applicationSettings.retrieveRecurrentSyncTimeInterval()
         backgroundSyncScheduler.scheduleRecurringSync(timeInterval)
     }
 }

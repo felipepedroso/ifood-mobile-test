@@ -1,6 +1,5 @@
 package br.pedroso.tweetsentiment.presentation.features.home.di
 
-import br.pedroso.tweetsentiment.domain.di.DependenciesTags
 import br.pedroso.tweetsentiment.domain.di.DependenciesTags.Companion.UI_SCHEDULER
 import br.pedroso.tweetsentiment.domain.di.DependenciesTags.Companion.WORKER_SCHEDULER
 import br.pedroso.tweetsentiment.presentation.features.home.HomeBehaviorCoordinator
@@ -29,7 +28,7 @@ class HomeModule {
                     view = it as HomeView,
                     homeBehaviorCoordinator = instance(),
                     homeSync = instance(),
-                    applicationPreferences = instance()
+                    applicationSettings = instance()
             )
         }
 

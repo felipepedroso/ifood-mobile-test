@@ -14,7 +14,7 @@ class BackgroundSyncModule {
         bind<BackgroundSync>() with singleton {
             BackgroundSync(
                     scheduler = instance(WORKER_SCHEDULER),
-                    applicationPreferences = instance(),
+                    applicationSettings = instance(),
                     syncUser = instance(),
                     syncUserTweets = instance()
             )

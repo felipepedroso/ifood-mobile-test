@@ -25,7 +25,7 @@ class TweetsListModule {
             TweetsListPresenter(
                     uiScheduler = instance(UI_SCHEDULER),
                     view = it as TweetsListView,
-                    applicationPreferences = instance(),
+                    applicationSettings = instance(),
                     firstSync = instance(),
                     firstSyncBehaviorCoordinator = instance(),
                     getUserFlowableFromDatabase = instance(),
@@ -41,7 +41,7 @@ class TweetsListModule {
         bind<FirstSync>() with singleton {
             FirstSync(
                     scheduler = instance(WORKER_SCHEDULER),
-                    applicationPreferences = instance(),
+                    applicationSettings = instance(),
                     syncUser = instance(),
                     syncUserTweets = instance()
             )
@@ -57,7 +57,7 @@ class TweetsListModule {
         bind<GetUserFlowableFromDatabase>() with singleton {
             GetUserFlowableFromDatabase(
                     scheduler = instance(WORKER_SCHEDULER),
-                    applicationPreferences = instance(),
+                    applicationSettings = instance(),
                     databaseDataSource = instance()
             )
         }

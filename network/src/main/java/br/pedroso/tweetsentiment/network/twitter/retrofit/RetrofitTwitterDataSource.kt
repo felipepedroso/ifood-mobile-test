@@ -2,7 +2,7 @@ package br.pedroso.tweetsentiment.network.twitter.retrofit
 
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.User
-import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
+import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
 import br.pedroso.tweetsentiment.network.twitter.retrofit.mappers.TweetMapper
@@ -10,11 +10,8 @@ import br.pedroso.tweetsentiment.network.twitter.retrofit.mappers.UserMapper
 import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterAuthService
 import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterService
 import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.ObservableTransformer
 import io.reactivex.functions.Function
 import retrofit2.HttpException
-import timber.log.Timber
 
 /**
  * Created by felip on 09/03/2018.
@@ -22,7 +19,7 @@ import timber.log.Timber
 class RetrofitTwitterDataSource(
         private val twitterAuthService: TwitterAuthService,
         private val twitterService: TwitterService,
-        private val applicationPreferences: ApplicationPreferences) : TwitterDataSource {
+        private val applicationSettings: ApplicationSettings) : TwitterDataSource {
 
     override fun getUser(userName: String): Observable<User> {
         return ensureAuthenticationBeforeApiCall()
@@ -53,8 +50,8 @@ class RetrofitTwitterDataSource(
     }
 
     private fun ensureAuthenticationBeforeApiCall(): Observable<String> {
-        return if (applicationPreferences.hasTwitterAccessToken())
-            Observable.just(applicationPreferences.retrieveTwitterAccessToken())
+        return if (applicationSettings.hasTwitterAccessToken())
+            Observable.just(applicationSettings.retrieveTwitterAccessToken())
         else
             doAuthentication()
     }
@@ -67,7 +64,7 @@ class RetrofitTwitterDataSource(
                         else -> Observable.error(TwitterError.AuthenticationError())
                     }
                 }
-                .doOnNext { applicationPreferences.storeTwitterAccessToken(it) }
+                .doOnNext { applicationSettings.storeTwitterAccessToken(it) }
                 .onErrorResumeNext(Observable.error(TwitterError.AuthenticationError()))
     }
 

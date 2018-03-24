@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.network.twitter.retrofit.interceptors
 
-import br.pedroso.tweetsentiment.domain.device.storage.ApplicationPreferences
+import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -8,12 +8,12 @@ import okhttp3.Response
  * Created by felip on 10/03/2018.
  */
 class TwitterRequestBearerInterceptor(
-        private val applicationPreferences: ApplicationPreferences) : Interceptor {
+        private val applicationSettings: ApplicationSettings) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
 
-        if (applicationPreferences.hasTwitterAccessToken()) {
-            val twitterAccessToken = applicationPreferences.retrieveTwitterAccessToken()
+        if (applicationSettings.hasTwitterAccessToken()) {
+            val twitterAccessToken = applicationSettings.retrieveTwitterAccessToken()
 
             val modifiedRequest = originalRequest.newBuilder()
                     .addHeader("Authorization", "Bearer $twitterAccessToken")

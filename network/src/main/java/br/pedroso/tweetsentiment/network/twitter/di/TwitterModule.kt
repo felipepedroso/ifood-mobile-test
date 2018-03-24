@@ -19,7 +19,7 @@ class TwitterModule {
             RetrofitTwitterDataSource(
                     twitterService = instance(),
                     twitterAuthService = instance(),
-                    applicationPreferences = instance()
+                    applicationSettings = instance()
             )
         }
     }
