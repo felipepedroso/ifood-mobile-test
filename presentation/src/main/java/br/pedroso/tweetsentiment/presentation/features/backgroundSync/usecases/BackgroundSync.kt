@@ -27,7 +27,7 @@ class BackgroundSync(
                 }
                 .doOnNext { Timber.d("Loaded user: $it") }
                 .flatMap { syncUserTweets.execute(it) }
-                .doOnNext { Timber.d("Loaded tweet: $it")}
+                .doOnNext { Timber.d("Loaded tweet: $it") }
                 .ignoreElements()
                 .subscribeOn(scheduler)
     }

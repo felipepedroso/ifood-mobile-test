@@ -12,7 +12,6 @@ import br.pedroso.tweetsentiment.app.tweetsList.utils.resourceColor
 import br.pedroso.tweetsentiment.app.tweetsList.utils.resourceIcon
 import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.domain.Tweet
-import kotlinx.android.synthetic.main.item_tweet.view.*
 import kotlinx.android.synthetic.main.item_tweet_content.view.*
 import kotlinx.android.synthetic.main.sentiment_chip.view.*
 
@@ -79,7 +78,7 @@ class TweetsListAdapter(private val buttonAnalyzeSentimentClickListener: (Tweet)
                     view.chipRoot.visibility = View.INVISIBLE
                 } else {
                     view.buttonAnalyzeSentiment.visibility = View.INVISIBLE
-                    view.chipRoot.visibility =  View.VISIBLE
+                    view.chipRoot.visibility = View.VISIBLE
                 }
             }
         }
