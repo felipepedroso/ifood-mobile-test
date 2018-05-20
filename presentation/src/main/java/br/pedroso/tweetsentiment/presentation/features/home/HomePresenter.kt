@@ -49,7 +49,7 @@ class HomePresenter(
     fun viewResumed() {
         val usernameToSync = applicationSettings.retrieveUsernameToSync()
 
-        if (!TextUtils.isEmpty(usernameToSync)){
+        if (!TextUtils.isEmpty(usernameToSync)) {
             view.openTweetListScreen()
         }
     }

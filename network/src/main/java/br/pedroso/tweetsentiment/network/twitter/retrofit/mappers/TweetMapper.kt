@@ -2,7 +2,6 @@ package br.pedroso.tweetsentiment.network.twitter.retrofit.mappers
 
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.network.twitter.retrofit.entities.RetrofitTweet
-import khronos.toDate
 import java.text.SimpleDateFormat
 import java.util.*
 

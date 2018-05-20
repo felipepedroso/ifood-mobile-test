@@ -4,7 +4,6 @@ import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 /**

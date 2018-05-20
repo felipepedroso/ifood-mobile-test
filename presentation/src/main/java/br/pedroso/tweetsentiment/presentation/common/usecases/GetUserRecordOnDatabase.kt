@@ -1,6 +1,5 @@
 package br.pedroso.tweetsentiment.presentation.common.usecases
 
-import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.utils.Result
 import io.reactivex.Maybe

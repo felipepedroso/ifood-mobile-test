@@ -3,7 +3,9 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors
 import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
 import br.pedroso.tweetsentiment.presentation.shared.behaviors.Behavior
-import io.reactivex.*
+import io.reactivex.Flowable
+import io.reactivex.FlowableTransformer
+import io.reactivex.Scheduler
 import org.reactivestreams.Publisher
 
 /**

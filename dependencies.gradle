@@ -110,6 +110,9 @@ ext {
     appDependencies.addAll(kodeinDependencies)
     appDependencies.addAll(rxJavaAndroidDependencies)
     appDependencies.addAll(timberDependencies)
+    appDependencies.addAll(retrofitDependencies)
+    appDependencies.addAll(firebaseJobDispatcherDependencies)
+    appDependencies.addAll(roomDependencies)
 
     //  Presentation Module
     presentationDependencies = []

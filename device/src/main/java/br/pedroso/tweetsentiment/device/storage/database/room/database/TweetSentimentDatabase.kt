@@ -2,9 +2,9 @@ package br.pedroso.tweetsentiment.device.storage.database.room.database
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
+import br.pedroso.tweetsentiment.device.storage.database.room.dao.TweetSentimentDao
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomTweet
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomUser
-import br.pedroso.tweetsentiment.device.storage.database.room.dao.TweetSentimentDao
 
 /**
  * Created by felipe on 09/03/2018.

@@ -36,12 +36,6 @@ android {
             includeAndroidResources = true
         }
     }
-
-    buildTypes.each {
-        it.buildConfigField 'String', 'NATURAL_LANGUAGE_API_KEY', NaturalLanguageApiKey
-        it.buildConfigField 'String', 'TWITTER_CONSUMER_KEY', TwitterConsumerKey
-        it.buildConfigField 'String', 'TWITTER_CONSUMER_SECRET', TwitterConsumerSecret
-    }
 }
 
 dependencies {

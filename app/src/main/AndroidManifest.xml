@@ -25,7 +25,7 @@
         <activity android:name=".app.features.tweetsList.TweetsListActivity" />
 
         <service
-            android:name=".device.backgroundSync.firebase.service.BackgroundSyncJobService"
+            android:name=".device.backgroundSync.firebase.BackgroundSyncJobService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
