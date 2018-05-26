@@ -28,7 +28,7 @@ ext {
     ]
 
     // RxJava
-    rxJavaVersion = '2.1.10'
+    rxJavaVersion = '2.1.14'
     rxAndroidVersion = '2.0.2'
 
     rxJavaDependencies = [
@@ -41,7 +41,7 @@ ext {
     ]
 
     //  Retrofit
-    retrofitVersion = '2.3.0'
+    retrofitVersion = '2.4.0'
 
     retrofitDependencies = [
             "com.squareup.retrofit2:retrofit:${retrofitVersion}",
@@ -56,7 +56,7 @@ ext {
     ]
 
     // Room
-    architectureComponentsVersion = '1.0.0'
+    architectureComponentsVersion = '1.1.0'
 
     roomDependencies = [
             "android.arch.persistence.room:runtime:$architectureComponentsVersion",
