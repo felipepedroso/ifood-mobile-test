@@ -1,4 +1,5 @@
 # Tweet Sentiment
+[![CircleCI](https://circleci.com/gh/felipepedroso/tweet-sentiment.svg?style=svg)](https://circleci.com/gh/felipepedroso/tweet-sentiment)
 
 ## Motivation
 This is a small toy app to demonstrate modern approaches to develop Android applications and to learn new techniques.
