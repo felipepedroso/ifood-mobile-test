@@ -56,15 +56,23 @@ ext {
     ]
 
     // Room
-    architectureComponentsVersion = '1.1.0'
+    roomVersion = '1.1.0'
 
     roomDependencies = [
-            "android.arch.persistence.room:runtime:$architectureComponentsVersion",
-            "android.arch.persistence.room:common:$architectureComponentsVersion",
-            "android.arch.persistence.room:rxjava2:$architectureComponentsVersion"
+            "android.arch.persistence.room:runtime:$roomVersion",
+            "android.arch.persistence.room:common:$roomVersion",
+            "android.arch.persistence.room:rxjava2:$roomVersion"
     ]
 
-    roomCompiler = "android.arch.persistence.room:compiler:$architectureComponentsVersion"
+    roomCompiler = "android.arch.persistence.room:compiler:$roomVersion"
+
+    // Architecture components
+    architectureComponentsVersion = '1.1.1'
+
+    architectureComponentsDependencies = [
+            "android.arch.lifecycle:runtime:$architectureComponentsVersion",
+            "android.arch.lifecycle:extensions:$architectureComponentsVersion"
+    ]
 
     // Firebase JobDispatcher
     firebaseJobDispatcherVersion = '0.8.5'
@@ -113,6 +121,7 @@ ext {
     appDependencies.addAll(retrofitDependencies)
     appDependencies.addAll(firebaseJobDispatcherDependencies)
     appDependencies.addAll(roomDependencies)
+    appDependencies.addAll(architectureComponentsDependencies)
 
     //  Presentation Module
     presentationDependencies = []
@@ -120,6 +129,7 @@ ext {
     presentationDependencies.addAll(kotlinDependencies)
     presentationDependencies.addAll(rxJavaAndroidDependencies)
     presentationDependencies.addAll(kodeinDependencies)
+    presentationDependencies.addAll(architectureComponentsDependencies)
     presentationDependencies.addAll(timberDependencies)
 
     // Network Module

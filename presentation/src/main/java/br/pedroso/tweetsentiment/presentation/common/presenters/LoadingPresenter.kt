@@ -1,15 +1,15 @@
 package br.pedroso.tweetsentiment.presentation.shared.behaviors.loading
 
-import br.pedroso.tweetsentiment.presentation.shared.behaviors.Behavior
+import br.pedroso.tweetsentiment.presentation.shared.behaviors.Presenter
 import io.reactivex.*
 import org.reactivestreams.Publisher
 
 /**
  * Created by felip on 09/03/2018.
  */
-class LoadingBehavior<T>(
+class LoadingPresenter<T>(
         val uiScheduler: Scheduler,
-        val view: LoadingContentView) : FlowableTransformer<T, T>, ObservableTransformer<T, T>, CompletableTransformer, Behavior(uiScheduler) {
+        val view: LoadingContentView) : FlowableTransformer<T, T>, ObservableTransformer<T, T>, CompletableTransformer, Presenter(uiScheduler) {
     override fun apply(upstream: Flowable<T>): Publisher<T> {
         return upstream
                 .subscribeOn(uiScheduler)

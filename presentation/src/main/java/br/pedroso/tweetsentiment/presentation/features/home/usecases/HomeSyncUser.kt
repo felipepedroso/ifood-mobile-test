@@ -3,13 +3,14 @@ package br.pedroso.tweetsentiment.presentation.features.home.usecases
 import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.presentation.common.usecases.StoreUserToSyncOnPreferences
 import br.pedroso.tweetsentiment.presentation.common.usecases.SyncUser
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 /**
  * Created by felip on 09/03/2018.
  */
-class HomeSync(
+class HomeSyncUser(
         private val scheduler: Scheduler,
         private val validateUsername: ValidateUsername,
         private val syncUser: SyncUser,

@@ -1,19 +1,18 @@
 package br.pedroso.tweetsentiment.app.features.home
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
-import br.pedroso.tweetsentiment.presentation.features.home.HomePresenter
+import br.pedroso.tweetsentiment.app.utils.viewModelProvider
 import br.pedroso.tweetsentiment.presentation.features.home.HomeView
+import br.pedroso.tweetsentiment.presentation.features.home.HomeViewModel
+import br.pedroso.tweetsentiment.presentation.features.home.presenters.HomeSyncRegisteredUserPresenter
+import br.pedroso.tweetsentiment.presentation.features.home.presenters.HomeSyncUserPresenter
 import com.github.salomonbrys.kodein.LazyKodein
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
@@ -21,44 +20,34 @@ import com.github.salomonbrys.kodein.with
 import io.reactivex.functions.Action
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.view_loading_feedback.*
+import timber.log.Timber
 
 class HomeActivity : BaseActivity(), HomeView {
     private val kodein by lazy { LazyKodein(appKodein) }
-    private val presenter by kodein.with(this).instance<HomePresenter>()
+    private val homeViewModel by viewModelProvider { kodein.value.instance<HomeViewModel>() }
+    private val homeSyncUserPresenter by kodein.with(this).instance<HomeSyncUserPresenter>()
+    private val homeSyncRegisteredUserPresenter by kodein.with(this).instance<HomeSyncRegisteredUserPresenter>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setupView()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.releaseSubscriptions()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.viewResumed()
     }
 
     private fun setupView() {
         setContentView(R.layout.activity_home)
 
         buttonCheckUserTweets.setOnClickListener {
-            presenter.clickedCheckUserTweets()
+            clickedCheckUserTweets()
         }
 
         setupEditTextTwitterAccount()
-
-
     }
 
     private fun setupEditTextTwitterAccount() {
         editTextTwitterAccount.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
-                    presenter.clickedCheckUserTweets()
+                    clickedCheckUserTweets()
                     hideSoftInputWindow()
                     true
                 }
@@ -72,6 +61,7 @@ class HomeActivity : BaseActivity(), HomeView {
                     0 -> disableContinueButton()
                     else -> enableContinueButton()
                 }
+                resetErrorMessageState().run()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -80,21 +70,41 @@ class HomeActivity : BaseActivity(), HomeView {
         })
     }
 
+    private fun clickedCheckUserTweets() {
+        val username = editTextTwitterAccount.text.toString()
+
+        val subscription =
+                homeViewModel.syncNewUser(username)
+                        .compose(homeSyncUserPresenter)
+                        .subscribe(
+                                { Timber.d("Loaded the new user!") },
+                                { Timber.e(it) })
+
+        registerDisposable(subscription)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tryToSyncRegisteredUser()
+    }
+
+    private fun tryToSyncRegisteredUser() {
+        val subscription =
+                homeViewModel.syncRegisteredUser()
+                        .compose(homeSyncRegisteredUserPresenter)
+                        .subscribe(
+                                { Timber.d("Loaded the registered user!") },
+                                { Timber.d("No user to sync!") }
+                        )
+        registerDisposable(subscription)
+    }
+
     private fun enableContinueButton() {
         buttonCheckUserTweets.isEnabled = true
     }
 
     private fun disableContinueButton() {
         buttonCheckUserTweets.isEnabled = false
-    }
-
-    private fun hideSoftInputWindow() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
-    }
-
-    override fun getUsernameFromInput(): String {
-        return editTextTwitterAccount.text.toString()
     }
 
     override fun showEmptyUsernameErrorMessage() = Action {
@@ -112,15 +122,6 @@ class HomeActivity : BaseActivity(), HomeView {
     override fun showLoading() = Action {
         loadingHolder.visibility = View.VISIBLE
         disableControls()
-    }
-
-    private fun disableControls() {
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    }
-
-    private fun enableControls() {
-        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     override fun showUserNotFoundState() = displayErrorMessage(R.string.error_user_not_found)
@@ -144,14 +145,7 @@ class HomeActivity : BaseActivity(), HomeView {
         textViewErrorMessage.visibility = View.GONE
     }
 
-    override fun openTweetListScreen() {
+    override fun openTweetListScreen() = Action {
         TweetsListActivity.navigateHere(this)
-    }
-
-    companion object {
-        fun navigateHere(context: Context) {
-            val intent = Intent(context, HomeActivity::class.java)
-            context.startActivity(intent)
-        }
     }
 }

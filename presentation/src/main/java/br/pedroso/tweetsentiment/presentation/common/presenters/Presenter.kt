@@ -7,7 +7,7 @@ import io.reactivex.functions.Action
 /**
  * Created by felip on 09/03/2018.
  */
-abstract class Behavior(private val scheduler: Scheduler) {
+abstract class Presenter(private val scheduler: Scheduler) {
 
     protected fun subscribeAndFireAction(actionToPerform: Action) {
         Completable.fromAction(actionToPerform)

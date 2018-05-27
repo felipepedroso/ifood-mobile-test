@@ -1,14 +1,14 @@
-package br.pedroso.tweetsentiment.presentation.common.behaviors
+package br.pedroso.tweetsentiment.presentation.common.presenters
 
-import br.pedroso.tweetsentiment.presentation.shared.behaviors.Behavior
+import br.pedroso.tweetsentiment.presentation.shared.behaviors.Presenter
 import io.reactivex.*
 import org.reactivestreams.Publisher
 
 /**
  * Created by felip on 10/03/2018.
  */
-abstract class ErrorStateBehavior<T>(private val uiScheduler: Scheduler)
-    : CompletableTransformer, FlowableTransformer<T, T>, ObservableTransformer<T, T>, Behavior(uiScheduler) {
+abstract class ErrorStatePresenter<T>(private val uiScheduler: Scheduler)
+    : CompletableTransformer, FlowableTransformer<T, T>, ObservableTransformer<T, T>, Presenter(uiScheduler) {
 
     override fun apply(upstream: Observable<T>): ObservableSource<T> {
         return upstream

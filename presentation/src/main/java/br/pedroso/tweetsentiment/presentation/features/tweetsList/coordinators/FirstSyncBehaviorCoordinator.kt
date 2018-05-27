@@ -1,8 +1,8 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators
 
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.TweetsListErrorStateBehavior
-import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingBehavior
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.TweetsListErrorStatePresenter
+import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingPresenter
 import io.reactivex.Completable
 import io.reactivex.CompletableSource
 import io.reactivex.CompletableTransformer
@@ -16,7 +16,7 @@ class FirstSyncBehaviorCoordinator(
         private val view: TweetsListView) : CompletableTransformer {
     override fun apply(upstream: Completable): CompletableSource {
         return upstream
-                .compose(LoadingBehavior<Any>(uiScheduler, view))
-                .compose(TweetsListErrorStateBehavior<Any>(uiScheduler, view))
+                .compose(LoadingPresenter<Any>(uiScheduler, view))
+                .compose(TweetsListErrorStatePresenter<Any>(uiScheduler, view))
     }
 }
