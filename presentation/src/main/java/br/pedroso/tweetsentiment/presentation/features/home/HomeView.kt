@@ -11,6 +11,5 @@ import io.reactivex.functions.Action
 interface HomeView : UserNotFoundStateView, LoadingContentView, ErrorStateView {
     fun hideEmptyUsernameErrorMessage(): Action
     fun showEmptyUsernameErrorMessage(): Action
-    fun getUsernameFromInput(): String
-    fun openTweetListScreen()
+    fun openTweetListScreen(): Action
 }

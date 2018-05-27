@@ -2,8 +2,8 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators
 
 import br.pedroso.tweetsentiment.domain.Sentiment
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.TweetsListErrorStateBehavior
-import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingBehavior
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.TweetsListErrorStatePresenter
+import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingPresenter
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import io.reactivex.ObservableTransformer
@@ -17,7 +17,7 @@ class AnalyseTweetSentimentBehaviorCoordinator(
         private val view: TweetsListView) : ObservableTransformer<Sentiment, Sentiment> {
     override fun apply(upstream: Observable<Sentiment>): ObservableSource<Sentiment> {
         return upstream
-                .compose(LoadingBehavior(uiScheduler, view))
-                .compose(TweetsListErrorStateBehavior(uiScheduler, view))
+                .compose(LoadingPresenter(uiScheduler, view))
+                .compose(TweetsListErrorStatePresenter(uiScheduler, view))
     }
 }

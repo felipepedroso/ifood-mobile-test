@@ -1,8 +1,8 @@
 package br.pedroso.tweetsentiment.app.di.network
 
+import br.pedroso.tweetsentiment.app.di.DependenciesTags
 import br.pedroso.tweetsentiment.app.di.network.naturalLanguage.NaturalLanguageApiModule
 import br.pedroso.tweetsentiment.app.di.network.twitter.TwitterModule
-import br.pedroso.tweetsentiment.app.di.DependenciesTags
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance

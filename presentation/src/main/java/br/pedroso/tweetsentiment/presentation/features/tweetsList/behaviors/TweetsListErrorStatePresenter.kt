@@ -2,16 +2,16 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors
 
 import br.pedroso.tweetsentiment.domain.network.errors.NaturalLanguageApiError
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
-import br.pedroso.tweetsentiment.presentation.common.behaviors.ErrorStateBehavior
+import br.pedroso.tweetsentiment.presentation.common.presenters.ErrorStatePresenter
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
 import io.reactivex.Scheduler
 
 /**
  * Created by felip on 10/03/2018.
  */
-class TweetsListErrorStateBehavior<T>(
+class TweetsListErrorStatePresenter<T>(
         val uiScheduler: Scheduler,
-        private val view: TweetsListView) : ErrorStateBehavior<T>(uiScheduler) {
+        private val view: TweetsListView) : ErrorStatePresenter<T>(uiScheduler) {
     override fun executeShowErrorStateActions(error: Throwable) {
         when (error) {
             is TwitterError.UserNotFound -> subscribeAndFireAction(view.showUserNotFoundState())

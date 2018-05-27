@@ -2,9 +2,9 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators
 
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.ShowUserTweetBehavior
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.TweetsListErrorStateBehavior
-import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingBehavior
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.ShowUserTweetPresenter
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.behaviors.TweetsListErrorStatePresenter
+import br.pedroso.tweetsentiment.presentation.shared.behaviors.loading.LoadingPresenter
 import io.reactivex.Flowable
 import io.reactivex.FlowableTransformer
 import io.reactivex.Scheduler
@@ -18,8 +18,8 @@ class UserTweetsFlowableBehaviorCoordinator(
         private val view: TweetsListView) : FlowableTransformer<Tweet, Tweet> {
     override fun apply(upstream: Flowable<Tweet>): Publisher<Tweet> {
         return upstream
-                .compose(LoadingBehavior(uiScheduler, view))
-                .compose(ShowUserTweetBehavior(uiScheduler, view))
-                .compose(TweetsListErrorStateBehavior(uiScheduler, view))
+                .compose(LoadingPresenter(uiScheduler, view))
+                .compose(ShowUserTweetPresenter(uiScheduler, view))
+                .compose(TweetsListErrorStatePresenter(uiScheduler, view))
     }
 }
