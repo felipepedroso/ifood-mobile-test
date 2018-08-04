@@ -6,9 +6,6 @@ import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.*
 import com.github.salomonbrys.kodein.*
 
-/**
- * Created by felip on 10/03/2018.
- */
 class TweetsListModule {
     val graph = Kodein.Module {
 

@@ -6,9 +6,6 @@ import br.pedroso.tweetsentiment.domain.utils.Result
 import io.reactivex.ObservableSource
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 09/03/2018.
- */
 class SyncUserTweets(
         private val scheduler: Scheduler,
         private val getUserLatestTweetOnDatabase: GetUserLatestTweetOnDatabase,

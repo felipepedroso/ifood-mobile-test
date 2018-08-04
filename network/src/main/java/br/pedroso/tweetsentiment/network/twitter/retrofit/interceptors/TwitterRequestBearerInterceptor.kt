@@ -4,9 +4,6 @@ import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import okhttp3.Interceptor
 import okhttp3.Response
 
-/**
- * Created by felip on 10/03/2018.
- */
 class TwitterRequestBearerInterceptor(
         private val applicationSettings: ApplicationSettings) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

@@ -5,9 +5,6 @@ import br.pedroso.tweetsentiment.network.twitter.retrofit.entities.RetrofitTweet
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * Created by felip on 10/03/2018.
- */
 class TweetMapper {
     companion object {
         // TODO: fix locale problem

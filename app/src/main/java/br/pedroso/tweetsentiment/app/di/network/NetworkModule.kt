@@ -10,9 +10,6 @@ import com.github.salomonbrys.kodein.singleton
 import okhttp3.Cache
 import java.io.File
 
-/**
- * Created by felip on 08/03/2018.
- */
 class NetworkModule {
     val graph = Kodein.Module {
         bind<Cache>() with singleton {

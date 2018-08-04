@@ -7,9 +7,6 @@ import br.pedroso.tweetsentiment.presentation.shared.usecases.RegisterUserOnData
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 09/03/2018.
- */
 class SyncUser(
         private val scheduler: Scheduler,
         private val getUserFromApi: GetUserFromApi,

@@ -10,9 +10,6 @@ import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.mappers.Ret
 import io.reactivex.Observable
 import io.reactivex.functions.Function
 
-/**
- * Created by felip on 10/03/2018.
- */
 class NaturalLanguageApiDataSource(val naturalLanguageApiService: NaturalLanguageApiService) : SentimentAnalysisDataSource {
     override fun analyzeSentimentFromText(text: String): Observable<Sentiment> {
         val document = Document(text)

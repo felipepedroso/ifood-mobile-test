@@ -5,9 +5,6 @@ import br.pedroso.tweetsentiment.domain.errors.UiError
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 09/03/2018.
- */
 class ValidateUsername(private val scheduler: Scheduler) {
     fun execute(username: String): Observable<String> {
         return Observable.just(username)

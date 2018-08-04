@@ -1,8 +1,5 @@
 package br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.entities.response
 
-/**
- * Created by felip on 10/03/2018.
- */
 data class Sentiment(val magnitude: Float, val score: Float)
 
 data class SentenceText(val content: String, val beginOffset: Int)

@@ -7,9 +7,6 @@ import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-/**
- * Created by felip on 09/03/2018.
- */
 interface TwitterService {
     @GET("/$TWITTER_API_VERSION/users/show.json")
     fun usersShow(@Query("screen_name") screenName: String): Observable<RetrofitUser>

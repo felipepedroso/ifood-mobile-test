@@ -9,9 +9,6 @@ import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-/**
- * Created by felip on 08/03/2018.
- */
 class SchedulersModule {
     val graph = Kodein.Module {
         bind<Scheduler>(WORKER_SCHEDULER) with singleton { Schedulers.io() }

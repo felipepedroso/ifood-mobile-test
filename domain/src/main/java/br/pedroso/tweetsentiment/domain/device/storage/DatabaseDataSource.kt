@@ -6,9 +6,6 @@ import br.pedroso.tweetsentiment.domain.User
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 
-/**
- * Created by felip on 08/03/2018.
- */
 interface DatabaseDataSource {
     fun getUser(username: String): Flowable<User>
     fun registerUser(user: User)

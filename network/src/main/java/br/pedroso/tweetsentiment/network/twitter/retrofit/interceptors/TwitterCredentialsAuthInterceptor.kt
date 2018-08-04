@@ -4,9 +4,6 @@ import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.Response
 
-/**
- * Created by felip on 10/03/2018.
- */
 class TwitterCredentialsAuthInterceptor(
         private val twitterConsumerKey: String,
         private val twitterConsumerSecret: String) : Interceptor {

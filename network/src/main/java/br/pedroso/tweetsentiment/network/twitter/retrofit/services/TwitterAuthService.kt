@@ -6,9 +6,6 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-/**
- * Created by felip on 09/03/2018.
- */
 interface TwitterAuthService {
     @FormUrlEncoded
     @POST("oauth2/token")

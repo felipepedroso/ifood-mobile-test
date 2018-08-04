@@ -9,9 +9,6 @@ import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.android.androidActivityScope
 import com.github.salomonbrys.kodein.lazy
 
-/**
- * Created by felip on 08/03/2018.
- */
 class Injection(private val application: Application) {
     init {
         application.registerActivityLifecycleCallbacks(androidActivityScope.lifecycleManager)

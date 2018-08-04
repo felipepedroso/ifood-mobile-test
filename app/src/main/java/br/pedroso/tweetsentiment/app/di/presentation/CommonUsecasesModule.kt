@@ -11,9 +11,6 @@ import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.instance
 import com.github.salomonbrys.kodein.singleton
 
-/**
- * Created by felip on 09/03/2018.
- */
 class CommonUsecasesModule {
     val graph = Kodein.Module {
         bind<GetUserFromApi>() with singleton {
