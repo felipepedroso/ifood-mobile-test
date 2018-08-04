@@ -25,8 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class TwitterModule {
     val graph = Kodein.Module {
-        import(TwitterRetrofitModule().graph)
-
         bind<TwitterDataSource>() with singleton {
             RetrofitTwitterDataSource(
                     twitterService = instance(),
