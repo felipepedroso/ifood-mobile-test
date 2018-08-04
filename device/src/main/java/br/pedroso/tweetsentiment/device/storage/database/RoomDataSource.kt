@@ -29,10 +29,9 @@ class RoomDataSource(val tweetSentimentDao: TweetSentimentDao) : DatabaseDataSou
                 .map { RoomTweetMapper.mapRoomToDomain(it) }
     }
 
-    override fun getTweetsFromUser(user: User): Flowable<Tweet> {
+    override fun getTweetsFromUser(user: User): Flowable<List<Tweet>> {
         return tweetSentimentDao.getAllTweetsFromUser(user.id)
-                .flatMap { Flowable.fromIterable(it) }
-                .map { RoomTweetMapper.mapRoomToDomain(it) }
+                .map { it.map { RoomTweetMapper.mapRoomToDomain(it) } }
     }
 
     override fun registerTweet(user: User, tweet: Tweet) {

@@ -21,4 +21,6 @@
     <string name="sorry">Sorry!</string>
     <string name="natural_language_api_error_title">Sorry...</string>
     <string name="natural_language_api_error_message">We couldn\'t analyse this tweet now. Please try again later.</string>
+    <string name="successful_recurrent_sync_schedule">A recurrent sync with Twitter will happen each %d seconds.</string>
+    <string name="failed_to_schedule_recurrent_sync">Failed to schedule recurrent sync</string>
 </resources>

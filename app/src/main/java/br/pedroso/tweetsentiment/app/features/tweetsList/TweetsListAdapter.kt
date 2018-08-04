@@ -19,29 +19,16 @@ import kotlinx.android.synthetic.main.sentiment_chip.view.*
  * Created by felipe on 10/03/18.
  */
 class TweetsListAdapter(private val buttonAnalyzeSentimentClickListener: (Tweet) -> Unit) : RecyclerView.Adapter<TweetsListAdapter.TweetViewHolder>() {
-    private val tweets: MutableList<Tweet> = ArrayList()
+    private val tweetsList: MutableList<Tweet> = ArrayList()
 
-    fun clear() {
-        tweets.clear()
-        notifyDataSetChanged()
-    }
-
-    fun addTweed(tweet: Tweet) {
-        var tweetsWithSameId = tweets.filter { it.id == tweet.id }
-
-        if (tweetsWithSameId.isNotEmpty()) {
-            tweets.removeAll(tweetsWithSameId)
-        }
-
-        tweets.add(tweet)
-
-        tweets.sortByDescending { it.creationTimestamp }
-
+    fun setTweetsList(tweetsList: List<Tweet>){
+        this.tweetsList.clear()
+        this.tweetsList.addAll(tweetsList)
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: TweetViewHolder?, position: Int) {
-        val tweet = tweets[position]
+        val tweet = tweetsList[position]
         holder?.bind(tweet, buttonAnalyzeSentimentClickListener)
     }
 
@@ -53,7 +40,7 @@ class TweetsListAdapter(private val buttonAnalyzeSentimentClickListener: (Tweet)
     }
 
     override fun getItemCount(): Int {
-        return tweets.size
+        return tweetsList.size
     }
 
     class TweetViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontalGuidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verticalGuidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/twenty_four_dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/verticalGuidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="@dimen/twenty_four_dp" />
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineTop"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.76"
+        app:srcCompat="@drawable/ic_feedback_happy" />
+
+    <TextView
+        android:id="@+id/textViewWelcome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textSize="@dimen/text_size_welcome"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/horizontalGuidelineTop" />
+
+    <ProgressBar
+        android:id="@+id/progressBarLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="@dimen/sixty_four_dp"
+        android:layout_height="@dimen/sixty_four_dp"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/horizontalGuidelineBottom"
+        app:layout_constraintEnd_toEndOf="@id/verticalGuidelineRight"
+        app:layout_constraintStart_toStartOf="@id/verticalGuidelineLeft"
+        app:layout_constraintTop_toTopOf="@id/horizontalGuidelineTop" />
+</android.support.constraint.ConstraintLayout>

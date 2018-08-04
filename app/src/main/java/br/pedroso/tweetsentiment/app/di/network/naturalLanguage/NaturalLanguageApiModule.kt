@@ -1,8 +1,8 @@
 package br.pedroso.tweetsentiment.app.di.network.naturalLanguage
 
 import br.pedroso.tweetsentiment.BuildConfig
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.Companion.NATURAL_LANGUAGE_OKHTTP_CLIENT
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.Companion.NATURAL_LANGUAGE_RETROFIT
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.NATURAL_LANGUAGE_OKHTTP_CLIENT
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.NATURAL_LANGUAGE_RETROFIT
 import br.pedroso.tweetsentiment.domain.network.dataSources.SentimentAnalysisDataSource
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.NaturalLanguageApiDataSource
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.NaturalLanguageApiService
