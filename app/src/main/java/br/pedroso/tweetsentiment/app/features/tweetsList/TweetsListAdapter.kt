@@ -21,6 +21,7 @@ class TweetsListAdapter(private val buttonAnalyzeSentimentClickListener: (Tweet)
     fun setTweetsList(tweetsList: List<Tweet>){
         this.tweetsList.clear()
         this.tweetsList.addAll(tweetsList)
+        this.tweetsList.sortByDescending { it.creationTimestamp }
         notifyDataSetChanged()
     }
 

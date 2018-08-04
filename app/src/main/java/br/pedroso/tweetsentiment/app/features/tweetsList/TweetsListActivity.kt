@@ -15,11 +15,11 @@ import android.view.View
 import android.view.WindowManager
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
-import br.pedroso.tweetsentiment.app.utils.showToast
 import br.pedroso.tweetsentiment.app.utils.viewModelProvider
 import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.User
 import br.pedroso.tweetsentiment.domain.entities.ViewState
+import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewModel
 import com.github.salomonbrys.kodein.LazyKodein
 import com.github.salomonbrys.kodein.android.appKodein
@@ -50,7 +50,13 @@ class TweetsListActivity : BaseActivity() {
 
         setupToolbar()
 
+        setupSwipeRefreshLayout()
+
         setupGoBackButton()
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        swipeRefreshLayoutRoot.setOnRefreshListener { syncUserData() }
     }
 
     private fun setupGoBackButton() {
@@ -85,6 +91,10 @@ class TweetsListActivity : BaseActivity() {
                     askConfirmationToSelectOtherUser()
                     true
                 }
+                R.id.action_refresh -> {
+                    syncUserData()
+                    true
+                }
                 else -> super.onOptionsItemSelected(item)
             }
         }
@@ -92,26 +102,33 @@ class TweetsListActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        resetErrorContainerState()
         syncUserData()
+        getCurrentUser()
+        getTweetsFromCurrentUser()
     }
 
     private fun syncUserData() {
         val subscription = tweetsListViewModel
                 .syncUserData()
-                .doOnSubscribe { showLoading() }
-                .doOnTerminate { hideLoading() }
+                .doOnSubscribe { showLoadingContent() }
+                .doOnTerminate { hideLoadingContent() }
                 .subscribe(
-                        { completedUserDataSync() },
+                        { Timber.d("Completed the user data sync.") },
                         { showErrorState(it) }
                 )
 
         registerDisposable(subscription)
     }
 
-    private fun completedUserDataSync() {
-        resetErrorContainerState()
-        getCurrentUser()
-        //getTweetsFromCurrentUser()
+    private fun hideLoadingContent() {
+        swipeRefreshLayoutRoot.isRefreshing = false
+        enableComponents()
+    }
+
+    private fun showLoadingContent() {
+        swipeRefreshLayoutRoot.isRefreshing = true
+        disableComponents()
     }
 
     private fun getCurrentUser() {
@@ -126,7 +143,7 @@ class TweetsListActivity : BaseActivity() {
     }
 
     private fun handleGetCurrentUserNewState(viewState: ViewState) = when (viewState) {
-        is ViewState.Loading -> showLoading()
+        is ViewState.Loading -> showLoadingContent()
         is ViewState.ShowContent<*> -> showUserProfile(viewState.contentValue as User)
         is ViewState.Error -> showErrorState(viewState.error)
         else -> Timber.d("State not used: $viewState")
@@ -144,25 +161,15 @@ class TweetsListActivity : BaseActivity() {
     }
 
     private fun handleGetTweetsFromCurrentUserNewState(viewState: ViewState) = when (viewState) {
-        is ViewState.Loading -> showLoading()
+        is ViewState.Loading -> showLoadingContent()
         is ViewState.ShowContent<*> -> displayTweetsList(viewState.contentValue as List<Tweet>)
         is ViewState.Error -> showErrorState(viewState.error)
         else -> Timber.d("State not used: $viewState")
     }
 
     private fun displayTweetsList(tweetsList: List<Tweet>) {
+        hideLoadingContent()
         tweetsListAdapter.setTweetsList(tweetsList)
-    }
-
-    private fun handleScheduleRecurrentSyncNewState(viewState: ViewState) = when (viewState) {
-        is ViewState.ShowContent<*> -> displayRecurrentSyncSuccessMessage(viewState.contentValue as Int)
-        is ViewState.Error -> showToast(R.string.failed_to_schedule_recurrent_sync)
-        else -> Timber.d("State not used: $viewState")
-    }
-
-    private fun displayRecurrentSyncSuccessMessage(recurrentSyncTimeInterval: Int) {
-        val message = getString(R.string.successful_recurrent_sync_schedule, recurrentSyncTimeInterval)
-        showToast(message)
     }
 
     private fun clickedOnAnalyzeTweet(tweet: Tweet) {
@@ -178,13 +185,13 @@ class TweetsListActivity : BaseActivity() {
 
     private fun handleAnalyzeTweetNewState(viewState: ViewState) = when (viewState) {
         is ViewState.Loading -> showLoading()
-        is ViewState.Success -> displayAnalyzeTweetSuccess()
+        is ViewState.Success -> analyzedTweetWithSuccess()
         is ViewState.Error -> showAnalyzeTweetErrorMessage()
         else -> Timber.d("State not used: $viewState")
     }
 
-    private fun displayAnalyzeTweetSuccess() {
-
+    private fun analyzedTweetWithSuccess() {
+        hideLoading()
     }
 
     private fun showErrorFeedback(errorImageResource: Int, errorStringResource: Int) {
@@ -201,13 +208,15 @@ class TweetsListActivity : BaseActivity() {
         coordinatorLayoutTweetsListContent.visibility = View.VISIBLE
     }
 
-    fun showEmptyState() {
-        showErrorFeedback(R.drawable.ic_feedback_neutral, R.string.empty_tweet_timeline)
+    private fun showErrorState(it: Throwable) = when (it) {
+        is TwitterError.EmptyResponse -> showEmptyState()
+        is TwitterError.UserNotFound -> showUserNotFoundState()
+        else -> showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_loading_timeline)
     }
 
-    private fun showErrorState(it: Throwable) {
-        showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_loading_timeline)
-    }
+    private fun showEmptyState() = showErrorFeedback(R.drawable.ic_feedback_neutral, R.string.empty_tweet_timeline)
+
+    private fun showUserNotFoundState() = showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_user_not_found)
 
     private fun showLoading() {
         loadingHolder.visibility = View.VISIBLE
@@ -217,10 +226,6 @@ class TweetsListActivity : BaseActivity() {
     private fun disableComponents() {
         window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-    }
-
-    fun showUserNotFoundState() {
-        showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_user_not_found)
     }
 
     private fun hideLoading() {
@@ -293,6 +298,7 @@ class TweetsListActivity : BaseActivity() {
     }
 
     private fun showAnalyzeTweetErrorMessage() {
+        hideLoading()
         val dialogBuilder = AlertDialog.Builder(this)
 
         dialogBuilder

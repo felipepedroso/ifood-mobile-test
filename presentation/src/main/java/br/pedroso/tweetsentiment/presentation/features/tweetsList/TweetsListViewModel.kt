@@ -42,6 +42,7 @@ class TweetsListViewModel(
         return getTweetsFromCurrentUser
                 .execute()
                 .compose(GetTweetsFromCurrentUserStateTransformer())
+                .observeOn(uiScheduler)
     }
 
     fun clearCurrentUserSettings(): Completable {
