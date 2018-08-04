@@ -1,7 +1,6 @@
 # Tweet Sentiment
 [![CircleCI](https://circleci.com/gh/felipepedroso/tweet-sentiment.svg?style=svg)](https://circleci.com/gh/felipepedroso/tweet-sentiment)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d8c36a6403494c1186ce68a3d3985ca0)](https://www.codacy.com/project/felipepedroso/tweet-sentiment/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=felipepedroso/tweet-sentiment&amp;utm_campaign=Badge_Grade_Dashboard)
-[![Coverage Status](https://coveralls.io/repos/github/felipepedroso/tweet-sentiment/badge.svg?branch=master)](https://coveralls.io/github/felipepedroso/tweet-sentiment?branch=master)
 
 ## Motivation
 This is a small toy app to demonstrate modern approaches to develop Android applications and to learn new techniques.
