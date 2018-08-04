@@ -21,15 +21,6 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - machine:
-          environment:
-            QEMU_AUDIO_DRV: none
-      - test:
-          pre:
-          - emulator -avd circleci-android24 -no-window:
-              background: true
-              parallel: true
-          - circle-android wait-for-boot
       - run:
           name: Coverage Report
           command: ./gradlew connectedAndroidTest coveralls
