@@ -7,9 +7,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 09/03/2018.
- */
 class HomeSyncUser(
         private val scheduler: Scheduler,
         private val validateUsername: ValidateUsername,

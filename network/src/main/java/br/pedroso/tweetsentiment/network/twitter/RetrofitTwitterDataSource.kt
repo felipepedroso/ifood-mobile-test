@@ -13,9 +13,6 @@ import io.reactivex.Observable
 import io.reactivex.functions.Function
 import retrofit2.HttpException
 
-/**
- * Created by felip on 09/03/2018.
- */
 class RetrofitTwitterDataSource(
         private val twitterAuthService: TwitterAuthService,
         private val twitterService: TwitterService,

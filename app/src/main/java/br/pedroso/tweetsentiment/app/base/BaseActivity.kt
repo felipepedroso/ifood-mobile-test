@@ -9,9 +9,6 @@ import br.pedroso.tweetsentiment.R
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-/**
- * Created by felip on 12/03/2018.
- */
 open class BaseActivity : AppCompatActivity() {
     private val compositeDisposable by lazy { CompositeDisposable() }
 

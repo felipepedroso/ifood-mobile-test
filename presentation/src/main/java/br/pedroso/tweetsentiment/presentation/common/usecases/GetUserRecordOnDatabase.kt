@@ -5,9 +5,6 @@ import br.pedroso.tweetsentiment.domain.utils.Result
 import io.reactivex.Maybe
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 11/03/2018.
- */
 class GetUserRecordOnDatabase(
         private val scheduler: Scheduler,
         private val databaseDataSource: DatabaseDataSource) {

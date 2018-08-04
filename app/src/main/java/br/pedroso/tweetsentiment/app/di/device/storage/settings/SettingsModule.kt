@@ -7,9 +7,6 @@ import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.singleton
 
-/**
- * Created by felip on 09/03/2018.
- */
 class SettingsModule(private val context: Context) {
     val graph = Kodein.Module {
         bind<ApplicationSettings>() with singleton {

@@ -6,9 +6,6 @@ import br.pedroso.tweetsentiment.domain.utils.Result
 import io.reactivex.Maybe
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 09/03/2018.
- */
 class GetUserLatestTweetOnDatabase(
         private val scheduler: Scheduler,
         private val databaseDataSource: DatabaseDataSource) {

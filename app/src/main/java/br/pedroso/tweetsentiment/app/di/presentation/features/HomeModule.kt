@@ -7,9 +7,6 @@ import br.pedroso.tweetsentiment.presentation.features.home.usecases.HomeSyncUse
 import br.pedroso.tweetsentiment.presentation.features.home.usecases.ValidateUsername
 import com.github.salomonbrys.kodein.*
 
-/**
- * Created by felip on 08/03/2018.
- */
 class HomeModule {
     val graph = Kodein.Module {
         bind<HomeSyncUser>() with singleton {

@@ -3,9 +3,6 @@ package br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.intercepto
 import okhttp3.Interceptor
 import okhttp3.Response
 
-/**
- * Created by felip on 10/03/2018.
- */
 class NaturalLanguageApiAddKeyInterceptor(private val naturalLanguageApiKey: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()

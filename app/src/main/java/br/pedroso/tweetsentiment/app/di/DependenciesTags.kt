@@ -1,8 +1,5 @@
 package br.pedroso.tweetsentiment.app.di
 
-/**
- * Created by felip on 08/03/2018.
- */
 object DependenciesTags {
     const val WORKER_SCHEDULER = "worker"
     const val UI_SCHEDULER = "main"

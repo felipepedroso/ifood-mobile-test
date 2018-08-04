@@ -7,9 +7,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 10/03/2018.
- */
 class SyncUserData(
         private val scheduler: Scheduler,
         private val syncUser: SyncUser,

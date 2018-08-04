@@ -4,9 +4,6 @@ import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 09/03/2018.
- */
 class StoreUserToSyncOnPreferences(
         private val scheduler: Scheduler,
         private val applicationSettings: ApplicationSettings) {

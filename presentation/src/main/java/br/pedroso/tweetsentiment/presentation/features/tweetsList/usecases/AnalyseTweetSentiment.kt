@@ -8,9 +8,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
-/**
- * Created by felip on 10/03/2018.
- */
 class AnalyseTweetSentiment(private val scheduler: Scheduler,
                             private val sentimentAnalysisDataSource: SentimentAnalysisDataSource,
                             private val databaseDataSource: DatabaseDataSource) {
