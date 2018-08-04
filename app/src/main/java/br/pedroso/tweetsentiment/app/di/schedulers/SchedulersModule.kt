@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.app.di.schedulers
 
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.Companion.UI_SCHEDULER
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.Companion.WORKER_SCHEDULER
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.UI_SCHEDULER
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.WORKER_SCHEDULER
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.singleton

@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.app.di.device.storage.filesystem
 
 import android.content.Context
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.Companion.NETWORK_CACHE_DIR
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.NETWORK_CACHE_DIR
 import com.github.salomonbrys.kodein.Kodein
 import com.github.salomonbrys.kodein.bind
 import com.github.salomonbrys.kodein.singleton

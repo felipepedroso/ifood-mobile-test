@@ -1,19 +1,10 @@
 package br.pedroso.tweetsentiment.app.di.presentation.features
 
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.Companion.UI_SCHEDULER
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.Companion.WORKER_SCHEDULER
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListPresenter
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListView
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.AnalyseTweetSentimentBehaviorCoordinator
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.FirstSyncBehaviorCoordinator
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserFlowableBehaviorCoordinator
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.coordinators.UserTweetsFlowableBehaviorCoordinator
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.AnalyseTweetSentiment
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.FirstSync
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetUserFlowableFromDatabase
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetUserTweetsFlowableFromDatabase
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.UI_SCHEDULER
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.WORKER_SCHEDULER
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewModel
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.*
 import com.github.salomonbrys.kodein.*
-import com.github.salomonbrys.kodein.android.androidActivityScope
 
 /**
  * Created by felip on 10/03/2018.
@@ -21,25 +12,26 @@ import com.github.salomonbrys.kodein.android.androidActivityScope
 class TweetsListModule {
     val graph = Kodein.Module {
 
-        bind<TweetsListPresenter>() with scopedSingleton(androidActivityScope) {
-            TweetsListPresenter(
+        bind<TweetsListViewModel>() with provider {
+            TweetsListViewModel(
                     uiScheduler = instance(UI_SCHEDULER),
-                    view = it as TweetsListView,
-                    applicationSettings = instance(),
-                    firstSync = instance(),
-                    firstSyncBehaviorCoordinator = instance(),
-                    getUserFlowableFromDatabase = instance(),
-                    getUserTweetsFlowableFromDatabase = instance(),
-                    userFlowableBehaviorCoordinator = instance(),
-                    userTweetsFlowableBehaviorCoordinator = instance(),
+                    syncUserData = instance(),
+                    getCurrentUser = instance(),
+                    getTweetsFromCurrentUser = instance(),
                     analyseTweetSentiment = instance(),
-                    analyseTweetSentimentBehaviorCoordinator = instance(),
-                    backgroundSyncScheduler = instance()
+                    clearCurrentUserSettings = instance()
             )
         }
 
-        bind<FirstSync>() with singleton {
-            FirstSync(
+        bind<ClearCurrentUserSettings>() with singleton {
+            ClearCurrentUserSettings(
+                    scheduler = instance(WORKER_SCHEDULER),
+                    applicationSettings = instance()
+            )
+        }
+
+        bind<SyncUserData>() with singleton {
+            SyncUserData(
                     scheduler = instance(WORKER_SCHEDULER),
                     applicationSettings = instance(),
                     syncUser = instance(),
@@ -47,39 +39,19 @@ class TweetsListModule {
             )
         }
 
-        bind<FirstSyncBehaviorCoordinator>() with autoScopedSingleton(androidActivityScope) {
-            FirstSyncBehaviorCoordinator(
-                    uiScheduler = instance(UI_SCHEDULER),
-                    view = it as TweetsListView
-            )
-        }
-
-        bind<GetUserFlowableFromDatabase>() with singleton {
-            GetUserFlowableFromDatabase(
+        bind<GetCurrentUser>() with singleton {
+            GetCurrentUser(
                     scheduler = instance(WORKER_SCHEDULER),
                     applicationSettings = instance(),
                     databaseDataSource = instance()
             )
         }
 
-        bind<UserFlowableBehaviorCoordinator>() with autoScopedSingleton(androidActivityScope) {
-            UserFlowableBehaviorCoordinator(
-                    uiScheduler = instance(UI_SCHEDULER),
-                    view = it as TweetsListView
-            )
-        }
-
-        bind<GetUserTweetsFlowableFromDatabase>() with singleton {
-            GetUserTweetsFlowableFromDatabase(
+        bind<GetTweetsFromCurrentUser>() with singleton {
+            GetTweetsFromCurrentUser(
                     scheduler = instance(WORKER_SCHEDULER),
-                    databaseDataSource = instance()
-            )
-        }
-
-        bind<UserTweetsFlowableBehaviorCoordinator>() with autoScopedSingleton(androidActivityScope) {
-            UserTweetsFlowableBehaviorCoordinator(
-                    uiScheduler = instance(UI_SCHEDULER),
-                    view = it as TweetsListView
+                    databaseDataSource = instance(),
+                    getCurrentUser = instance()
             )
         }
 
@@ -88,13 +60,6 @@ class TweetsListModule {
                     scheduler = instance(WORKER_SCHEDULER),
                     sentimentAnalysisDataSource = instance(),
                     databaseDataSource = instance()
-            )
-        }
-
-        bind<AnalyseTweetSentimentBehaviorCoordinator>() with autoScopedSingleton(androidActivityScope) {
-            AnalyseTweetSentimentBehaviorCoordinator(
-                    uiScheduler = instance(UI_SCHEDULER),
-                    view = it as TweetsListView
             )
         }
     }
