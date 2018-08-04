@@ -74,13 +74,6 @@ ext {
             "android.arch.lifecycle:extensions:$architectureComponentsVersion"
     ]
 
-    // Firebase JobDispatcher
-    firebaseJobDispatcherVersion = '0.8.5'
-
-    firebaseJobDispatcherDependencies = [
-            "com.firebase:firebase-jobdispatcher:$firebaseJobDispatcherVersion"
-    ]
-
     //  Test
     jUnitVersion = '4.12'
     mockitoKotlinVersion = '1.5.0'
@@ -119,7 +112,6 @@ ext {
     appDependencies.addAll(rxJavaAndroidDependencies)
     appDependencies.addAll(timberDependencies)
     appDependencies.addAll(retrofitDependencies)
-    appDependencies.addAll(firebaseJobDispatcherDependencies)
     appDependencies.addAll(roomDependencies)
     appDependencies.addAll(architectureComponentsDependencies)
 
@@ -150,7 +142,6 @@ ext {
     deviceDependencies.addAll(kodeinDependencies)
     deviceDependencies.addAll(timberDependencies)
     deviceDependencies.addAll(roomDependencies)
-    deviceDependencies.addAll(firebaseJobDispatcherDependencies)
 
     // Domain Module
     domainDependencies = []
