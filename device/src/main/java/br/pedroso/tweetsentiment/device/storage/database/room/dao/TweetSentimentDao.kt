@@ -7,9 +7,6 @@ import io.reactivex.Flowable
 import io.reactivex.Maybe
 
 
-/**
- * Created by felipe on 09/03/2018.
- */
 @Dao
 interface TweetSentimentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

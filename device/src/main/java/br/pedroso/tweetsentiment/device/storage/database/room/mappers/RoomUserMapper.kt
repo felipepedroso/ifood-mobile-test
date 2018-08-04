@@ -3,9 +3,6 @@ package br.pedroso.tweetsentiment.device.storage.database.room.mappers
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomUser
 import br.pedroso.tweetsentiment.domain.User
 
-/**
- * Created by felipe on 09/03/2018.
- */
 class RoomUserMapper {
 
     companion object {

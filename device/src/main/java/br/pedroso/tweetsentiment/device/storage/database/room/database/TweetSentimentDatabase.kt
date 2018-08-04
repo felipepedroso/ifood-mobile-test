@@ -6,9 +6,6 @@ import br.pedroso.tweetsentiment.device.storage.database.room.dao.TweetSentiment
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomTweet
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomUser
 
-/**
- * Created by felipe on 09/03/2018.
- */
 @Database(
         version = 1,
         entities = [RoomTweet::class, RoomUser::class],

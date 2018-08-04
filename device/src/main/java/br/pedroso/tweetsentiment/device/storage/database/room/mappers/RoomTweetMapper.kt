@@ -6,9 +6,6 @@ import br.pedroso.tweetsentiment.domain.Tweet
 import br.pedroso.tweetsentiment.domain.User
 import java.util.*
 
-/**
- * Created by felipe on 09/03/2018.
- */
 class RoomTweetMapper {
 
     companion object {

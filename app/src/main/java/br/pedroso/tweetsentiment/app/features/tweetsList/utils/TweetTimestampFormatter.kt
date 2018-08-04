@@ -6,9 +6,6 @@ import khronos.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * Created by felipe on 1/10/18.
- */
 class TweetTimestampFormatter {
     companion object {
         private val FORMAT_GENERIC_DATE = "dd MMM yy"

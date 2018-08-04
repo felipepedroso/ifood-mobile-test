@@ -15,9 +15,6 @@ import br.pedroso.tweetsentiment.domain.Tweet
 import kotlinx.android.synthetic.main.item_tweet_content.view.*
 import kotlinx.android.synthetic.main.sentiment_chip.view.*
 
-/**
- * Created by felipe on 10/03/18.
- */
 class TweetsListAdapter(private val buttonAnalyzeSentimentClickListener: (Tweet) -> Unit) : RecyclerView.Adapter<TweetsListAdapter.TweetViewHolder>() {
     private val tweetsList: MutableList<Tweet> = ArrayList()
 
