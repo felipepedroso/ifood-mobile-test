@@ -10,9 +10,6 @@ import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 
-/**
- * Created by felipe on 09/03/2018.
- */
 class RoomDataSource(val tweetSentimentDao: TweetSentimentDao) : DatabaseDataSource {
     override fun getUserRecordOnDatabase(username: String): Maybe<User> {
         return tweetSentimentDao.getUserRecord(username)

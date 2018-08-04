@@ -4,9 +4,6 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 
-/**
- * Created by felipe on 09/03/2018.
- */
 @Entity(tableName = "tweets",
         foreignKeys = [
             ForeignKey(

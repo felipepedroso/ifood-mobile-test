@@ -3,9 +3,6 @@ package br.pedroso.tweetsentiment.app.tweetsList.utils
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.domain.Sentiment
 
-/**
- * Created by felipe on 1/10/18.
- */
 
 val Sentiment.resourceColor: Int
     get() = when (this) {

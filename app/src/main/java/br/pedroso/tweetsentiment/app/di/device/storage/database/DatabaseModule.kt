@@ -9,9 +9,6 @@ import br.pedroso.tweetsentiment.device.storage.database.room.database.TweetSent
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import com.github.salomonbrys.kodein.*
 
-/**
- * Created by felipe on 09/03/2018.
- */
 class DatabaseModule(context: Context) {
     val graph = Kodein.Module {
         bind<TweetSentimentDatabase>(DependenciesTags.DATABASE) with singleton {
