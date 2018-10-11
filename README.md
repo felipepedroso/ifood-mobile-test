@@ -23,25 +23,21 @@ You can try the debug application [here](https://drive.google.com/file/d/1buphfr
 ## Characteristics
 * 100% developed using Kotlin
 * Offline-first application, where the UI consider a database as a Single Source of Truth and the syncronization is made by a background service. The UI is subscribed to the DB and updates everytime a new data is available.
-* Reactive architecture using a "passive view" concept. 
+* Reactive architecture using MVVM. 
 * Dependency Injection using Kodein
 * The project aims to create a concise and easy to understand code, always trying to be aligned with Clean principles.
 
 ## Architecture
-This project uses a reactive variation of the MVP architecture, where all the information and interactions are handled by RxJava flows. The basic interaction is:
+This project uses a reactive variation of the MVVM architecture, where all the information and interactions are handled by RxJava flows. The basic interaction is:
 
-Views(Activities)   <->   Presenters   ->   Usecases   ->   Model (Data, Network)
-
-To handle the usecases dataflow and coordinate different behaviors, the presenter relies in objects called 'BehaviorCoordinators'. They are RxJava transformers that create a stream composition to organize the dataflow, provide proper UI feedbacks and error handling.
-
-The background sync service also has a "presenter" that is responsible for the coordination of background sync usecases.
+Views(Activities)   ->   ViewModels   ->   Usecases   ->   Model (Data, Network)
 
 All major components are represented by interfaces, allowing an easy implementation replacement and making tests easier.
 
 ## Modularization
 The project was splitted in the following modules:
 
-* app: responsible for handling the interaction with the Android framework stuff.
+* app: responsible for handling the interaction with the Android framework stuff and DI.
 * device: handle things like storage, job scheduling and in the future, notifications
 * domain: dictates the language spoken by all modules, like the entities, errors, interfaces, etc
 * network: conects the app with cloud APIs like Twitter and Google Natural Language Api
