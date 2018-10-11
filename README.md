@@ -22,7 +22,7 @@ You can try the debug application [here](https://drive.google.com/file/d/1buphfr
 
 ## Characteristics
 * 100% developed using Kotlin
-* Offline-first application, where the UI consider a database as a Single Source of Truth and the syncronization is made by a background service. The UI is subscribed to the DB and updates everytime a new data is available.
+* Offline-first application, where the UI consider a database as a Single Source of Truth.
 * Reactive architecture using a "passive view" concept. 
 * Dependency Injection using Kodein
 * The project aims to create a concise and easy to understand code, always trying to be aligned with Clean principles.
