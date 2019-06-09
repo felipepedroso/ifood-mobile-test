@@ -1,4 +1,4 @@
-package br.pedroso.tweetsentiment.domain
+package br.pedroso.tweetsentiment.domain.entities
 
 data class User(
         val id: Long,

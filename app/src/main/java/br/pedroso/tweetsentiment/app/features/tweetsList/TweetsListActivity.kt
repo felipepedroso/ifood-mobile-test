@@ -9,15 +9,14 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.palette.graphics.Palette
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
 import br.pedroso.tweetsentiment.app.utils.viewModelProvider
-import br.pedroso.tweetsentiment.domain.Tweet
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.Tweet
+import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.entities.ViewState
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewModel
@@ -238,12 +237,6 @@ class TweetsListActivity : BaseActivity() {
         window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
-    fun hideEmptyState() = resetErrorContainerState()
-
-    fun hideErrorState() = resetErrorContainerState()
-
-    fun hideUserNotFoundState() = resetErrorContainerState()
-
     private fun showUserProfile(user: User) {
         hideLoading()
 
@@ -281,7 +274,7 @@ class TweetsListActivity : BaseActivity() {
         dialogBuilder
                 .setTitle(R.string.select_other_user)
                 .setMessage(R.string.select_other_user_dialog_message)
-                .setPositiveButton(R.string.ok, { _, _ -> confirmedToChangeUser() })
+                .setPositiveButton(R.string.ok) { _, _ -> confirmedToChangeUser() }
                 .setNegativeButton(R.string.cancel, null)
 
         val dialog = dialogBuilder.create()

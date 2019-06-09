@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.domain.network.dataSources
 
-import br.pedroso.tweetsentiment.domain.Tweet
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.Tweet
+import br.pedroso.tweetsentiment.domain.entities.User
 import io.reactivex.Observable
 
 interface TwitterDataSource {

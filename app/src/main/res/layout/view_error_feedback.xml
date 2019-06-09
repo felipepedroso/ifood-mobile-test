@@ -15,7 +15,8 @@
         app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
         app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.76"
+        android:contentDescription="@string/content_description_app_logo_error"/>
 
     <TextView
         android:id="@+id/textViewErrorTitle"
@@ -48,7 +49,8 @@
         android:id="@+id/buttonGoBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/twenty_four_dp"
+        android:paddingStart="@dimen/twenty_four_dp"
+        android:paddingEnd="@dimen/twenty_four_dp"
         android:text="@string/return_home"
         android:theme="@style/AppTheme.Button"
         app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineBottom"

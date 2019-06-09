@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases
 
-import br.pedroso.tweetsentiment.domain.Sentiment
-import br.pedroso.tweetsentiment.domain.Tweet
+import br.pedroso.tweetsentiment.domain.entities.Sentiment
+import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.network.dataSources.SentimentAnalysisDataSource
 import io.reactivex.Completable

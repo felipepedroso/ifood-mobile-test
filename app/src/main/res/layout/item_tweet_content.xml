@@ -23,7 +23,7 @@
         android:id="@+id/textViewTweetTimestamp"
         style="@style/TweetTimestampStyle"
         android:layout_gravity="center_horizontal"
-        android:text="timestamp"
+        tools:text="timestamp"
         android:textSize="@dimen/sentiment_text_size"
         app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"

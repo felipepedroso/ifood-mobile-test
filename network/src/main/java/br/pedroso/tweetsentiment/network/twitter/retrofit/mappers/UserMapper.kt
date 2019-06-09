@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.network.twitter.retrofit.mappers
 
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.network.twitter.retrofit.entities.RetrofitUser
 
 class UserMapper {

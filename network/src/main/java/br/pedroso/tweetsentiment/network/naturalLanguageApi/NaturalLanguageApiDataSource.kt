@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.network.naturalLanguageApi
 
-import br.pedroso.tweetsentiment.domain.Sentiment
+import br.pedroso.tweetsentiment.domain.entities.Sentiment
 import br.pedroso.tweetsentiment.domain.network.dataSources.SentimentAnalysisDataSource
 import br.pedroso.tweetsentiment.domain.network.errors.NaturalLanguageApiError
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.NaturalLanguageApiService

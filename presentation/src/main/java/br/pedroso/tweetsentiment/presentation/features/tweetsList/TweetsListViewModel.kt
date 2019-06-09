@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList
 
 import androidx.lifecycle.ViewModel
-import br.pedroso.tweetsentiment.domain.Tweet
+import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.ViewState
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.*
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.viewStateTransformers.*

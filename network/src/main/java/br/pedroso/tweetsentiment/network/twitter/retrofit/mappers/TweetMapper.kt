@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.network.twitter.retrofit.mappers
 
-import br.pedroso.tweetsentiment.domain.Tweet
+import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.network.twitter.retrofit.entities.RetrofitTweet
 import java.text.SimpleDateFormat
 import java.util.*
@@ -12,7 +12,7 @@ class TweetMapper {
 
         fun mapTwitterApiToDomain(retrofitTweet: RetrofitTweet): Tweet {
             with(retrofitTweet) {
-                var creationTimestamp = SimpleDateFormat(TWITTER_DATE_FORMAT, Locale.ENGLISH).parse(createdAt)
+                val creationTimestamp = SimpleDateFormat(TWITTER_DATE_FORMAT, Locale.ENGLISH).parse(createdAt)
 
                 return Tweet(
                         id = id,

@@ -13,6 +13,6 @@ class GetUserRecordOnDatabase(
         return databaseDataSource.getUserRecordOnDatabase(username)
                 .subscribeOn(scheduler)
                 .map { Result.WithValue(it) as Result }
-                .switchIfEmpty(Maybe.just(Result.Empty() as Result))
+                .switchIfEmpty(Maybe.just(Result.Empty as Result))
     }
 }

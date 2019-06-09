@@ -3,9 +3,9 @@ package br.pedroso.tweetsentiment.device.storage.database
 import br.pedroso.tweetsentiment.device.storage.database.room.dao.TweetSentimentDao
 import br.pedroso.tweetsentiment.device.storage.database.room.mappers.RoomTweetMapper
 import br.pedroso.tweetsentiment.device.storage.database.room.mappers.RoomUserMapper
-import br.pedroso.tweetsentiment.domain.Sentiment
-import br.pedroso.tweetsentiment.domain.Tweet
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.Sentiment
+import br.pedroso.tweetsentiment.domain.entities.Tweet
+import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import io.reactivex.Flowable
 import io.reactivex.Maybe
@@ -28,7 +28,7 @@ class RoomDataSource(val tweetSentimentDao: TweetSentimentDao) : DatabaseDataSou
 
     override fun getTweetsFromUser(user: User): Flowable<List<Tweet>> {
         return tweetSentimentDao.getAllTweetsFromUser(user.id)
-                .map { it.map { RoomTweetMapper.mapRoomToDomain(it) } }
+                .map { it -> it.map { RoomTweetMapper.mapRoomToDomain(it) } }
     }
 
     override fun registerTweet(user: User, tweet: Tweet) {

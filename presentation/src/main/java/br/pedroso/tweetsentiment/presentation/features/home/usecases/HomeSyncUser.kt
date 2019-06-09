@@ -1,9 +1,8 @@
 package br.pedroso.tweetsentiment.presentation.features.home.usecases
 
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.presentation.common.usecases.StoreUserToSyncOnPreferences
 import br.pedroso.tweetsentiment.presentation.common.usecases.SyncUser
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 

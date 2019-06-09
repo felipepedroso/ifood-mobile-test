@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.mappers
 
-import br.pedroso.tweetsentiment.domain.Sentiment
+import br.pedroso.tweetsentiment.domain.entities.Sentiment
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.entities.response.NaturalLanguageApiResponseBody
 
 class RetrofitResponseMapper {

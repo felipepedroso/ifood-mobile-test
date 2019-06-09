@@ -1,7 +1,7 @@
-package br.pedroso.tweetsentiment.app.tweetsList.utils
+package br.pedroso.tweetsentiment.app.features.tweetsList.utils
 
 import br.pedroso.tweetsentiment.R
-import br.pedroso.tweetsentiment.domain.Sentiment
+import br.pedroso.tweetsentiment.domain.entities.Sentiment
 
 
 val Sentiment.resourceColor: Int

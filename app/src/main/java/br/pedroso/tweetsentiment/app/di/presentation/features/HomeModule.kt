@@ -26,9 +26,7 @@ class HomeModule {
         }
 
         bind<ValidateUsername>() with singleton {
-            ValidateUsername(
-                    scheduler = instance(WORKER_SCHEDULER)
-            )
+            ValidateUsername()
         }
     }
 }

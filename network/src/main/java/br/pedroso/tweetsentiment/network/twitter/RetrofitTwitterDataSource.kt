@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.network.twitter
 
-import br.pedroso.tweetsentiment.domain.Tweet
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.Tweet
+import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError

@@ -1,9 +1,9 @@
 package br.pedroso.tweetsentiment.device.storage.database.room.mappers
 
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomTweet
-import br.pedroso.tweetsentiment.domain.Sentiment
-import br.pedroso.tweetsentiment.domain.Tweet
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.Sentiment
+import br.pedroso.tweetsentiment.domain.entities.Tweet
+import br.pedroso.tweetsentiment.domain.entities.User
 import java.util.*
 
 class RoomTweetMapper {

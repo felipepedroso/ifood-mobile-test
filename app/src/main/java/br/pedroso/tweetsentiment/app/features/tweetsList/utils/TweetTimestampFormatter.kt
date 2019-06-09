@@ -1,4 +1,4 @@
-package br.pedroso.tweetsentiment.app.tweetsList.utils
+package br.pedroso.tweetsentiment.app.features.tweetsList.utils
 
 import android.content.Context
 import br.pedroso.tweetsentiment.R
@@ -8,8 +8,8 @@ import java.util.*
 
 class TweetTimestampFormatter {
     companion object {
-        private val FORMAT_GENERIC_DATE = "dd MMM yy"
-        private val FORMAT_CURRENT_YEAR = "dd MMM"
+        private const val FORMAT_GENERIC_DATE = "dd MMM yy"
+        private const val FORMAT_CURRENT_YEAR = "dd MMM"
 
         fun format(context: Context, timestamp: Date): String {
             val now = Dates.today

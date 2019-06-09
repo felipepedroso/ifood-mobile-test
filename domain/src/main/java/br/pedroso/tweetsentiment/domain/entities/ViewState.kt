@@ -1,12 +1,12 @@
 package br.pedroso.tweetsentiment.domain.entities
 
 sealed class ViewState {
-    class Loading : ViewState()
+    object Loading : ViewState()
     class ShowContent<out T>(val contentValue: T) : ViewState()
-    class Success : ViewState()
-    class Done : ViewState()
+    object Success : ViewState()
+    object Done : ViewState()
     class Error(val error: Throwable) : ViewState()
-    class Empty : ViewState()
+    object Empty : ViewState()
 
     override fun toString() = this.javaClass.simpleName!!
 }

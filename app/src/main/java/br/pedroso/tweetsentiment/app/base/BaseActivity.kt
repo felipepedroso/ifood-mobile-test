@@ -1,5 +1,6 @@
 package br.pedroso.tweetsentiment.app.base
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import br.pedroso.tweetsentiment.R
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
+@SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
     private val compositeDisposable by lazy { CompositeDisposable() }
 

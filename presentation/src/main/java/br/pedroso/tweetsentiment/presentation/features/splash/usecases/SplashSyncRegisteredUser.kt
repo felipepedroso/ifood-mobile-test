@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.presentation.features.splash.usecases
 
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.presentation.features.home.usecases.HomeSyncUser
 import io.reactivex.Observable

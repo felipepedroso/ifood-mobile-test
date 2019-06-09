@@ -1,4 +1,4 @@
-package br.pedroso.tweetsentiment.domain
+package br.pedroso.tweetsentiment.domain.entities
 
 import java.util.*
 

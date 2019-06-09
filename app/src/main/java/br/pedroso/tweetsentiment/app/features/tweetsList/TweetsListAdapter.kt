@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.pedroso.tweetsentiment.R
-import br.pedroso.tweetsentiment.app.tweetsList.utils.TweetTimestampFormatter
-import br.pedroso.tweetsentiment.app.tweetsList.utils.resourceColor
-import br.pedroso.tweetsentiment.app.tweetsList.utils.resourceIcon
-import br.pedroso.tweetsentiment.domain.Sentiment
-import br.pedroso.tweetsentiment.domain.Tweet
+import br.pedroso.tweetsentiment.app.features.tweetsList.utils.TweetTimestampFormatter
+import br.pedroso.tweetsentiment.app.features.tweetsList.utils.resourceColor
+import br.pedroso.tweetsentiment.app.features.tweetsList.utils.resourceIcon
+import br.pedroso.tweetsentiment.domain.entities.Sentiment
+import br.pedroso.tweetsentiment.domain.entities.Tweet
 import kotlinx.android.synthetic.main.item_tweet_content.view.*
 import kotlinx.android.synthetic.main.sentiment_chip.view.*
 
@@ -27,7 +27,7 @@ class TweetsListAdapter(private val buttonAnalyzeSentimentClickListener: (Tweet)
 
     override fun onBindViewHolder(holder: TweetViewHolder, position: Int) {
         val tweet = tweetsList[position]
-        holder?.bind(tweet, buttonAnalyzeSentimentClickListener)
+        holder.bind(tweet, buttonAnalyzeSentimentClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TweetViewHolder {

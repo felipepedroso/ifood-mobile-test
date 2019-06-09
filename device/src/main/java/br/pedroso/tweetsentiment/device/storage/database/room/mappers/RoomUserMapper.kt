@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.device.storage.database.room.mappers
 
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomUser
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.User
 
 class RoomUserMapper {
 

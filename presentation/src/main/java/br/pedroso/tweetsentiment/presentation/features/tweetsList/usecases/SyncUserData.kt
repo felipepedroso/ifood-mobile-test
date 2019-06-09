@@ -2,7 +2,6 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases
 
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.presentation.common.usecases.SyncUser
-import br.pedroso.tweetsentiment.presentation.shared.usecases.SyncUserTweets
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler

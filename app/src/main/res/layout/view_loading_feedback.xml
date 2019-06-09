@@ -20,7 +20,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/progressBarLoading"
         style="?android:attr/progressBarStyle"
         android:layout_width="@dimen/sixty_four_dp"
         android:layout_height="@dimen/sixty_four_dp"

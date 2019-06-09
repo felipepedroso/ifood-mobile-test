@@ -1,7 +1,7 @@
-package br.pedroso.tweetsentiment.presentation.shared.usecases
+package br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases
 
-import br.pedroso.tweetsentiment.domain.Tweet
-import br.pedroso.tweetsentiment.domain.User
+import br.pedroso.tweetsentiment.domain.entities.Tweet
+import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
 import io.reactivex.Observable
 import io.reactivex.Scheduler
