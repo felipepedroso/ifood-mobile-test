@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.app.di.device.storage.database
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.Context
 import br.pedroso.tweetsentiment.app.di.DependenciesTags
 import br.pedroso.tweetsentiment.device.storage.database.RoomDataSource

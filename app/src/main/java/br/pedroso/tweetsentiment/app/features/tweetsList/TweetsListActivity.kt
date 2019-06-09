@@ -6,10 +6,10 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
-import android.support.v7.graphics.Palette
-import android.support.v7.widget.LinearLayoutManager
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
+import androidx.palette.graphics.Palette
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
 import android.view.WindowManager
@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.activity_tweets_list_content.*
 import kotlinx.android.synthetic.main.view_error_feedback.*
 import kotlinx.android.synthetic.main.view_loading_feedback.*
 import timber.log.Timber
+import java.lang.Exception
 
 class TweetsListActivity : BaseActivity() {
 
@@ -74,7 +75,7 @@ class TweetsListActivity : BaseActivity() {
     }
 
     private fun setupTweetsList() {
-        val manager = LinearLayoutManager(this)
+        val manager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
         recyclerViewTweetsList.apply {
             layoutManager = manager
@@ -248,15 +249,15 @@ class TweetsListActivity : BaseActivity() {
 
         collapsingToolbarLayoutTweetsList.title = user.name
 
-        Picasso.with(this).load(user.profilePictureUrl).into(imageViewProfilePicture)
+        Picasso.get().load(user.profilePictureUrl).into(imageViewProfilePicture)
+
         if (!TextUtils.isEmpty(user.bannerUrl)) {
-            Picasso.with(this).load(user.bannerUrl).memoryPolicy(MemoryPolicy.NO_CACHE).into(imageViewProfileBackground, object : Callback {
+            Picasso.get().load(user.bannerUrl).memoryPolicy(MemoryPolicy.NO_CACHE).into(imageViewProfileBackground, object : Callback {
+                override fun onError(e: Exception?) = Unit
+
                 override fun onSuccess() {
                     val bitmap = (imageViewProfileBackground.drawable as BitmapDrawable).bitmap
-                    Palette.from(bitmap).generate { palette -> applyPalette(palette) }
-                }
-
-                override fun onError() {
+                    Palette.from(bitmap).generate { palette -> palette?.run { applyPalette(this) } }
                 }
             })
         }

@@ -6,15 +6,15 @@ allprojects {
 
 ext {
     minSDK = 21
-    targetSDK = 27
-    compileSDK = 27
+    targetSDK = 28
+    compileSDK = 28
 
     // Kotlin
     kotlinJVMTarget = "1.8"
-    kotlinVersion = "1.2.30"
+    kotlinVersion = kotlin_version
 
     kotlinDependencies = [
-            "org.jetbrains.kotlin:kotlin-stdlib-jre7:${kotlinVersion}",
+            "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
             "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}",
             "com.github.hotchemi:khronos:0.9.0"
     ]
@@ -28,8 +28,8 @@ ext {
     ]
 
     // RxJava
-    rxJavaVersion = '2.1.14'
-    rxAndroidVersion = '2.0.2'
+    rxJavaVersion = '2.2.9'
+    rxAndroidVersion = '2.1.1'
 
     rxJavaDependencies = [
             "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
@@ -41,70 +41,70 @@ ext {
     ]
 
     //  Retrofit
-    retrofitVersion = '2.4.0'
+    retrofitVersion = '2.6.0'
 
     retrofitDependencies = [
             "com.squareup.retrofit2:retrofit:${retrofitVersion}",
             "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
             "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
-            "com.squareup.okhttp3:logging-interceptor:3.6.0"
+            "com.squareup.okhttp3:logging-interceptor:3.8.0"
     ]
 
     // Timber
     timberDependencies = [
-            "com.jakewharton.timber:timber:4.6.1"
+            "com.jakewharton.timber:timber:4.7.1"
     ]
 
     // Room
-    roomVersion = '1.1.0'
+    roomVersion = '2.0.0-rc01'
 
     roomDependencies = [
-            "android.arch.persistence.room:runtime:$roomVersion",
-            "android.arch.persistence.room:common:$roomVersion",
-            "android.arch.persistence.room:rxjava2:$roomVersion"
+            "androidx.room:room-runtime:$roomVersion",
+            "androidx.room:room-common:$roomVersion",
+            "androidx.room:room-rxjava2:$roomVersion"
     ]
 
-    roomCompiler = "android.arch.persistence.room:compiler:$roomVersion"
+    roomCompiler = "androidx.room:room-compiler:$roomVersion"
 
     // Architecture components
-    architectureComponentsVersion = '1.1.1'
+    architectureComponentsVersion = '2.0.0-rc01'
 
     architectureComponentsDependencies = [
-            "android.arch.lifecycle:runtime:$architectureComponentsVersion",
-            "android.arch.lifecycle:extensions:$architectureComponentsVersion"
+            "androidx.lifecycle:lifecycle-runtime:$architectureComponentsVersion",
+            "androidx.lifecycle:lifecycle-extensions:$architectureComponentsVersion"
     ]
 
     //  Test
     jUnitVersion = '4.12'
-    mockitoKotlinVersion = '1.5.0'
+    mockitoKotlinVersion = '2.1.0'
 
     testDependencies = [
             "junit:junit:${jUnitVersion}",
-            "com.nhaarman:mockito-kotlin:${mockitoKotlinVersion}",
+            "com.nhaarman.mockitokotlin2:mockito-kotlin:${mockitoKotlinVersion}",
     ]
 
     // Android Test
-    espressoCoreVersion = '3.0.1'
-    espressoToolsVersion = '1.0.1'
+    espressoCoreVersion = '3.1.0'
+    espressoToolsVersion = '1.1.0'
 
     androidTestDependencies = [
-            "com.android.support.test:runner:${espressoToolsVersion}",
-            "com.android.support.test.espresso:espresso-core:${espressoCoreVersion}",
+            "androidx.test:runner:${espressoToolsVersion}",
+            "androidx.test.espresso:espresso-core:${espressoCoreVersion}",
     ]
 
     // App Module
-    supportLibraryVersion = '27.0.2'
-    constraintLayoutVersion = '1.0.2'
+    supportLibraryVersion = '1.0.0'
+    constraintLayoutVersion = '1.1.3'
 
     appDependencies = [
-            "com.android.support:appcompat-v7:${supportLibraryVersion}",
-            "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}",
-            "com.android.support:recyclerview-v7:${supportLibraryVersion}",
-            "com.android.support:cardview-v7:${supportLibraryVersion}",
-            "com.android.support:design:${supportLibraryVersion}",
-            "com.squareup.picasso:picasso:2.5.2",
-            "com.android.support:palette-v7:${supportLibraryVersion}",
-            "de.hdodenhof:circleimageview:2.2.0"
+            "androidx.appcompat:appcompat:${supportLibraryVersion}",
+            "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}",
+            "androidx.recyclerview:recyclerview:${supportLibraryVersion}",
+            "androidx.cardview:cardview:${supportLibraryVersion}",
+            "com.google.android.material:material:1.0.0-rc01",
+            "com.squareup.picasso:picasso:2.71828",
+            "androidx.palette:palette:1.0.0",
+            "de.hdodenhof:circleimageview:3.0.0"
     ]
 
     appDependencies.addAll(kotlinDependencies)
