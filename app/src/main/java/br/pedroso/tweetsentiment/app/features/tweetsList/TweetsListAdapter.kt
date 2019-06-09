@@ -1,8 +1,8 @@
 package br.pedroso.tweetsentiment.app.features.tweetsList
 
 import android.graphics.drawable.GradientDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +25,7 @@ class TweetsListAdapter(private val buttonAnalyzeSentimentClickListener: (Tweet)
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: TweetViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: TweetViewHolder, position: Int) {
         val tweet = tweetsList[position]
         holder?.bind(tweet, buttonAnalyzeSentimentClickListener)
     }

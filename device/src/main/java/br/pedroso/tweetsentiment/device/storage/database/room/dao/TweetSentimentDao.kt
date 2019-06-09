@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.device.storage.database.room.dao
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomTweet
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomUser
 import io.reactivex.Flowable

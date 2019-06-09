@@ -1,6 +1,6 @@
 package br.pedroso.tweetsentiment.presentation.features.home
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import br.pedroso.tweetsentiment.domain.entities.ViewState
 import br.pedroso.tweetsentiment.presentation.features.home.usecases.HomeSyncUser
 import br.pedroso.tweetsentiment.presentation.features.home.viewState.HomeViewStateTransformer

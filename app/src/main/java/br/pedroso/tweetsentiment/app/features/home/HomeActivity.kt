@@ -109,7 +109,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun clearUsernameTextView() {
-        editTextTwitterAccount.text.clear()
+        editTextTwitterAccount.text?.clear()
     }
 
     private fun enableContinueButton() {

@@ -2,7 +2,7 @@ package br.pedroso.tweetsentiment.app.base
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import br.pedroso.tweetsentiment.R
