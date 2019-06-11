@@ -18,8 +18,11 @@ import br.pedroso.tweetsentiment.presentation.features.home.HomeViewModel
 import com.github.salomonbrys.kodein.LazyKodein
 import com.github.salomonbrys.kodein.android.appKodein
 import com.github.salomonbrys.kodein.instance
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.view_loading_feedback.*
+import kotlinx.android.synthetic.main.activity_home.buttonCheckUserTweets
+import kotlinx.android.synthetic.main.activity_home.editTextTwitterAccount
+import kotlinx.android.synthetic.main.activity_home.textInputLayoutTwitterAccount
+import kotlinx.android.synthetic.main.activity_home.textViewErrorMessage
+import kotlinx.android.synthetic.main.view_loading_feedback.loadingHolder
 import timber.log.Timber
 
 @Suppress("IMPLICIT_CAST_TO_ANY")
@@ -75,10 +78,10 @@ class HomeActivity : BaseActivity() {
         val username = editTextTwitterAccount.text.toString()
 
         val subscription =
-                homeViewModel.syncNewUser(username)
-                        .doOnNext { handleNewViewState(it) }
-                        .doOnError { logUnregisteredException(it) }
-                        .subscribe()
+            homeViewModel.syncNewUser(username)
+                .doOnNext { handleNewViewState(it) }
+                .doOnError { logUnregisteredException(it) }
+                .subscribe()
 
         registerDisposable(subscription)
     }

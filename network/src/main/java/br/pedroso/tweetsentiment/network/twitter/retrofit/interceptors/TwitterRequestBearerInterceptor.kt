@@ -5,7 +5,8 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class TwitterRequestBearerInterceptor(
-        private val applicationSettings: ApplicationSettings) : Interceptor {
+    private val applicationSettings: ApplicationSettings
+) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
 
@@ -13,8 +14,8 @@ class TwitterRequestBearerInterceptor(
             val twitterAccessToken = applicationSettings.retrieveTwitterAccessToken()
 
             val modifiedRequest = originalRequest.newBuilder()
-                    .addHeader("Authorization", "Bearer $twitterAccessToken")
-                    .build()
+                .addHeader("Authorization", "Bearer $twitterAccessToken")
+                .build()
 
             return chain.proceed(modifiedRequest)
         }

@@ -10,13 +10,14 @@ import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.mappers.Ret
 import io.reactivex.Observable
 import io.reactivex.functions.Function
 
-class NaturalLanguageApiDataSource(val naturalLanguageApiService: NaturalLanguageApiService) : SentimentAnalysisDataSource {
+class NaturalLanguageApiDataSource(val naturalLanguageApiService: NaturalLanguageApiService) :
+    SentimentAnalysisDataSource {
     override fun analyzeSentimentFromText(text: String): Observable<Sentiment> {
         val document = Document(text)
         val requestBody = NaturalLanguageApiRequestBody(document)
         return naturalLanguageApiService.analyzeSentiment(requestBody)
-                .map { RetrofitResponseMapper.retrofitResponseToDomain(it) }
-                .onErrorResumeNext(NaturalLanguageErrorMapper())
+            .map { RetrofitResponseMapper.retrofitResponseToDomain(it) }
+            .onErrorResumeNext(NaturalLanguageErrorMapper())
     }
 
     private class NaturalLanguageErrorMapper<T> : Function<Throwable, Observable<T>> {

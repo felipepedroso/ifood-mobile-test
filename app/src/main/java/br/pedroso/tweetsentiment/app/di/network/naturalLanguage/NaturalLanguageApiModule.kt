@@ -47,11 +47,11 @@ class NaturalLanguageApiModule {
 
         bind<Retrofit>(NATURAL_LANGUAGE_RETROFIT) with singleton {
             Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .baseUrl(NATURAL_LANGUAGE_API_BASE_URL)
-                    .client(instance(NATURAL_LANGUAGE_OKHTTP_CLIENT))
-                    .build()
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(NATURAL_LANGUAGE_API_BASE_URL)
+                .client(instance(NATURAL_LANGUAGE_OKHTTP_CLIENT))
+                .build()
         }
 
         bind<NaturalLanguageApiService>() with singleton {
@@ -62,7 +62,7 @@ class NaturalLanguageApiModule {
 
         bind<SentimentAnalysisDataSource>() with singleton {
             NaturalLanguageApiDataSource(
-                    naturalLanguageApiService = instance()
+                naturalLanguageApiService = instance()
             )
         }
     }

@@ -12,6 +12,8 @@ interface TwitterService {
     fun usersShow(@Query("screen_name") screenName: String): Observable<RetrofitUser>
 
     @GET("/$TWITTER_API_VERSION/statuses/user_timeline.json")
-    fun statusesUserTimeline(@Query("screen_name") screenName: String,
-                             @Query("since_id") sinceId: Long? = null): Observable<List<RetrofitTweet>>
+    fun statusesUserTimeline(
+        @Query("screen_name") screenName: String,
+        @Query("since_id") sinceId: Long? = null
+    ): Observable<List<RetrofitTweet>>
 }

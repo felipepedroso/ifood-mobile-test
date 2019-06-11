@@ -24,15 +24,15 @@ class TwitterModule {
     val graph = Kodein.Module {
         bind<TwitterDataSource>() with singleton {
             RetrofitTwitterDataSource(
-                    twitterService = instance(),
-                    twitterAuthService = instance(),
-                    applicationSettings = instance()
+                twitterService = instance(),
+                twitterAuthService = instance(),
+                applicationSettings = instance()
             )
         }
 
         bind<TwitterRequestBearerInterceptor>() with singleton {
             TwitterRequestBearerInterceptor(
-                    applicationSettings = instance()
+                applicationSettings = instance()
             )
         }
 
@@ -57,11 +57,11 @@ class TwitterModule {
 
         bind<Retrofit>(DependenciesTags.TWITTER_RETROFIT) with singleton {
             Retrofit.Builder()
-                    .baseUrl(TWITTER_API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(instance(DependenciesTags.TWITTER_OKHTTP_CLIENT))
-                    .build()
+                .baseUrl(TWITTER_API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(instance(DependenciesTags.TWITTER_OKHTTP_CLIENT))
+                .build()
         }
 
         bind<TwitterService>() with singleton {
@@ -71,8 +71,8 @@ class TwitterModule {
 
         bind<TwitterCredentialsAuthInterceptor>() with singleton {
             TwitterCredentialsAuthInterceptor(
-                    twitterConsumerKey = BuildConfig.TWITTER_CONSUMER_KEY,
-                    twitterConsumerSecret = BuildConfig.TWITTER_CONSUMER_SECRET
+                twitterConsumerKey = BuildConfig.TWITTER_CONSUMER_KEY,
+                twitterConsumerSecret = BuildConfig.TWITTER_CONSUMER_SECRET
             )
         }
 
@@ -97,12 +97,11 @@ class TwitterModule {
 
         bind<Retrofit>(DependenciesTags.TWITTER_AUTH_RETROFIT) with singleton {
             Retrofit.Builder()
-                    .baseUrl(TWITTER_API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .client(instance(DependenciesTags.TWITTER_AUTH_OKHTTP_CLIENT))
-                    .build()
-
+                .baseUrl(TWITTER_API_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(instance(DependenciesTags.TWITTER_AUTH_OKHTTP_CLIENT))
+                .build()
         }
 
         bind<TwitterAuthService>() with singleton {

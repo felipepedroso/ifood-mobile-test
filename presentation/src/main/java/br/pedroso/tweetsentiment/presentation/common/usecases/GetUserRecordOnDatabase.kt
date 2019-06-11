@@ -6,13 +6,14 @@ import io.reactivex.Maybe
 import io.reactivex.Scheduler
 
 class GetUserRecordOnDatabase(
-        private val scheduler: Scheduler,
-        private val databaseDataSource: DatabaseDataSource) {
+    private val scheduler: Scheduler,
+    private val databaseDataSource: DatabaseDataSource
+) {
 
     fun execute(username: String): Maybe<Result> {
         return databaseDataSource.getUserRecordOnDatabase(username)
-                .subscribeOn(scheduler)
-                .map { Result.WithValue(it) as Result }
-                .switchIfEmpty(Maybe.just(Result.Empty as Result))
+            .subscribeOn(scheduler)
+            .map { Result.WithValue(it) as Result }
+            .switchIfEmpty(Maybe.just(Result.Empty as Result))
     }
 }

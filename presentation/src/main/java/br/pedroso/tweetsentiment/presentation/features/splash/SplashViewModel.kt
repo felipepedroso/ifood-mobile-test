@@ -8,12 +8,13 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 class SplashViewModel(
-        private val splashSyncRegisteredUser: SplashSyncRegisteredUser,
-        private val uiScheduler: Scheduler) : ViewModel() {
+    private val splashSyncRegisteredUser: SplashSyncRegisteredUser,
+    private val uiScheduler: Scheduler
+) : ViewModel() {
 
     fun syncRegisteredUser(): Observable<ViewState> {
         return splashSyncRegisteredUser.execute()
-                .compose(SplashViewStateTransformer())
-                .observeOn(uiScheduler)
+            .compose(SplashViewStateTransformer())
+            .observeOn(uiScheduler)
     }
 }

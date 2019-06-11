@@ -11,7 +11,7 @@ class SettingsModule(private val context: Context) {
     val graph = Kodein.Module {
         bind<ApplicationSettings>() with singleton {
             HawkApplicationSettings(
-                    context = context
+                context = context
             )
         }
     }

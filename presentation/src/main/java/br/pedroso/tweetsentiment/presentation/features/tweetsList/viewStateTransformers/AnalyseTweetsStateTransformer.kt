@@ -9,9 +9,8 @@ import io.reactivex.ObservableTransformer
 class AnalyseTweetsStateTransformer : ObservableTransformer<Sentiment, ViewState> {
     override fun apply(upstream: Observable<Sentiment>): ObservableSource<ViewState> {
         return upstream
-                .map { ViewState.Success as ViewState }
-                .onErrorReturn { ViewState.Error(it) }
-                .startWith(ViewState.Loading)
+            .map { ViewState.Success as ViewState }
+            .onErrorReturn { ViewState.Error(it) }
+            .startWith(ViewState.Loading)
     }
-
 }

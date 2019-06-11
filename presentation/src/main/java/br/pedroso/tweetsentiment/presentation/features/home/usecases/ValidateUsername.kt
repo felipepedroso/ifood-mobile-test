@@ -7,11 +7,11 @@ import io.reactivex.Observable
 class ValidateUsername {
     fun execute(username: String): Observable<String> {
         return Observable.just(username)
-                .flatMap {
-                    when {
-                        TextUtils.isEmpty(it) -> Observable.error(UiError.EmptyField())
-                        else -> Observable.just(it)
-                    }
+            .flatMap {
+                when {
+                    TextUtils.isEmpty(it) -> Observable.error(UiError.EmptyField())
+                    else -> Observable.just(it)
                 }
+            }
     }
 }

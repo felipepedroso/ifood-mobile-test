@@ -8,13 +8,13 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 class HomeViewModel(
-        private val homeSyncUser: HomeSyncUser,
-        private val uiScheduler: Scheduler) : ViewModel() {
+    private val homeSyncUser: HomeSyncUser,
+    private val uiScheduler: Scheduler
+) : ViewModel() {
 
     fun syncNewUser(userName: String): Observable<ViewState> {
         return homeSyncUser.execute(userName)
-                .compose(HomeViewStateTransformer())
-                .observeOn(uiScheduler)
+            .compose(HomeViewStateTransformer())
+            .observeOn(uiScheduler)
     }
-
 }

@@ -5,8 +5,9 @@ import io.reactivex.Completable
 import io.reactivex.Scheduler
 
 class ClearCurrentUserSettings(
-        private val scheduler: Scheduler,
-        private val applicationSettings: ApplicationSettings) {
+    private val scheduler: Scheduler,
+    private val applicationSettings: ApplicationSettings
+) {
 
     fun execute(): Completable {
         return Completable.fromCallable {

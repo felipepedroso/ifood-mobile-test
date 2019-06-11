@@ -7,15 +7,16 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 class HomeSyncUser(
-        private val scheduler: Scheduler,
-        private val validateUsername: ValidateUsername,
-        private val syncUser: SyncUser,
-        private val storeUserToSyncOnPreferences: StoreUserToSyncOnPreferences) {
+    private val scheduler: Scheduler,
+    private val validateUsername: ValidateUsername,
+    private val syncUser: SyncUser,
+    private val storeUserToSyncOnPreferences: StoreUserToSyncOnPreferences
+) {
 
     fun execute(username: String): Observable<User> {
         return validateUsername.execute(username)
-                .flatMap { syncUser.execute(it) }
-                .doOnNext { storeUserToSyncOnPreferences.execute(it.userName) }
-                .subscribeOn(scheduler)
+            .flatMap { syncUser.execute(it) }
+            .doOnNext { storeUserToSyncOnPreferences.execute(it.userName) }
+            .subscribeOn(scheduler)
     }
 }

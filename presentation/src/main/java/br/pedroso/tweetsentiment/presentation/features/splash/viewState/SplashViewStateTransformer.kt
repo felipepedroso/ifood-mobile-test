@@ -9,10 +9,10 @@ import io.reactivex.ObservableTransformer
 class SplashViewStateTransformer : ObservableTransformer<User, ViewState> {
     override fun apply(upstream: Observable<User>): ObservableSource<ViewState> {
         return upstream
-                .map { ViewState.ShowContent(it) as ViewState }
-                .defaultIfEmpty(ViewState.Empty)
-                .onErrorReturn { ViewState.Error(it) }
-                .startWith(ViewState.Loading)
-                .concatWith(Observable.just(ViewState.Done))
+            .map { ViewState.ShowContent(it) as ViewState }
+            .defaultIfEmpty(ViewState.Empty)
+            .onErrorReturn { ViewState.Error(it) }
+            .startWith(ViewState.Loading)
+            .concatWith(Observable.just(ViewState.Done))
     }
 }

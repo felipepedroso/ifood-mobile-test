@@ -24,7 +24,7 @@ class HawkApplicationSettings(context: Context) : ApplicationSettings {
     }
 
     override fun retrieveRecurrentSyncTimeInterval(): Int {
-        return Hawk.get(RECURRENT_SYNC_TIME_INTERVAL, 60)
+        return Hawk.get(RECURRENT_SYNC_TIME_INTERVAL, DEFAULT_RECURRENT_SYNC_TIME_INTERVAL)
     }
 
     override fun storeTwitterAccessToken(accessToken: String) {
@@ -43,5 +43,6 @@ class HawkApplicationSettings(context: Context) : ApplicationSettings {
         const val CURRENT_USERNAME = "current_user"
         const val RECURRENT_SYNC_TIME_INTERVAL = "recurrent_syn_time_interval"
         const val TWITTER_ACCESS_TOKEN = "twitter_access_token"
+        const val DEFAULT_RECURRENT_SYNC_TIME_INTERVAL = 60
     }
 }

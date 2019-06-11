@@ -9,24 +9,23 @@ class RoomUserMapper {
         fun mapRoomToDomain(roomUser: RoomUser): User {
             with(roomUser) {
                 return User(
-                        id = id,
-                        userName = userName,
-                        name = name,
-                        bannerUrl = bannerUrl,
-                        profilePictureUrl = profilePictureUrl
+                    id = id,
+                    userName = userName,
+                    name = name,
+                    bannerUrl = bannerUrl,
+                    profilePictureUrl = profilePictureUrl
                 )
             }
         }
 
-
         fun mapDomainToRoom(user: User): RoomUser {
             with(user) {
                 return RoomUser(
-                        id = id,
-                        userName = userName,
-                        name = name,
-                        bannerUrl = bannerUrl,
-                        profilePictureUrl = profilePictureUrl
+                    id = id,
+                    userName = userName,
+                    name = name,
+                    bannerUrl = bannerUrl,
+                    profilePictureUrl = profilePictureUrl
                 )
             }
         }

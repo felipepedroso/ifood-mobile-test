@@ -5,13 +5,14 @@ import io.reactivex.Completable
 import io.reactivex.Scheduler
 
 class StoreUserToSyncOnPreferences(
-        private val scheduler: Scheduler,
-        private val applicationSettings: ApplicationSettings) {
+    private val scheduler: Scheduler,
+    private val applicationSettings: ApplicationSettings
+) {
 
     fun execute(username: String) {
         Completable.fromAction { applicationSettings.storeUsernameToSync(username) }
-                .subscribeOn(scheduler)
-                .observeOn(scheduler)
-                .subscribe()
+            .subscribeOn(scheduler)
+            .observeOn(scheduler)
+            .subscribe()
     }
 }

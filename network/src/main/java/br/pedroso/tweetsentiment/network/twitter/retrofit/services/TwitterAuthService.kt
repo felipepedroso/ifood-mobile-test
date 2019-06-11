@@ -9,5 +9,7 @@ import retrofit2.http.POST
 interface TwitterAuthService {
     @FormUrlEncoded
     @POST("oauth2/token")
-    fun applicationOnlyAuthentication(@Field("grant_type") grantType: String = "client_credentials"): Observable<AuthenticationResult>
+    fun applicationOnlyAuthentication(
+        @Field("grant_type") grantType: String = "client_credentials"
+    ): Observable<AuthenticationResult>
 }

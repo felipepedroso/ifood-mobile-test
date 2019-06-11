@@ -8,11 +8,11 @@ class UserMapper {
         fun mapRetrofitToDomain(retrofitUser: RetrofitUser): User {
             with(retrofitUser) {
                 return User(
-                        id = id,
-                        name = name,
-                        userName = userName,
-                        bannerUrl = bannerUrl ?: "http://lorempixel.com/1500/500/abstract",
-                        profilePictureUrl = profilePictureUrl?.replace("_normal", "") ?: ""
+                    id = id,
+                    name = name,
+                    userName = userName,
+                    bannerUrl = bannerUrl ?: "http://lorempixel.com/1500/500/abstract",
+                    profilePictureUrl = profilePictureUrl?.replace("_normal", "") ?: ""
                 )
             }
         }

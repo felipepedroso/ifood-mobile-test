@@ -1,11 +1,14 @@
 package br.pedroso.tweetsentiment.device.storage.database.room.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomTweet
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomUser
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-
 
 @Dao
 interface TweetSentimentDao {

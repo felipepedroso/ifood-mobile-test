@@ -7,11 +7,12 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 class GetUserTweetsSinceTweet(
-        private val scheduler: Scheduler,
-        private val twitterDataSource: TwitterDataSource) {
+    private val scheduler: Scheduler,
+    private val twitterDataSource: TwitterDataSource
+) {
 
     fun execute(user: User, tweet: Tweet): Observable<Tweet> {
         return twitterDataSource.getTweetsSinceTweet(user, tweet)
-                .subscribeOn(scheduler)
+            .subscribeOn(scheduler)
     }
 }

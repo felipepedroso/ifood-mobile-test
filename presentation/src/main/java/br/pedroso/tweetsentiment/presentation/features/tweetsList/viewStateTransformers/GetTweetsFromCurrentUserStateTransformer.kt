@@ -9,9 +9,9 @@ import org.reactivestreams.Publisher
 class GetTweetsFromCurrentUserStateTransformer : FlowableTransformer<List<Tweet>, ViewState> {
     override fun apply(upstream: Flowable<List<Tweet>>): Publisher<ViewState> {
         return upstream
-                .map { ViewState.ShowContent(it) as ViewState }
-                .defaultIfEmpty(ViewState.Empty)
-                .onErrorReturn { ViewState.Error(it) }
-                .startWith(ViewState.Loading)
+            .map { ViewState.ShowContent(it) as ViewState }
+            .defaultIfEmpty(ViewState.Empty)
+            .onErrorReturn { ViewState.Error(it) }
+            .startWith(ViewState.Loading)
     }
 }

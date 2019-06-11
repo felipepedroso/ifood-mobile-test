@@ -1,37 +1,39 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases
 
+import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.entities.Sentiment
 import br.pedroso.tweetsentiment.domain.entities.Tweet
-import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.network.dataSources.SentimentAnalysisDataSource
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
-class AnalyseTweetSentiment(private val scheduler: Scheduler,
-                            private val sentimentAnalysisDataSource: SentimentAnalysisDataSource,
-                            private val databaseDataSource: DatabaseDataSource) {
+class AnalyseTweetSentiment(
+    private val scheduler: Scheduler,
+    private val sentimentAnalysisDataSource: SentimentAnalysisDataSource,
+    private val databaseDataSource: DatabaseDataSource
+) {
 
     fun execute(tweet: Tweet): Observable<Sentiment> {
         return Observable.just(tweet.sentiment)
-                .flatMap {
-                    when (it) {
-                        Sentiment.NotAnalyzed -> analyseTweetSentiment(tweet)
-                        else -> Observable.just(it)
-                    }
+            .flatMap {
+                when (it) {
+                    Sentiment.NotAnalyzed -> analyseTweetSentiment(tweet)
+                    else -> Observable.just(it)
                 }
+            }
     }
 
     private fun analyseTweetSentiment(tweet: Tweet): Observable<Sentiment> {
         return sentimentAnalysisDataSource.analyzeSentimentFromText(tweet.text)
-                .subscribeOn(scheduler)
-                .doOnNext { updateTweetSentimentField(tweet, it) }
+            .subscribeOn(scheduler)
+            .doOnNext { updateTweetSentimentField(tweet, it) }
     }
 
     private fun updateTweetSentimentField(tweet: Tweet, sentiment: Sentiment) {
         Completable.fromAction { databaseDataSource.updateTweetSentiment(tweet, sentiment) }
-                .subscribeOn(scheduler)
-                .observeOn(scheduler)
-                .subscribe()
+            .subscribeOn(scheduler)
+            .observeOn(scheduler)
+            .subscribe()
     }
 }

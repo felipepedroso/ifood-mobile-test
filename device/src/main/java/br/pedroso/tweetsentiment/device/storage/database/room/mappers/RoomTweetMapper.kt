@@ -4,7 +4,7 @@ import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomTweet
 import br.pedroso.tweetsentiment.domain.entities.Sentiment
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
-import java.util.*
+import java.util.Date
 
 class RoomTweetMapper {
 
@@ -12,11 +12,11 @@ class RoomTweetMapper {
         fun mapDomainToRoom(user: User, tweet: Tweet): RoomTweet {
             with(tweet) {
                 return RoomTweet(
-                        id = id,
-                        text = text,
-                        createdAtTimestamp = creationTimestamp.time,
-                        sentiment = sentiment.name,
-                        userId = user.id
+                    id = id,
+                    text = text,
+                    createdAtTimestamp = creationTimestamp.time,
+                    sentiment = sentiment.name,
+                    userId = user.id
                 )
             }
         }
@@ -24,10 +24,10 @@ class RoomTweetMapper {
         fun mapRoomToDomain(roomTweet: RoomTweet): Tweet {
             with(roomTweet) {
                 return Tweet(
-                        id = id,
-                        text = text,
-                        creationTimestamp = Date(createdAtTimestamp),
-                        sentiment = Sentiment.valueOf(sentiment)
+                    id = id,
+                    text = text,
+                    creationTimestamp = Date(createdAtTimestamp),
+                    sentiment = Sentiment.valueOf(sentiment)
                 )
             }
         }

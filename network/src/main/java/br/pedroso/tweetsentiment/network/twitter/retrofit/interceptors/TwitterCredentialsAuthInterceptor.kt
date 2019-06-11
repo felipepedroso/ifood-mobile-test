@@ -5,8 +5,9 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class TwitterCredentialsAuthInterceptor(
-        private val twitterConsumerKey: String,
-        private val twitterConsumerSecret: String) : Interceptor {
+    private val twitterConsumerKey: String,
+    private val twitterConsumerSecret: String
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
@@ -14,8 +15,8 @@ class TwitterCredentialsAuthInterceptor(
         val authorization = Credentials.basic(twitterConsumerKey, twitterConsumerSecret)
 
         val modifiedRequest = originalRequest.newBuilder()
-                .addHeader("Authorization", authorization)
-                .build()
+            .addHeader("Authorization", authorization)
+            .build()
 
         return chain.proceed(modifiedRequest)
     }

@@ -29,11 +29,11 @@ class SplashActivity : BaseActivity() {
 
     private fun tryToSyncRegisteredUser() {
         val subscription =
-                splashViewModel.syncRegisteredUser()
-                        .subscribe(
-                                { handleNewViewState(it) },
-                                { Timber.e("Unknow exception: $it") }
-                        )
+            splashViewModel.syncRegisteredUser()
+                .subscribe(
+                    { handleNewViewState(it) },
+                    { Timber.e("Unknow exception: $it") }
+                )
 
         registerDisposable(subscription)
     }
