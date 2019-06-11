@@ -458,6 +458,7 @@ style:
   NestedClassesVisibility:
     active: false
   NewLineAtEndOfFile:
+    autoCorrect: true
     active: true
   NoTabs:
     active: false
