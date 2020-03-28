@@ -6,8 +6,8 @@ allprojects {
 
 ext {
     minSDK = 21
-    targetSDK = 28
-    compileSDK = 28
+    targetSDK = 29
+    compileSDK = 29
 
     // Kotlin
     kotlinJVMTarget = "1.8"
