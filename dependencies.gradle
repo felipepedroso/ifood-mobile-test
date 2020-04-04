@@ -19,12 +19,11 @@ ext {
             "com.github.hotchemi:khronos:0.9.0"
     ]
 
-    //  Kodein
-    kodeinVersion = '4.1.0'
-
-    kodeinDependencies = [
-            "com.github.salomonbrys.kodein:kodein:${kodeinVersion}",
-            "com.github.salomonbrys.kodein:kodein-android:${kodeinVersion}"
+    // Koin
+    koinVersion = '2.1.5'
+    koinDependencies = [
+            "org.koin:koin-android:${koinVersion}",
+            "org.koin:koin-android-viewmodel:${koinVersion}"
     ]
 
     // RxJava
@@ -56,11 +55,11 @@ ext {
     ]
 
     // Room
-    roomVersion = '2.0.0-rc01'
+    roomVersion = '2.2.5'
 
     roomDependencies = [
             "androidx.room:room-runtime:$roomVersion",
-            "androidx.room:room-common:$roomVersion",
+            "androidx.room:room-ktx:$roomVersion",
             "androidx.room:room-rxjava2:$roomVersion"
     ]
 
@@ -108,7 +107,7 @@ ext {
     ]
 
     appDependencies.addAll(kotlinDependencies)
-    appDependencies.addAll(kodeinDependencies)
+    appDependencies.addAll(koinDependencies)
     appDependencies.addAll(rxJavaAndroidDependencies)
     appDependencies.addAll(timberDependencies)
     appDependencies.addAll(retrofitDependencies)
@@ -120,7 +119,6 @@ ext {
 
     presentationDependencies.addAll(kotlinDependencies)
     presentationDependencies.addAll(rxJavaAndroidDependencies)
-    presentationDependencies.addAll(kodeinDependencies)
     presentationDependencies.addAll(architectureComponentsDependencies)
     presentationDependencies.addAll(timberDependencies)
 
@@ -130,7 +128,6 @@ ext {
     networkDependencies.addAll(kotlinDependencies)
     networkDependencies.addAll(rxJavaAndroidDependencies)
     networkDependencies.addAll(retrofitDependencies)
-    networkDependencies.addAll(kodeinDependencies)
     networkDependencies.addAll(timberDependencies)
 
     // Device Module
@@ -139,7 +136,6 @@ ext {
     ]
 
     deviceDependencies.addAll(rxJavaAndroidDependencies)
-    deviceDependencies.addAll(kodeinDependencies)
     deviceDependencies.addAll(timberDependencies)
     deviceDependencies.addAll(roomDependencies)
 
@@ -148,5 +144,4 @@ ext {
 
     domainDependencies.addAll(kotlinDependencies)
     domainDependencies.addAll(rxJavaDependencies)
-    domainDependencies.addAll(kodeinDependencies)
 }

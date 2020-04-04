@@ -5,17 +5,13 @@ import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
 import br.pedroso.tweetsentiment.app.features.home.HomeActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
-import br.pedroso.tweetsentiment.app.utils.viewModelProvider
 import br.pedroso.tweetsentiment.domain.entities.ViewState
 import br.pedroso.tweetsentiment.presentation.features.splash.SplashViewModel
-import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.appKodein
-import com.github.salomonbrys.kodein.instance
+import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class SplashActivity : BaseActivity() {
-    private val kodein by lazy { LazyKodein(appKodein) }
-    private val splashViewModel by viewModelProvider { kodein.value.instance<SplashViewModel>() }
+    private val splashViewModel: SplashViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

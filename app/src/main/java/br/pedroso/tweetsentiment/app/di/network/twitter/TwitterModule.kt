@@ -1,7 +1,10 @@
 package br.pedroso.tweetsentiment.app.di.network.twitter
 
 import br.pedroso.tweetsentiment.BuildConfig
-import br.pedroso.tweetsentiment.app.di.DependenciesTags
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.TWITTER_AUTH_OKHTTP_CLIENT
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.TWITTER_AUTH_RETROFIT
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.TWITTER_OKHTTP_CLIENT
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.TWITTER_RETROFIT
 import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
 import br.pedroso.tweetsentiment.network.twitter.RetrofitTwitterDataSource
 import br.pedroso.tweetsentiment.network.twitter.retrofit.constants.TWITTER_API_BASE_URL
@@ -9,104 +12,83 @@ import br.pedroso.tweetsentiment.network.twitter.retrofit.interceptors.TwitterCr
 import br.pedroso.tweetsentiment.network.twitter.retrofit.interceptors.TwitterRequestBearerInterceptor
 import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterAuthService
 import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterService
-import com.github.salomonbrys.kodein.Kodein
-import com.github.salomonbrys.kodein.bind
-import com.github.salomonbrys.kodein.instance
-import com.github.salomonbrys.kodein.singleton
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
-class TwitterModule {
-    val graph = Kodein.Module {
-        bind<TwitterDataSource>() with singleton {
-            RetrofitTwitterDataSource(
-                twitterService = instance(),
-                twitterAuthService = instance(),
-                applicationSettings = instance()
-            )
-        }
+val twitterModule = module {
+    single<TwitterDataSource> {
+        RetrofitTwitterDataSource(
+            twitterAuthService = get(),
+            twitterService = get(),
+            applicationSettings = get()
+        )
+    }
 
-        bind<TwitterRequestBearerInterceptor>() with singleton {
-            TwitterRequestBearerInterceptor(
-                applicationSettings = instance()
-            )
-        }
+    single {
+        TwitterRequestBearerInterceptor(
+            applicationSettings = get()
+        )
+    }
 
-        bind<OkHttpClient>(DependenciesTags.TWITTER_OKHTTP_CLIENT) with singleton {
-            val builder = OkHttpClient.Builder()
-
-            val twitterRequestBearerInterceptor: TwitterRequestBearerInterceptor = instance()
-            builder.addInterceptor(twitterRequestBearerInterceptor)
+    single(named(TWITTER_OKHTTP_CLIENT)) {
+        OkHttpClient.Builder().apply {
+            addInterceptor(get<TwitterRequestBearerInterceptor>())
 
             if (BuildConfig.DEBUG) {
-                val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-                    this.level = HttpLoggingInterceptor.Level.BODY
-                }
-                builder.addInterceptor(loggingInterceptor)
+                addInterceptor(get<HttpLoggingInterceptor>())
             }
 
-            val cache: Cache = instance()
-            builder.cache(cache)
+            cache(get())
+        }.build()
+    }
 
-            builder.build()
-        }
+    single(named(TWITTER_RETROFIT)) {
+        Retrofit.Builder().apply {
+            baseUrl(TWITTER_API_BASE_URL)
+            addConverterFactory(get())
+            addCallAdapterFactory(get())
+            client(get(named(TWITTER_OKHTTP_CLIENT)))
+        }.build()
+    }
 
-        bind<Retrofit>(DependenciesTags.TWITTER_RETROFIT) with singleton {
-            Retrofit.Builder()
-                .baseUrl(TWITTER_API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(instance(DependenciesTags.TWITTER_OKHTTP_CLIENT))
-                .build()
-        }
+    single {
+        val retrofit: Retrofit = get(named(TWITTER_RETROFIT))
+        retrofit.create(TwitterService::class.java)
+    }
 
-        bind<TwitterService>() with singleton {
-            val retrofit: Retrofit = instance(DependenciesTags.TWITTER_RETROFIT)
-            retrofit.create(TwitterService::class.java)
-        }
+    single {
+        TwitterCredentialsAuthInterceptor(
+            twitterConsumerKey = BuildConfig.TWITTER_CONSUMER_KEY,
+            twitterConsumerSecret = BuildConfig.TWITTER_CONSUMER_SECRET
+        )
+    }
 
-        bind<TwitterCredentialsAuthInterceptor>() with singleton {
-            TwitterCredentialsAuthInterceptor(
-                twitterConsumerKey = BuildConfig.TWITTER_CONSUMER_KEY,
-                twitterConsumerSecret = BuildConfig.TWITTER_CONSUMER_SECRET
-            )
-        }
-
-        bind<OkHttpClient>(DependenciesTags.TWITTER_AUTH_OKHTTP_CLIENT) with singleton {
-            val builder = OkHttpClient.Builder()
-
-            val interceptor: TwitterCredentialsAuthInterceptor = instance()
-            builder.addInterceptor(interceptor)
+    single(named(TWITTER_AUTH_OKHTTP_CLIENT)) {
+        OkHttpClient.Builder().apply {
+            addInterceptor(get<TwitterCredentialsAuthInterceptor>())
 
             if (BuildConfig.DEBUG) {
-                val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-                    this.level = HttpLoggingInterceptor.Level.BODY
-                }
-                builder.addInterceptor(loggingInterceptor)
+                addInterceptor(get<HttpLoggingInterceptor>())
             }
 
-            val cache: Cache = instance()
-            builder.cache(cache)
+            cache(get())
+        }.build()
+    }
 
-            builder.build()
-        }
+    single(named(TWITTER_AUTH_RETROFIT)) {
+        Retrofit.Builder().apply {
+            baseUrl(TWITTER_API_BASE_URL)
+            addConverterFactory(get())
+            addCallAdapterFactory(get())
+            client(get(named(TWITTER_AUTH_OKHTTP_CLIENT)))
+        }.build()
+    }
 
-        bind<Retrofit>(DependenciesTags.TWITTER_AUTH_RETROFIT) with singleton {
-            Retrofit.Builder()
-                .baseUrl(TWITTER_API_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(instance(DependenciesTags.TWITTER_AUTH_OKHTTP_CLIENT))
-                .build()
-        }
-
-        bind<TwitterAuthService>() with singleton {
-            val retrofit: Retrofit = instance(DependenciesTags.TWITTER_AUTH_RETROFIT)
-            retrofit.create(TwitterAuthService::class.java)
-        }
+    single {
+        val retrofit: Retrofit = get(named(TWITTER_AUTH_RETROFIT))
+        retrofit.create(TwitterAuthService::class.java)
     }
 }

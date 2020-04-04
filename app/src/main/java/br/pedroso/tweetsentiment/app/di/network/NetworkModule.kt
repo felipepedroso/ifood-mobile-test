@@ -1,27 +1,41 @@
 package br.pedroso.tweetsentiment.app.di.network
 
-import br.pedroso.tweetsentiment.app.di.DependenciesTags
-import br.pedroso.tweetsentiment.app.di.network.naturalLanguage.NaturalLanguageApiModule
-import br.pedroso.tweetsentiment.app.di.network.twitter.TwitterModule
-import com.github.salomonbrys.kodein.Kodein
-import com.github.salomonbrys.kodein.bind
-import com.github.salomonbrys.kodein.instance
-import com.github.salomonbrys.kodein.singleton
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.NETWORK_CACHE_DIR
+import br.pedroso.tweetsentiment.app.di.network.naturallanguageapi.naturalLanguageApiModule
+import br.pedroso.tweetsentiment.app.di.network.twitter.twitterModule
 import okhttp3.Cache
-import java.io.File
+import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
+import retrofit2.CallAdapter
+import retrofit2.Converter
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
-class NetworkModule {
-    val graph = Kodein.Module {
-        bind<Cache>() with singleton {
-            val cacheDir: File = instance(DependenciesTags.NETWORK_CACHE_DIR)
-            Cache(cacheDir, NETWORK_CACHE_SIZE)
-        }
+private const val NETWORK_CACHE_SIZE = 10L * 1024 * 1024
 
-        import(TwitterModule().graph)
-        import(NaturalLanguageApiModule().graph)
+private val commonNetwork = module {
+    single {
+        Cache(get(named(NETWORK_CACHE_DIR)), NETWORK_CACHE_SIZE)
     }
 
-    companion object {
-        private const val NETWORK_CACHE_SIZE = 10L * 1024 * 1024
+    factory {
+        HttpLoggingInterceptor().apply {
+            this.level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
+
+    factory<Converter.Factory> {
+        GsonConverterFactory.create()
+    }
+
+    factory<CallAdapter.Factory> {
+        RxJava2CallAdapterFactory.create()
     }
 }
+
+val networkModule = listOf(
+    commonNetwork,
+    twitterModule,
+    naturalLanguageApiModule
+)

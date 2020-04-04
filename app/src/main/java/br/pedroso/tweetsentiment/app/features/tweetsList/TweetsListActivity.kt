@@ -14,15 +14,11 @@ import androidx.core.content.ContextCompat
 import androidx.palette.graphics.Palette
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
-import br.pedroso.tweetsentiment.app.utils.viewModelProvider
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.entities.ViewState
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewModel
-import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.appKodein
-import com.github.salomonbrys.kodein.instance
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
@@ -38,12 +34,12 @@ import kotlinx.android.synthetic.main.view_error_feedback.imageViewError
 import kotlinx.android.synthetic.main.view_error_feedback.linearLayoutErrorContainer
 import kotlinx.android.synthetic.main.view_error_feedback.textViewErrorMessage
 import kotlinx.android.synthetic.main.view_loading_feedback.loadingHolder
+import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class TweetsListActivity : BaseActivity() {
 
-    private val kodein by lazy { LazyKodein(appKodein) }
-    private val tweetsListViewModel by viewModelProvider { kodein.value.instance<TweetsListViewModel>() }
+    private val tweetsListViewModel: TweetsListViewModel by viewModel()
     private val tweetsListAdapter = TweetsListAdapter(this::clickedOnAnalyzeTweet)
 
     override fun onCreate(savedInstanceState: Bundle?) {

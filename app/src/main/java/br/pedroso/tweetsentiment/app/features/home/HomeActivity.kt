@@ -10,25 +10,21 @@ import android.view.inputmethod.EditorInfo
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
-import br.pedroso.tweetsentiment.app.utils.viewModelProvider
 import br.pedroso.tweetsentiment.domain.entities.ViewState
 import br.pedroso.tweetsentiment.domain.errors.UiError
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
 import br.pedroso.tweetsentiment.presentation.features.home.HomeViewModel
-import com.github.salomonbrys.kodein.LazyKodein
-import com.github.salomonbrys.kodein.android.appKodein
-import com.github.salomonbrys.kodein.instance
 import kotlinx.android.synthetic.main.activity_home.buttonCheckUserTweets
 import kotlinx.android.synthetic.main.activity_home.editTextTwitterAccount
 import kotlinx.android.synthetic.main.activity_home.textInputLayoutTwitterAccount
 import kotlinx.android.synthetic.main.activity_home.textViewErrorMessage
 import kotlinx.android.synthetic.main.view_loading_feedback.loadingHolder
+import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 @Suppress("IMPLICIT_CAST_TO_ANY")
 class HomeActivity : BaseActivity() {
-    private val kodein by lazy { LazyKodein(appKodein) }
-    private val homeViewModel by viewModelProvider { kodein.value.instance<HomeViewModel>() }
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
