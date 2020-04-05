@@ -9,11 +9,11 @@ import retrofit2.http.Query
 
 interface TwitterService {
     @GET("/$TWITTER_API_VERSION/users/show.json")
-    fun usersShow(@Query("screen_name") screenName: String): Observable<RetrofitUser>
+    suspend fun usersShow(@Query("screen_name") screenName: String): RetrofitUser
 
     @GET("/$TWITTER_API_VERSION/statuses/user_timeline.json")
-    fun statusesUserTimeline(
+    suspend fun statusesUserTimeline(
         @Query("screen_name") screenName: String,
         @Query("since_id") sinceId: Long? = null
-    ): Observable<List<RetrofitTweet>>
+    ): List<RetrofitTweet>
 }

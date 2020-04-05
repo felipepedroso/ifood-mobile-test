@@ -1,3 +1,3 @@
 package br.pedroso.tweetsentiment.domain.network.errors
 
-class NaturalLanguageApiError : Throwable()
+class NaturalLanguageApiError(cause : Throwable) : Throwable(cause)

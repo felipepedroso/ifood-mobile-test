@@ -35,7 +35,6 @@ val naturalLanguageApiModule = module {
     single(named(NATURAL_LANGUAGE_RETROFIT)) {
         Retrofit.Builder().apply {
             addConverterFactory(get())
-            addCallAdapterFactory(get())
             baseUrl(NATURAL_LANGUAGE_API_BASE_URL)
             client(get(named(NATURAL_LANGUAGE_OKHTTP_CLIENT)))
         }.build()

@@ -9,24 +9,27 @@ import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.entities.re
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.mappers.RetrofitResponseMapper
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import io.reactivex.functions.Function
+import kotlinx.coroutines.rx2.asCoroutineDispatcher
+import kotlinx.coroutines.rx2.rxObservable
 
 class NaturalLanguageApiDataSource(
     val workerScheduler: Scheduler,
     val naturalLanguageApiService: NaturalLanguageApiService
 ) : SentimentAnalysisDataSource {
     override fun analyzeSentimentFromText(text: String): Observable<Sentiment> {
-        val document = Document(text)
-        val requestBody = NaturalLanguageApiRequestBody(document)
-        return naturalLanguageApiService.analyzeSentiment(requestBody)
-            .map { RetrofitResponseMapper.retrofitResponseToDomain(it) }
-            .onErrorResumeNext(NaturalLanguageErrorMapper())
-            .subscribeOn(workerScheduler)
-    }
+        return rxObservable(workerScheduler.asCoroutineDispatcher()) {
+            try {
+                val document = Document(text)
+                val requestBody = NaturalLanguageApiRequestBody(document)
 
-    private class NaturalLanguageErrorMapper<T> : Function<Throwable, Observable<T>> {
-        override fun apply(error: Throwable): Observable<T> {
-            return Observable.error(NaturalLanguageApiError())
+                val response = naturalLanguageApiService.analyzeSentiment(requestBody)
+
+                val sentiment = RetrofitResponseMapper.retrofitResponseToDomain(response)
+                send(sentiment)
+                close()
+            } catch (exception: Exception) {
+                close(NaturalLanguageApiError(exception))
+            }
         }
     }
 }

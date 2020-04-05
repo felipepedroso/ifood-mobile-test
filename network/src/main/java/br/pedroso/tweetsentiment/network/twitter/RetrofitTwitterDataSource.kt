@@ -12,6 +12,8 @@ import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterServic
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.functions.Function
+import kotlinx.coroutines.rx2.asCoroutineDispatcher
+import kotlinx.coroutines.rx2.rxObservable
 import retrofit2.HttpException
 
 class RetrofitTwitterDataSource(
@@ -22,68 +24,100 @@ class RetrofitTwitterDataSource(
 ) : TwitterDataSource {
 
     override fun getUser(userName: String): Observable<User> {
-        return ensureAuthenticationBeforeApiCall()
-            .flatMap { twitterService.usersShow(userName) }
-            .map { UserMapper.mapRetrofitToDomain(it) }
-            .onErrorResumeNext(TwitterApiErrorMapper())
-            .subscribeOn(workerScheduler)
+        return rxObservable(workerScheduler.asCoroutineDispatcher()) {
+            try {
+                ensureAuthenticationBeforeApiCall()
+
+                val retrofitUser = twitterService.usersShow(userName)
+
+                val user = UserMapper.mapRetrofitToDomain(retrofitUser)
+                send(user)
+                close()
+            } catch (exception: Exception) {
+                val error = mapTwitterError(exception)
+                close(error)
+            }
+        }
     }
 
     override fun getTweetsSinceTweet(user: User, tweet: Tweet): Observable<Tweet> {
-        return ensureAuthenticationBeforeApiCall()
-            .flatMap { twitterService.statusesUserTimeline(user.userName, tweet.id) }
-            .flatMap { Observable.fromIterable(it) }
-            .map { TweetMapper.mapTwitterApiToDomain(it) }
-            .onErrorResumeNext(TwitterApiErrorMapper())
-            .subscribeOn(workerScheduler)
+        return rxObservable(workerScheduler.asCoroutineDispatcher()) {
+            try {
+                ensureAuthenticationBeforeApiCall()
+
+                val retrofitTweets = twitterService.statusesUserTimeline(user.userName, tweet.id)
+
+                if (retrofitTweets.isNotEmpty()) {
+                    retrofitTweets
+                        .map { TweetMapper.mapTwitterApiToDomain(it) }
+                        .forEach { tweet -> send(tweet) }
+
+                    close()
+                } else {
+                    close(TwitterError.EmptyResponse())
+                }
+            } catch (exception: Exception) {
+                val error = mapTwitterError(exception)
+                close(error)
+            }
+        }
     }
 
     override fun getLatestTweetsFromUser(user: User): Observable<Tweet> {
-        return ensureAuthenticationBeforeApiCall()
-            .flatMap { twitterService.statusesUserTimeline(user.userName) }
-            .flatMap {
-                when (it.isEmpty()) {
-                    true -> Observable.error(TwitterError.EmptyResponse())
-                    else -> Observable.fromIterable(it)
+        return rxObservable(workerScheduler.asCoroutineDispatcher()) {
+            try {
+                ensureAuthenticationBeforeApiCall()
+
+                val retrofitTweets = twitterService.statusesUserTimeline(user.userName)
+
+                if (retrofitTweets.isNotEmpty()) {
+                    retrofitTweets
+                        .map { TweetMapper.mapTwitterApiToDomain(it) }
+                        .forEach { tweet -> send(tweet) }
+
+                    close()
+                } else {
+                    close(TwitterError.EmptyResponse())
                 }
+            } catch (exception: Exception) {
+                val error = mapTwitterError(exception)
+                close(error)
             }
-            .map { TweetMapper.mapTwitterApiToDomain(it) }
-            .onErrorResumeNext(TwitterApiErrorMapper())
-            .subscribeOn(workerScheduler)
-    }
-
-    private fun ensureAuthenticationBeforeApiCall(): Observable<String> {
-        return if (applicationSettings.hasTwitterAccessToken())
-            Observable.just(applicationSettings.retrieveTwitterAccessToken())
-        else
-            doAuthentication()
-    }
-
-    private fun doAuthentication(): Observable<String> {
-        return twitterAuthService.applicationOnlyAuthentication()
-            .flatMap {
-                when (it.tokenType) {
-                    "bearer" -> Observable.just(it.accessToken)
-                    else -> Observable.error(TwitterError.AuthenticationError())
-                }
-            }
-            .doOnNext { applicationSettings.storeTwitterAccessToken(it) }
-            .onErrorResumeNext(Observable.error(TwitterError.AuthenticationError()))
-            .subscribeOn(workerScheduler)
-    }
-
-    private class TwitterApiErrorMapper<T> : Function<Throwable, Observable<T>> {
-        override fun apply(error: Throwable): Observable<T> {
-            val error = when {
-                error is HttpException && error.code() == NOT_FOUND_ERROR_CODE -> {
-                    TwitterError.UserNotFound()
-                }
-                error is TwitterError -> error
-                else -> TwitterError.UndesiredResponse()
-            }
-
-            return Observable.error(error)
         }
+    }
+
+    private suspend fun ensureAuthenticationBeforeApiCall(): String {
+        return if (applicationSettings.hasTwitterAccessToken()) {
+            applicationSettings.retrieveTwitterAccessToken()
+        } else {
+            doAuthentication()
+        }
+    }
+
+    private suspend fun doAuthentication(): String {
+        try {
+            val authenticationResult = twitterAuthService.applicationOnlyAuthentication()
+
+            if (authenticationResult.tokenType == "bearer") {
+                val token = authenticationResult.accessToken
+
+                applicationSettings.storeTwitterAccessToken(token)
+
+                return token
+            } else {
+                throw TwitterError.AuthenticationError()
+            }
+        } catch (exception: Exception) {
+            throw TwitterError.AuthenticationError()
+        }
+    }
+
+    private fun mapTwitterError(exception: Exception): Throwable = when {
+        exception is HttpException && exception.code() == NOT_FOUND_ERROR_CODE -> {
+            TwitterError.UserNotFound()
+        }
+        exception is TwitterError -> exception
+        else -> TwitterError.UndesiredResponse()
     }
 
     companion object {

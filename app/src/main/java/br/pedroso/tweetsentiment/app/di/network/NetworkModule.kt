@@ -7,9 +7,7 @@ import okhttp3.Cache
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import retrofit2.CallAdapter
 import retrofit2.Converter
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 private const val NETWORK_CACHE_SIZE = 10L * 1024 * 1024
@@ -27,10 +25,6 @@ private val commonNetwork = module {
 
     factory<Converter.Factory> {
         GsonConverterFactory.create()
-    }
-
-    factory<CallAdapter.Factory> {
-        RxJava2CallAdapterFactory.create()
     }
 }
 

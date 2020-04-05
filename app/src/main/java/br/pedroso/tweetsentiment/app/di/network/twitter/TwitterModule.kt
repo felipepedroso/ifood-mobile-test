@@ -51,7 +51,6 @@ val twitterModule = module {
         Retrofit.Builder().apply {
             baseUrl(TWITTER_API_BASE_URL)
             addConverterFactory(get())
-            addCallAdapterFactory(get())
             client(get(named(TWITTER_OKHTTP_CLIENT)))
         }.build()
     }
@@ -84,7 +83,6 @@ val twitterModule = module {
         Retrofit.Builder().apply {
             baseUrl(TWITTER_API_BASE_URL)
             addConverterFactory(get())
-            addCallAdapterFactory(get())
             client(get(named(TWITTER_AUTH_OKHTTP_CLIENT)))
         }.build()
     }
