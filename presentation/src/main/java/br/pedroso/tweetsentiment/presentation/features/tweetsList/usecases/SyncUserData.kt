@@ -7,7 +7,6 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 class SyncUserData(
-    private val scheduler: Scheduler,
     private val syncUser: SyncUser,
     private val syncUserTweets: SyncUserTweets,
     private val applicationSettings: ApplicationSettings
@@ -17,7 +16,6 @@ class SyncUserData(
         return Observable.just(applicationSettings.retrieveUsernameToSync())
             .flatMap { syncUser.execute(it) }
             .flatMap { syncUserTweets.execute(it) }
-            .ignoreElements()
-            .subscribeOn(scheduler)
+    .ignoreElements()
     }
 }

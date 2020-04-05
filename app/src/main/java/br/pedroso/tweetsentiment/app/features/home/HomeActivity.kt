@@ -76,7 +76,7 @@ class HomeActivity : BaseActivity() {
         val subscription =
             homeViewModel.syncNewUser(username)
                 .doOnNext { handleNewViewState(it) }
-                .doOnError { logUnregisteredException(it) }
+                .doOnError { error ->  logUnregisteredException(error) }
                 .subscribe()
 
         registerDisposable(subscription)

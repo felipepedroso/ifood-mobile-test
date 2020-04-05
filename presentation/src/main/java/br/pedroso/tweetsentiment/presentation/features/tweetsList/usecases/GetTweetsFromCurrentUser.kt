@@ -6,7 +6,6 @@ import io.reactivex.Flowable
 import io.reactivex.Scheduler
 
 class GetTweetsFromCurrentUser(
-    private val scheduler: Scheduler,
     private val getCurrentUser: GetCurrentUser,
     private val databaseDataSource: DatabaseDataSource
 ) {
@@ -15,6 +14,5 @@ class GetTweetsFromCurrentUser(
         return getCurrentUser
             .execute()
             .flatMap { databaseDataSource.getTweetsFromUser(it) }
-            .subscribeOn(scheduler)
     }
 }

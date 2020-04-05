@@ -1,7 +1,6 @@
 package br.pedroso.tweetsentiment.app.di.features.tweetslist
 
 import br.pedroso.tweetsentiment.app.di.DependenciesTags.UI_SCHEDULER
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.WORKER_SCHEDULER
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewModel
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.AnalyseTweetSentiment
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.ClearCurrentUserSettings
@@ -26,14 +25,12 @@ val tweetsListModule = module {
 
     single {
         ClearCurrentUserSettings(
-            scheduler = get(named(WORKER_SCHEDULER)),
             applicationSettings = get()
         )
     }
 
     single {
         SyncUserData(
-            scheduler = get(named(WORKER_SCHEDULER)),
             applicationSettings = get(),
             syncUser = get(),
             syncUserTweets = get()
@@ -42,7 +39,6 @@ val tweetsListModule = module {
 
     single {
         GetCurrentUser(
-            scheduler = get(named(WORKER_SCHEDULER)),
             applicationSettings = get(),
             databaseDataSource = get()
         )
@@ -50,7 +46,6 @@ val tweetsListModule = module {
 
     single {
         GetTweetsFromCurrentUser(
-            scheduler = get(named(WORKER_SCHEDULER)),
             databaseDataSource = get(),
             getCurrentUser = get()
         )
@@ -58,7 +53,6 @@ val tweetsListModule = module {
 
     single {
         AnalyseTweetSentiment(
-            scheduler = get(named(WORKER_SCHEDULER)),
             sentimentAnalysisDataSource = get(),
             databaseDataSource = get()
         )

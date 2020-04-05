@@ -7,7 +7,6 @@ import io.reactivex.Flowable
 import io.reactivex.Scheduler
 
 class GetCurrentUser(
-    private val scheduler: Scheduler,
     private val databaseDataSource: DatabaseDataSource,
     private val applicationSettings: ApplicationSettings
 ) {
@@ -15,6 +14,5 @@ class GetCurrentUser(
     fun execute(): Flowable<User> {
         return Flowable.just(applicationSettings.retrieveUsernameToSync())
             .flatMap { databaseDataSource.getUser(it) }
-            .subscribeOn(scheduler)
     }
 }

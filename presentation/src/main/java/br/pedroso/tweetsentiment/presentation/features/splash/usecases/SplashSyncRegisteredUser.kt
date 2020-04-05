@@ -7,7 +7,6 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 
 class SplashSyncRegisteredUser(
-    private val scheduler: Scheduler,
     private val applicationSettings: ApplicationSettings,
     private val homeSyncUser: HomeSyncUser
 ) {
@@ -22,6 +21,5 @@ class SplashSyncRegisteredUser(
                     else -> homeSyncUser.execute(it)
                 }
             }
-            .subscribeOn(scheduler)
     }
 }

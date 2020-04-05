@@ -1,6 +1,7 @@
 package br.pedroso.tweetsentiment.app.di.network.twitter
 
 import br.pedroso.tweetsentiment.BuildConfig
+import br.pedroso.tweetsentiment.app.di.DependenciesTags
 import br.pedroso.tweetsentiment.app.di.DependenciesTags.TWITTER_AUTH_OKHTTP_CLIENT
 import br.pedroso.tweetsentiment.app.di.DependenciesTags.TWITTER_AUTH_RETROFIT
 import br.pedroso.tweetsentiment.app.di.DependenciesTags.TWITTER_OKHTTP_CLIENT
@@ -21,6 +22,7 @@ import retrofit2.Retrofit
 val twitterModule = module {
     single<TwitterDataSource> {
         RetrofitTwitterDataSource(
+            workerScheduler = get(named(DependenciesTags.WORKER_SCHEDULER)),
             twitterAuthService = get(),
             twitterService = get(),
             applicationSettings = get()

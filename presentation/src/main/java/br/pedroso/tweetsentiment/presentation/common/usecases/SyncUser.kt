@@ -1,38 +1,36 @@
 package br.pedroso.tweetsentiment.presentation.common.usecases
 
+import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.entities.User
-import br.pedroso.tweetsentiment.domain.utils.Result
+import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
+import br.pedroso.tweetsentiment.domain.utils.Optional
+import io.reactivex.Maybe
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 
 class SyncUser(
-    private val scheduler: Scheduler,
-    private val getUserFromApi: GetUserFromApi,
-    private val registerUserOnDatabase: RegisterUserOnDatabase,
-    private val getUserRecordOnDatabase: GetUserRecordOnDatabase
+    private val twitterDataSource: TwitterDataSource,
+    private val databaseDataSource: DatabaseDataSource
 ) {
 
     fun execute(username: String): Observable<User> {
-        return getUserFromApi.execute(username)
-            .subscribeOn(scheduler)
-            .doOnNext { registerOrUpdateUserOnDatabase(it) }
-    }
+        return getUserOnDatabase(username)
+            .flatMapObservable { optional ->
+                val user = optional.value
 
-    private fun registerOrUpdateUserOnDatabase(user: User) {
-        getUserRecordOnDatabase.execute(user.userName)
-            .subscribeOn(scheduler)
-            .observeOn(scheduler)
-            .subscribe {
-                when (it) {
-                    is Result.WithValue<*> -> updateUserOnDatabase(it.value as User, user)
-                    else -> registerUserOnDatabase.execute(user)
+                if (user != null) {
+                    Observable.just(user)
+                } else {
+                    twitterDataSource.getUser(username)
+                        .flatMap { user ->
+                            databaseDataSource.registerUser(user).andThen(Observable.just(user))
+                        }
                 }
             }
     }
 
-    private fun updateUserOnDatabase(userFromDatabase: User, userFromApi: User) {
-        if (userFromDatabase != userFromApi) {
-            registerUserOnDatabase.execute(userFromApi)
-        }
+    private fun getUserOnDatabase(username: String): Maybe<Optional<User>> {
+        return databaseDataSource.getUserRecordOnDatabase(username)
+            .map { Optional.of(it) }
+            .defaultIfEmpty(Optional.empty())
     }
 }

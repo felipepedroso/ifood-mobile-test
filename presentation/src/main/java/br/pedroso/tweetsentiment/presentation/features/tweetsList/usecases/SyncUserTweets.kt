@@ -1,31 +1,40 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases
 
+import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
-import br.pedroso.tweetsentiment.domain.utils.Result
+import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
+import br.pedroso.tweetsentiment.domain.utils.Optional
+import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.ObservableSource
-import io.reactivex.Scheduler
 
 class SyncUserTweets(
-    private val scheduler: Scheduler,
-    private val getUserLatestTweetOnDatabase: GetUserLatestTweetOnDatabase,
-    private val getUserTweetsSinceTweet: GetUserTweetsSinceTweet,
-    private val getUserLatestTweetsFromApi: GetUserLatestTweetsFromApi,
-    private val registerTweetOnDatabase: RegisterTweetOnDatabase
+    private val databaseDataSource: DatabaseDataSource,
+    private val twitterDataSource: TwitterDataSource
 ) {
 
+    private fun getLatestTweetFromDatabase(user: User): Maybe<Optional<Tweet>> {
+        return databaseDataSource.getLatestTweetFromUser(user)
+            .map { Optional.of(it) }
+            .defaultIfEmpty(Optional.empty())
+    }
+
     fun execute(user: User): ObservableSource<Tweet> {
-        return getUserLatestTweetOnDatabase.execute(user)
-            .flatMapObservable {
-                when (it) {
-                    is Result.WithValue<*> -> getUserTweetsSinceTweet.execute(
-                        user,
-                        it.value as Tweet
-                    )
-                    else -> getUserLatestTweetsFromApi.execute(user)
+        return getLatestTweetFromDatabase(user)
+            .flatMapObservable { optional ->
+                val latestTweet = optional.value
+
+                twitterDataSource.run {
+                    if (latestTweet != null) {
+                        getTweetsSinceTweet(user, latestTweet)
+                    } else {
+                        getLatestTweetsFromUser(user)
+                    }
                 }
             }
-            .doOnNext { registerTweetOnDatabase.execute(user, it) }
-            .subscribeOn(scheduler)
+            .flatMap { tweet ->
+                databaseDataSource.registerTweet(user, tweet).andThen(Observable.just(tweet))
+            }
     }
 }

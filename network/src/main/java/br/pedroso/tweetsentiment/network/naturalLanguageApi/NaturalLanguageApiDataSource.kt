@@ -8,16 +8,20 @@ import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.entities.re
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.entities.request.NaturalLanguageApiRequestBody
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.mappers.RetrofitResponseMapper
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.functions.Function
 
-class NaturalLanguageApiDataSource(val naturalLanguageApiService: NaturalLanguageApiService) :
-    SentimentAnalysisDataSource {
+class NaturalLanguageApiDataSource(
+    val workerScheduler: Scheduler,
+    val naturalLanguageApiService: NaturalLanguageApiService
+) : SentimentAnalysisDataSource {
     override fun analyzeSentimentFromText(text: String): Observable<Sentiment> {
         val document = Document(text)
         val requestBody = NaturalLanguageApiRequestBody(document)
         return naturalLanguageApiService.analyzeSentiment(requestBody)
             .map { RetrofitResponseMapper.retrofitResponseToDomain(it) }
             .onErrorResumeNext(NaturalLanguageErrorMapper())
+            .subscribeOn(workerScheduler)
     }
 
     private class NaturalLanguageErrorMapper<T> : Function<Throwable, Observable<T>> {

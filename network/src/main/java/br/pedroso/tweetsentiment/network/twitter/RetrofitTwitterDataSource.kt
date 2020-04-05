@@ -10,10 +10,12 @@ import br.pedroso.tweetsentiment.network.twitter.retrofit.mappers.UserMapper
 import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterAuthService
 import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterService
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.functions.Function
 import retrofit2.HttpException
 
 class RetrofitTwitterDataSource(
+    private val workerScheduler: Scheduler,
     private val twitterAuthService: TwitterAuthService,
     private val twitterService: TwitterService,
     private val applicationSettings: ApplicationSettings
@@ -24,6 +26,7 @@ class RetrofitTwitterDataSource(
             .flatMap { twitterService.usersShow(userName) }
             .map { UserMapper.mapRetrofitToDomain(it) }
             .onErrorResumeNext(TwitterApiErrorMapper())
+            .subscribeOn(workerScheduler)
     }
 
     override fun getTweetsSinceTweet(user: User, tweet: Tweet): Observable<Tweet> {
@@ -32,6 +35,7 @@ class RetrofitTwitterDataSource(
             .flatMap { Observable.fromIterable(it) }
             .map { TweetMapper.mapTwitterApiToDomain(it) }
             .onErrorResumeNext(TwitterApiErrorMapper())
+            .subscribeOn(workerScheduler)
     }
 
     override fun getLatestTweetsFromUser(user: User): Observable<Tweet> {
@@ -45,6 +49,7 @@ class RetrofitTwitterDataSource(
             }
             .map { TweetMapper.mapTwitterApiToDomain(it) }
             .onErrorResumeNext(TwitterApiErrorMapper())
+            .subscribeOn(workerScheduler)
     }
 
     private fun ensureAuthenticationBeforeApiCall(): Observable<String> {
@@ -64,6 +69,7 @@ class RetrofitTwitterDataSource(
             }
             .doOnNext { applicationSettings.storeTwitterAccessToken(it) }
             .onErrorResumeNext(Observable.error(TwitterError.AuthenticationError()))
+            .subscribeOn(workerScheduler)
     }
 
     private class TwitterApiErrorMapper<T> : Function<Throwable, Observable<T>> {
