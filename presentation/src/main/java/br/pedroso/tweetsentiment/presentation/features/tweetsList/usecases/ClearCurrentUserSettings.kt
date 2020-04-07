@@ -7,7 +7,7 @@ class ClearCurrentUserSettings(
     private val applicationSettings: ApplicationSettings
 ) {
 
-    fun execute(): Completable {
-        return Completable.fromCallable { applicationSettings.cleanUsernameToSync() }
+    fun execute() {
+        return applicationSettings.cleanUsernameToSync()
     }
 }

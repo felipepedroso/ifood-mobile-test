@@ -1,6 +1,5 @@
 package br.pedroso.tweetsentiment.app.di.features.shared
 
-import br.pedroso.tweetsentiment.presentation.features.home.usecases.StoreUserToSyncOnPreferences
 import br.pedroso.tweetsentiment.presentation.common.usecases.SyncUser
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.SyncUserTweets
 import org.koin.dsl.module
@@ -18,12 +17,6 @@ val sharedModule = module {
         SyncUser(
             twitterDataSource = get(),
             databaseDataSource = get()
-        )
-    }
-
-    single {
-        StoreUserToSyncOnPreferences(
-            applicationSettings = get()
         )
     }
 }

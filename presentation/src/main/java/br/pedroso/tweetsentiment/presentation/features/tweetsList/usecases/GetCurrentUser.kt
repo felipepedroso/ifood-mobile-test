@@ -3,16 +3,15 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.entities.User
-import io.reactivex.Flowable
-import kotlinx.coroutines.rx2.asFlowable
+import kotlinx.coroutines.flow.Flow
 
 class GetCurrentUser(
     private val databaseDataSource: DatabaseDataSource,
     private val applicationSettings: ApplicationSettings
 ) {
 
-    fun execute(): Flowable<User> {
+    fun execute(): Flow<User> {
         val username = applicationSettings.retrieveUsernameToSync()
-        return databaseDataSource.getUser(username).asFlowable()
+        return databaseDataSource.getUser(username)
     }
 }

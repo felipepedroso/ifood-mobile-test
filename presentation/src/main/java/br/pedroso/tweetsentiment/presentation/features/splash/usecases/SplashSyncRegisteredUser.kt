@@ -10,15 +10,13 @@ class SplashSyncRegisteredUser(
     private val homeSyncUser: HomeSyncUser
 ) {
 
-    fun execute(): Observable<User> {
+    suspend fun execute(): User? {
         val usernameToSync = applicationSettings.retrieveUsernameToSync()
 
-        return Observable.just(usernameToSync)
-            .flatMap {
-                when (it) {
-                    "" -> Observable.empty()
-                    else -> homeSyncUser.execute(it)
-                }
-            }
+        return if(usernameToSync.isNotBlank()) {
+            homeSyncUser.execute(usernameToSync)
+        } else {
+            null
+        }
     }
 }

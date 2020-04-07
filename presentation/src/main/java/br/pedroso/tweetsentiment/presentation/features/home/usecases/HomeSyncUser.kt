@@ -1,20 +1,22 @@
 package br.pedroso.tweetsentiment.presentation.features.home.usecases
 
+import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.entities.User
+import br.pedroso.tweetsentiment.domain.errors.UiError
 import br.pedroso.tweetsentiment.presentation.common.usecases.SyncUser
-import io.reactivex.Observable
 
 class HomeSyncUser(
-    private val validateUsername: ValidateUsername,
     private val syncUser: SyncUser,
-    private val storeUserToSyncOnPreferences: StoreUserToSyncOnPreferences
+    private val applicationSettings: ApplicationSettings
 ) {
 
-    fun execute(username: String): Observable<User> {
-        return validateUsername.execute(username)
-            .flatMap { syncUser.execute(it) }
-            .flatMap { user ->
-                storeUserToSyncOnPreferences.execute(user.userName).andThen(Observable.just(user))
-            }
+    suspend fun execute(username: String): User {
+        if (username.isBlank()) {
+            throw UiError.EmptyField()
+        }
+
+        return syncUser.execute(username).also {
+            applicationSettings.storeUsernameToSync(it.userName)
+        }
     }
 }

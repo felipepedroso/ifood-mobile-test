@@ -12,10 +12,11 @@ class SyncUserData(
     private val applicationSettings: ApplicationSettings
 ) {
 
-    fun execute(): Completable {
-        return Observable.just(applicationSettings.retrieveUsernameToSync())
-            .flatMap { syncUser.execute(it) }
-            .flatMap { syncUserTweets.execute(it) }
-    .ignoreElements()
+    suspend fun execute() {
+        val usernameToSync = applicationSettings.retrieveUsernameToSync()
+
+        val user = syncUser.execute(usernameToSync)
+
+        syncUserTweets.execute(user)
     }
 }
