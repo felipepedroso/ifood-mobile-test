@@ -1,7 +1,7 @@
 package br.pedroso.tweetsentiment.app.di.storage.database
 
 import androidx.room.Room
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.WORKER_SCHEDULER
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.WORKER_DISPATCHER
 import br.pedroso.tweetsentiment.device.storage.database.RoomDataSource
 import br.pedroso.tweetsentiment.device.storage.database.room.database.TweetSentimentDatabase
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
@@ -27,7 +27,7 @@ val databaseModule = module {
 
     single<DatabaseDataSource> {
         RoomDataSource(
-            workerScheduler = get(named(WORKER_SCHEDULER)),
+            dispatcher = get(named(WORKER_DISPATCHER)),
             tweetSentimentDao = get()
         )
     }

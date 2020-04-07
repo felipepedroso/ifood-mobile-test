@@ -7,64 +7,75 @@ import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.entities.Sentiment
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.Scheduler
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class RoomDataSource(
-    private val workerScheduler: Scheduler,
+    private val dispatcher: CoroutineDispatcher,
     private val tweetSentimentDao: TweetSentimentDao
 ) : DatabaseDataSource {
-    override fun getUserRecordOnDatabase(username: String): Maybe<User> {
-        return tweetSentimentDao.getUserRecord(username)
-            .map { RoomUserMapper.mapRoomToDomain(it) }
-            .subscribeOn(workerScheduler)
-    }
 
-    override fun updateTweetSentiment(tweet: Tweet, sentiment: Sentiment): Completable {
-        return Completable.defer {
-            Completable.fromAction {
-                val updatedRoomTweet =
-                    tweetSentimentDao.getTweetById(tweet.id).copy(sentiment = sentiment.name)
-                tweetSentimentDao.updateTweet(updatedRoomTweet)
+    override suspend fun getUserRecordOnDatabase(username: String): User? {
+        return withContext(dispatcher) {
+            val roomUser = tweetSentimentDao.getUserRecord(username)
+
+            if (roomUser != null) {
+                RoomUserMapper.mapRoomToDomain(roomUser)
+            } else {
+                null
             }
-        }.subscribeOn(workerScheduler)
+        }
     }
 
-    override fun getLatestTweetFromUser(user: User): Maybe<Tweet> {
-        return tweetSentimentDao.getLatestTweetFromUser(user.id)
-            .map { RoomTweetMapper.mapRoomToDomain(it) }
-            .subscribeOn(workerScheduler)
+    override suspend fun updateTweetSentiment(tweet: Tweet, sentiment: Sentiment) {
+        withContext(dispatcher) {
+            val tweetToUpdate =
+                tweetSentimentDao.getTweetById(tweet.id)
+
+            if (tweetToUpdate != null) {
+                tweetSentimentDao.updateTweet(tweetToUpdate.copy(sentiment = sentiment.name))
+            }
+        }
     }
 
-    override fun getTweetsFromUser(user: User): Flowable<List<Tweet>> {
+    override suspend fun getLatestTweetFromUser(user: User): Tweet? {
+        return withContext(dispatcher) {
+            val roomTweet = tweetSentimentDao.getLatestTweetFromUser(user.id)
+
+            if (roomTweet != null) {
+                RoomTweetMapper.mapRoomToDomain(roomTweet)
+            } else {
+                null
+            }
+        }
+    }
+
+    override fun getTweetsFromUser(user: User): Flow<List<Tweet>> {
         return tweetSentimentDao.getAllTweetsFromUser(user.id)
             .map { it -> it.map { RoomTweetMapper.mapRoomToDomain(it) } }
-            .subscribeOn(workerScheduler)
+            .flowOn(dispatcher)
     }
 
-    override fun registerTweet(user: User, tweet: Tweet): Completable {
-        return Completable.defer {
-            Completable.fromAction {
-                val roomTweet = RoomTweetMapper.mapDomainToRoom(user, tweet)
-                tweetSentimentDao.registerTweet(roomTweet)
-            }
-        }.subscribeOn(workerScheduler)
+    override suspend fun registerTweet(user: User, tweet: Tweet) {
+        withContext(dispatcher) {
+            val roomTweet = RoomTweetMapper.mapDomainToRoom(user, tweet)
+            tweetSentimentDao.registerTweet(roomTweet)
+        }
     }
 
-    override fun getUser(username: String): Flowable<User> {
+    override fun getUser(username: String): Flow<User> {
         return tweetSentimentDao.getUser(username)
             .map { RoomUserMapper.mapRoomToDomain(it) }
-            .subscribeOn(workerScheduler)
+            .flowOn(dispatcher)
     }
 
-    override fun registerUser(user: User): Completable {
-        return Completable.defer {
-            Completable.fromAction {
-                val roomUser = RoomUserMapper.mapDomainToRoom(user)
-                tweetSentimentDao.registerUsers(roomUser)
-            }
-        }.subscribeOn(workerScheduler)
+    override suspend fun registerUser(user: User) {
+        withContext(dispatcher) {
+            val roomUser = RoomUserMapper.mapDomainToRoom(user)
+            tweetSentimentDao.registerUsers(roomUser)
+        }
     }
 }

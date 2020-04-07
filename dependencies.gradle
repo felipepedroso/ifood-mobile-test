@@ -68,7 +68,7 @@ ext {
     roomDependencies = [
             "androidx.room:room-runtime:$roomVersion",
             "androidx.room:room-ktx:$roomVersion",
-            "androidx.room:room-rxjava2:$roomVersion"
+            "androidx.room:room-ktx:$roomVersion"
     ]
 
     roomCompiler = "androidx.room:room-compiler:$roomVersion"
@@ -136,7 +136,6 @@ ext {
     networkDependencies = []
 
     networkDependencies.addAll(kotlinDependencies)
-    networkDependencies.addAll(rxJavaAndroidDependencies)
     networkDependencies.addAll(coroutinesDependencies)
     networkDependencies.addAll(retrofitDependencies)
     networkDependencies.addAll(timberDependencies)
@@ -146,7 +145,6 @@ ext {
             "com.orhanobut:hawk:2.0.1"
     ]
 
-    deviceDependencies.addAll(rxJavaAndroidDependencies)
     deviceDependencies.addAll(coroutinesDependencies)
     deviceDependencies.addAll(timberDependencies)
     deviceDependencies.addAll(roomDependencies)
@@ -155,6 +153,5 @@ ext {
     domainDependencies = []
 
     domainDependencies.addAll(kotlinDependencies)
-    domainDependencies.addAll(rxJavaDependencies)
     domainDependencies.addAll(coroutinesDependencies)
 }

@@ -4,7 +4,6 @@ import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.presentation.features.home.usecases.HomeSyncUser
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 
 class SplashSyncRegisteredUser(
     private val applicationSettings: ApplicationSettings,

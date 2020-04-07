@@ -9,88 +9,63 @@ import br.pedroso.tweetsentiment.network.twitter.retrofit.mappers.TweetMapper
 import br.pedroso.tweetsentiment.network.twitter.retrofit.mappers.UserMapper
 import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterAuthService
 import br.pedroso.tweetsentiment.network.twitter.retrofit.services.TwitterService
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import io.reactivex.functions.Function
-import kotlinx.coroutines.rx2.asCoroutineDispatcher
-import kotlinx.coroutines.rx2.rxObservable
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
 class RetrofitTwitterDataSource(
-    private val workerScheduler: Scheduler,
+    private val dispatcher: CoroutineDispatcher,
     private val twitterAuthService: TwitterAuthService,
     private val twitterService: TwitterService,
     private val applicationSettings: ApplicationSettings
 ) : TwitterDataSource {
 
-    override fun getUser(userName: String): Observable<User> {
-        return rxObservable(workerScheduler.asCoroutineDispatcher()) {
-            try {
-                ensureAuthenticationBeforeApiCall()
+    override suspend fun getUser(userName: String): User {
+        try {
+            ensureAuthenticationBeforeApiCall()
 
+            return withContext(dispatcher) {
                 val retrofitUser = twitterService.usersShow(userName)
-
-                val user = UserMapper.mapRetrofitToDomain(retrofitUser)
-                send(user)
-                close()
-            } catch (exception: Exception) {
-                val error = mapTwitterError(exception)
-                close(error)
+                UserMapper.mapRetrofitToDomain(retrofitUser)
             }
+        } catch (exception: Exception) {
+            throw mapTwitterError(exception)
         }
     }
 
-    override fun getTweetsSinceTweet(user: User, tweet: Tweet): Observable<Tweet> {
-        return rxObservable(workerScheduler.asCoroutineDispatcher()) {
-            try {
-                ensureAuthenticationBeforeApiCall()
+    override suspend fun getTweetsSinceTweet(user: User, tweet: Tweet): List<Tweet> {
+        try {
+            ensureAuthenticationBeforeApiCall()
 
+            return withContext(dispatcher) {
                 val retrofitTweets = twitterService.statusesUserTimeline(user.userName, tweet.id)
-
-                if (retrofitTweets.isNotEmpty()) {
-                    retrofitTweets
-                        .map { TweetMapper.mapTwitterApiToDomain(it) }
-                        .forEach { tweet -> send(tweet) }
-
-                    close()
-                } else {
-                    close(TwitterError.EmptyResponse())
-                }
-            } catch (exception: Exception) {
-                val error = mapTwitterError(exception)
-                close(error)
+                retrofitTweets.map { TweetMapper.mapTwitterApiToDomain(it) }
             }
+        } catch (exception: Exception) {
+            throw mapTwitterError(exception)
         }
     }
 
-    override fun getLatestTweetsFromUser(user: User): Observable<Tweet> {
-        return rxObservable(workerScheduler.asCoroutineDispatcher()) {
-            try {
-                ensureAuthenticationBeforeApiCall()
+    override suspend fun getLatestTweetsFromUser(user: User): List<Tweet> {
+        try {
+            ensureAuthenticationBeforeApiCall()
 
+            return withContext(dispatcher) {
                 val retrofitTweets = twitterService.statusesUserTimeline(user.userName)
-
-                if (retrofitTweets.isNotEmpty()) {
-                    retrofitTweets
-                        .map { TweetMapper.mapTwitterApiToDomain(it) }
-                        .forEach { tweet -> send(tweet) }
-
-                    close()
-                } else {
-                    close(TwitterError.EmptyResponse())
-                }
-            } catch (exception: Exception) {
-                val error = mapTwitterError(exception)
-                close(error)
+                retrofitTweets.map { TweetMapper.mapTwitterApiToDomain(it) }
             }
+        } catch (exception: Exception) {
+            throw mapTwitterError(exception)
         }
     }
 
     private suspend fun ensureAuthenticationBeforeApiCall(): String {
-        return if (applicationSettings.hasTwitterAccessToken()) {
-            applicationSettings.retrieveTwitterAccessToken()
-        } else {
-            doAuthentication()
+        return withContext(dispatcher) {
+            if (applicationSettings.hasTwitterAccessToken()) {
+                applicationSettings.retrieveTwitterAccessToken()
+            } else {
+                doAuthentication()
+            }
         }
     }
 

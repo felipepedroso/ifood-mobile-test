@@ -3,7 +3,7 @@ package br.pedroso.tweetsentiment.app.di.network.naturallanguageapi
 import br.pedroso.tweetsentiment.BuildConfig
 import br.pedroso.tweetsentiment.app.di.DependenciesTags.NATURAL_LANGUAGE_OKHTTP_CLIENT
 import br.pedroso.tweetsentiment.app.di.DependenciesTags.NATURAL_LANGUAGE_RETROFIT
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.WORKER_SCHEDULER
+import br.pedroso.tweetsentiment.app.di.DependenciesTags.WORKER_DISPATCHER
 import br.pedroso.tweetsentiment.domain.network.dataSources.SentimentAnalysisDataSource
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.NaturalLanguageApiDataSource
 import br.pedroso.tweetsentiment.network.naturalLanguageApi.retrofit.NaturalLanguageApiService
@@ -47,7 +47,7 @@ val naturalLanguageApiModule = module {
 
     single<SentimentAnalysisDataSource> {
         NaturalLanguageApiDataSource(
-            workerScheduler = get(named(WORKER_SCHEDULER)),
+            dispatcher = get(named(WORKER_DISPATCHER)),
             naturalLanguageApiService = get()
         )
     }

@@ -4,7 +4,7 @@ import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.entities.User
 import io.reactivex.Flowable
-import io.reactivex.Scheduler
+import kotlinx.coroutines.rx2.asFlowable
 
 class GetCurrentUser(
     private val databaseDataSource: DatabaseDataSource,
@@ -12,7 +12,7 @@ class GetCurrentUser(
 ) {
 
     fun execute(): Flowable<User> {
-        return Flowable.just(applicationSettings.retrieveUsernameToSync())
-            .flatMap { databaseDataSource.getUser(it) }
+        val username = applicationSettings.retrieveUsernameToSync()
+        return databaseDataSource.getUser(username).asFlowable()
     }
 }

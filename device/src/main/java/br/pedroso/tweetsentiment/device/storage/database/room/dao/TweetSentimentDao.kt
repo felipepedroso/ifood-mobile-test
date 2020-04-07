@@ -7,32 +7,31 @@ import androidx.room.Query
 import androidx.room.Update
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomTweet
 import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomUser
-import io.reactivex.Flowable
-import io.reactivex.Maybe
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TweetSentimentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun registerTweet(roomTweet: RoomTweet)
+    suspend fun registerTweet(roomTweet: RoomTweet)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun registerUsers(vararg roomUser: RoomUser)
+    suspend fun registerUsers(vararg roomUser: RoomUser)
 
     @Query("SELECT * FROM tweets WHERE user_id = :userId")
-    fun getAllTweetsFromUser(userId: Long): Flowable<List<RoomTweet>>
+    fun getAllTweetsFromUser(userId: Long): Flow<List<RoomTweet>>
 
     @Query("SELECT * FROM users WHERE userName = :userName")
-    fun getUser(userName: String): Flowable<RoomUser>
+    fun getUser(userName: String): Flow<RoomUser>
 
     @Query("SELECT * FROM users WHERE userName = :userName")
-    fun getUserRecord(userName: String): Maybe<RoomUser>
+    suspend fun getUserRecord(userName: String): RoomUser?
 
     @Query("SELECT * FROM tweets WHERE user_id = :userId ORDER BY created_at DESC LIMIT 1")
-    fun getLatestTweetFromUser(userId: Long): Maybe<RoomTweet>
+    suspend fun getLatestTweetFromUser(userId: Long): RoomTweet?
 
     @Query("SELECT * FROM tweets WHERE id = :id LIMIT 1")
-    fun getTweetById(id: Long): RoomTweet
+    suspend fun getTweetById(id: Long): RoomTweet?
 
     @Update
-    fun updateTweet(roomTweet: RoomTweet)
+    suspend fun updateTweet(roomTweet: RoomTweet)
 }

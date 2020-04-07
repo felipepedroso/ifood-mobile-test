@@ -4,37 +4,33 @@ import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
-import br.pedroso.tweetsentiment.domain.utils.Optional
-import io.reactivex.Maybe
-import io.reactivex.Observable
 import io.reactivex.ObservableSource
+import kotlinx.coroutines.rx2.rxObservable
 
 class SyncUserTweets(
     private val databaseDataSource: DatabaseDataSource,
     private val twitterDataSource: TwitterDataSource
 ) {
 
-    private fun getLatestTweetFromDatabase(user: User): Maybe<Optional<Tweet>> {
-        return databaseDataSource.getLatestTweetFromUser(user)
-            .map { Optional.of(it) }
-            .defaultIfEmpty(Optional.empty())
-    }
-
     fun execute(user: User): ObservableSource<Tweet> {
-        return getLatestTweetFromDatabase(user)
-            .flatMapObservable { optional ->
-                val latestTweet = optional.value
+        return rxObservable {
+            try {
+                val lastestTweetOnDatabase = databaseDataSource.getLatestTweetFromUser(user)
 
-                twitterDataSource.run {
-                    if (latestTweet != null) {
-                        getTweetsSinceTweet(user, latestTweet)
-                    } else {
-                        getLatestTweetsFromUser(user)
-                    }
+                val tweets = if (lastestTweetOnDatabase != null) {
+                    twitterDataSource.getTweetsSinceTweet(user, lastestTweetOnDatabase)
+                } else {
+                    twitterDataSource.getLatestTweetsFromUser(user)
                 }
+
+                tweets.forEach { tweet ->
+                    databaseDataSource.registerTweet(user, tweet)
+                    send(tweet)
+                }
+                close()
+            } catch (exception: Exception) {
+                close(exception)
             }
-            .flatMap { tweet ->
-                databaseDataSource.registerTweet(user, tweet).andThen(Observable.just(tweet))
-            }
+        }
     }
 }
