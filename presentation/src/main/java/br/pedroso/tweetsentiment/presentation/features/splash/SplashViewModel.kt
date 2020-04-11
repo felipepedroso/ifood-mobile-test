@@ -1,32 +1,37 @@
 package br.pedroso.tweetsentiment.presentation.features.splash
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import br.pedroso.tweetsentiment.domain.entities.ViewState
+import androidx.lifecycle.viewModelScope
+import br.pedroso.tweetsentiment.presentation.features.splash.SplashSingleEvent.NavigateToHomeScreen
+import br.pedroso.tweetsentiment.presentation.features.splash.SplashSingleEvent.NavigateToTweetsListScreen
 import br.pedroso.tweetsentiment.presentation.features.splash.usecases.SplashSyncRegisteredUser
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import kotlinx.coroutines.rx2.rxObservable
+import com.hadilq.liveevent.LiveEvent
+import kotlinx.coroutines.launch
 
 class SplashViewModel(
-    private val splashSyncRegisteredUser: SplashSyncRegisteredUser,
-    private val uiScheduler: Scheduler
+    private val splashSyncRegisteredUser: SplashSyncRegisteredUser
 ) : ViewModel() {
 
-    fun syncRegisteredUser(): Observable<ViewState> {
-        return rxObservable {
-            try {
-                send(ViewState.Loading)
+    private val _singleEvents = LiveEvent<SplashSingleEvent>()
+    val singleEvents: LiveData<SplashSingleEvent>
+        get() = _singleEvents
+
+    init {
+        viewModelScope.launch {
+            val event = try {
                 val registeredUser = splashSyncRegisteredUser.execute()
 
-                if (registeredUser != null) {
-                    send(ViewState.ShowContent(registeredUser))
+                if (registeredUser == null) {
+                    NavigateToHomeScreen
                 } else {
-                    send(ViewState.Empty)
+                    NavigateToTweetsListScreen
                 }
             } catch (exception: Exception) {
-                send(ViewState.Error(exception))
+                NavigateToHomeScreen
             }
-            close()
-        }.observeOn(uiScheduler)
+
+            _singleEvents.postValue(event)
+        }
     }
 }
