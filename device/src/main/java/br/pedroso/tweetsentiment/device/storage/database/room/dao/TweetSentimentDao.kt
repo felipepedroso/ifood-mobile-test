@@ -17,7 +17,7 @@ interface TweetSentimentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun registerUsers(vararg roomUser: RoomUser)
 
-    @Query("SELECT * FROM tweets WHERE user_id = :userId")
+    @Query("SELECT * FROM tweets WHERE user_id = :userId ORDER BY created_at DESC")
     fun getAllTweetsFromUser(userId: Long): Flow<List<RoomTweet>>
 
     @Query("SELECT * FROM users WHERE userName = :userName")

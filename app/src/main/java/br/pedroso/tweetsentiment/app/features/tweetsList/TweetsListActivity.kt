@@ -176,9 +176,8 @@ class TweetsListActivity : BaseActivity() {
         supportStartPostponedEnterTransition()
     }
 
-    private fun displayTweetsList(tweetsList: List<Tweet>) {
-        tweetsListAdapter.setTweetsList(tweetsList)
-    }
+    private fun displayTweetsList(tweetsList: List<Tweet>) =
+        tweetsListAdapter.submitList(tweetsList)
 
     private fun displayLoadingContent() {
         swipeRefreshLayoutRoot.isRefreshing = true
