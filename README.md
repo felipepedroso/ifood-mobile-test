@@ -27,7 +27,7 @@ You can try the debug application [here](https://drive.google.com/file/d/1buphfr
 * The project aims to create a concise and easy to understand code, always trying to be aligned with Clean principles.
 
 ## Architecture
-This project uses a reactive variation of the MVVM architecture, where all the information and interactions are handled by RxJava flows. The basic interaction is:
+This project uses a reactive variation of the MVVM architecture, where all the information and interactions are handled by Coroutines and LiveData. The basic interaction is:
 
 Views(Activities)   ->   ViewModels   ->   Usecases   ->   Model (Data, Network)
 
@@ -45,7 +45,7 @@ The project was splitted in the following modules:
 The goal of this modularization is to isolate the modules that use the Android Context class (app and device) and, as consequence, allow the code reuse in projects for other platforms (e.g. TornadoFx, Kotlin Native, etc)
 
 ## Libraries used
-* RxJava/RxAndroid
+* Coroutines
 * Retrofit
 * Kodein
 * Firebase Job Dispatcher

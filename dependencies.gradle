@@ -24,7 +24,6 @@ ext {
     coroutinesDependencies = [
             "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}",
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}",
-            "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:${coroutinesVersion}"
     ]
 
     // Koin
@@ -34,25 +33,11 @@ ext {
             "org.koin:koin-android-viewmodel:${koinVersion}"
     ]
 
-    // RxJava
-    rxJavaVersion = '2.2.9'
-    rxAndroidVersion = '2.1.1'
-
-    rxJavaDependencies = [
-            "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
-    ]
-
-    rxJavaAndroidDependencies = [
-            "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
-            "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
-    ]
-
     //  Retrofit
     retrofitVersion = '2.6.0'
 
     retrofitDependencies = [
             "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-            "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}",
             "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
             "com.squareup.okhttp3:logging-interceptor:3.8.0"
     ]
@@ -116,7 +101,6 @@ ext {
 
     appDependencies.addAll(kotlinDependencies)
     appDependencies.addAll(koinDependencies)
-    appDependencies.addAll(rxJavaAndroidDependencies)
     appDependencies.addAll(coroutinesDependencies)
     appDependencies.addAll(timberDependencies)
     appDependencies.addAll(retrofitDependencies)
@@ -129,7 +113,6 @@ ext {
     ]
 
     presentationDependencies.addAll(kotlinDependencies)
-    presentationDependencies.addAll(rxJavaAndroidDependencies)
     presentationDependencies.addAll(coroutinesDependencies)
     presentationDependencies.addAll(architectureComponentsDependencies)
     presentationDependencies.addAll(timberDependencies)

@@ -3,7 +3,6 @@ package br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases
 import br.pedroso.tweetsentiment.domain.device.storage.DatabaseDataSource
 import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
-import kotlinx.coroutines.rx2.rxObservable
 
 class SyncUserTweets(
     private val databaseDataSource: DatabaseDataSource,

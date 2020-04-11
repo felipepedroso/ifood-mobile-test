@@ -7,21 +7,9 @@ import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import br.pedroso.tweetsentiment.R
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 
 @SuppressLint("Registered")
 open class BaseActivity : AppCompatActivity() {
-    private val compositeDisposable by lazy { CompositeDisposable() }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        clearDisposables()
-    }
-
-    private fun clearDisposables() {
-        compositeDisposable.clear()
-    }
 
     override fun startActivity(intent: Intent?) {
         super.startActivity(intent)
@@ -47,9 +35,5 @@ open class BaseActivity : AppCompatActivity() {
     protected fun hideSoftInputWindow() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-    }
-
-    fun registerDisposable(disposable: Disposable) {
-        compositeDisposable.add(disposable)
     }
 }
