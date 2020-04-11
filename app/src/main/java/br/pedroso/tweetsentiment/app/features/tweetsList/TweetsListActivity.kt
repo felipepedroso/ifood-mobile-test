@@ -11,14 +11,17 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.palette.graphics.Palette
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
-import br.pedroso.tweetsentiment.domain.entities.ViewState
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListSingleEvent
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewEvent
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewModel
+import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewState
 import com.squareup.picasso.Callback
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.Picasso
@@ -35,46 +38,44 @@ import kotlinx.android.synthetic.main.view_error_feedback.linearLayoutErrorConta
 import kotlinx.android.synthetic.main.view_error_feedback.textViewErrorMessage
 import kotlinx.android.synthetic.main.view_loading_feedback.loadingHolder
 import org.koin.android.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class TweetsListActivity : BaseActivity() {
 
-    private val tweetsListViewModel: TweetsListViewModel by viewModel()
-    private val tweetsListAdapter = TweetsListAdapter(this::clickedOnAnalyzeTweet)
+    private val viewModel: TweetsListViewModel by viewModel()
+
+    private val tweetsListAdapter = TweetsListAdapter { tweet ->
+        viewModel.onViewEvent(TweetsListViewEvent.AnalyseTweet(tweet))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
+        observeViewState()
+        observeSingleEvents()
+        observeUserState()
+        observeTweetsListState()
+    }
+
+    override fun onBackPressed() {
+        viewModel.onViewEvent(TweetsListViewEvent.PressedBackButton)
     }
 
     private fun setupView() {
         setContentView(R.layout.activity_tweets_list)
-
         setupTweetsList()
-
         setupToolbar()
-
         setupSwipeRefreshLayout()
-
         setupGoBackButton()
     }
 
     private fun setupSwipeRefreshLayout() {
-        swipeRefreshLayoutRoot.setOnRefreshListener { syncUserData() }
+        swipeRefreshLayoutRoot.setOnRefreshListener {
+            viewModel.onViewEvent(TweetsListViewEvent.RequestedRefresh)
+        }
     }
 
     private fun setupGoBackButton() {
-        buttonGoBack.setOnClickListener {
-            confirmedToChangeUser()
-        }
-    }
-
-    override fun onBackPressed() {
-        if (linearLayoutErrorContainer.visibility == View.VISIBLE) {
-            confirmedToChangeUser()
-        } else {
-            askConfirmationToSelectOtherUser()
-        }
+        buttonGoBack.setOnClickListener { onBackPressed() }
     }
 
     private fun setupTweetsList() {
@@ -92,11 +93,7 @@ class TweetsListActivity : BaseActivity() {
         toolbarTweetsList.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_select_other_user -> {
-                    askConfirmationToSelectOtherUser()
-                    true
-                }
-                R.id.action_refresh -> {
-                    syncUserData()
+                    viewModel.onViewEvent(TweetsListViewEvent.RequestedToSelectOtherUser)
                     true
                 }
                 else -> super.onOptionsItemSelected(item)
@@ -104,150 +101,46 @@ class TweetsListActivity : BaseActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun observeViewState() {
+        viewModel.viewState.observe(this, Observer { state ->
+            when (state) {
+                TweetsListViewState.LoadingContent -> displayLoadingContent()
+                TweetsListViewState.RunningAnalysis -> displayRunningAnalysis()
+                TweetsListViewState.Ready -> displayReadyState()
+                is TweetsListViewState.Error -> showErrorState(state.error)
+            }
+        })
+    }
+
+    private fun observeSingleEvents() {
+        viewModel.singleEvents.observe(this, Observer { event ->
+            when (event) {
+                TweetsListSingleEvent.DisplayErrorDuringAnalysisMessage ->
+                    displayErrorDuringAnalysisMessage()
+                TweetsListSingleEvent.DisplaySelectOtherUserConfirmation ->
+                    displaySelectOtherUserConfirmation()
+                TweetsListSingleEvent.CloseScreen -> closeScreen()
+            }
+        })
+    }
+
+    private fun observeUserState() {
+        viewModel.userState.observe(this, Observer { user -> showUserProfile(user) })
+    }
+
+    private fun observeTweetsListState() {
+        viewModel.tweetsListState.observe(this, Observer { tweetsList ->
+            displayTweetsList(tweetsList)
+        })
+    }
+
+    private fun displayReadyState() {
         resetErrorContainerState()
-        syncUserData()
-        getCurrentUser()
-        getTweetsFromCurrentUser()
-    }
-
-    private fun syncUserData() {
-        val subscription = tweetsListViewModel
-            .syncUserData()
-            .doOnSubscribe { showLoadingContent() }
-            .doOnTerminate { hideLoadingContent() }
-            .subscribe(
-                { Timber.d("Completed the user data sync.") },
-                { showErrorState(it) }
-            )
-
-        registerDisposable(subscription)
-    }
-
-    private fun hideLoadingContent() {
-        swipeRefreshLayoutRoot.isRefreshing = false
-        enableComponents()
-    }
-
-    private fun showLoadingContent() {
-        swipeRefreshLayoutRoot.isRefreshing = true
-        disableComponents()
-    }
-
-    private fun getCurrentUser() {
-        val subscription = tweetsListViewModel
-            .getCurrentUser()
-            .subscribe(
-                { handleGetCurrentUserNewState(it) },
-                { Timber.e(it) }
-            )
-
-        registerDisposable(subscription)
-    }
-
-    private fun handleGetCurrentUserNewState(viewState: ViewState) = when (viewState) {
-        is ViewState.Loading -> showLoadingContent()
-        is ViewState.ShowContent<*> -> showUserProfile(viewState.contentValue as User)
-        is ViewState.Error -> showErrorState(viewState.error)
-        else -> Timber.d("State not used: $viewState")
-    }
-
-    private fun getTweetsFromCurrentUser() {
-        val subscription = tweetsListViewModel
-            .getTweetsFromCurrentUser()
-            .subscribe(
-                { handleGetTweetsFromCurrentUserNewState(it) },
-                { Timber.e(it) }
-            )
-
-        registerDisposable(subscription)
-    }
-
-    private fun handleGetTweetsFromCurrentUserNewState(viewState: ViewState) = when (viewState) {
-        is ViewState.Loading -> showLoadingContent()
-        is ViewState.ShowContent<*> -> displayTweetsList(viewState.contentValue as List<Tweet>)
-        is ViewState.Error -> showErrorState(viewState.error)
-        else -> Timber.d("State not used: $viewState")
-    }
-
-    private fun displayTweetsList(tweetsList: List<Tweet>) {
         hideLoadingContent()
-        tweetsListAdapter.setTweetsList(tweetsList)
-    }
-
-    private fun clickedOnAnalyzeTweet(tweet: Tweet) {
-        val subscription = tweetsListViewModel
-            .analyzeTweet(tweet)
-            .subscribe(
-                { handleAnalyzeTweetNewState(it) },
-                { Timber.e(it) }
-            )
-
-        registerDisposable(subscription)
-    }
-
-    private fun handleAnalyzeTweetNewState(viewState: ViewState) = when (viewState) {
-        is ViewState.Loading -> showLoading()
-        is ViewState.Success -> analyzedTweetWithSuccess()
-        is ViewState.Error -> showAnalyzeTweetErrorMessage()
-        else -> Timber.d("State not used: $viewState")
-    }
-
-    private fun analyzedTweetWithSuccess() {
-        hideLoading()
-    }
-
-    private fun showErrorFeedback(errorImageResource: Int, errorStringResource: Int) {
-        linearLayoutErrorContainer.visibility = View.VISIBLE
-        imageViewError.setImageResource(errorImageResource)
-        textViewErrorMessage.text = getString(errorStringResource)
-        coordinatorLayoutTweetsListContent.visibility = View.GONE
-    }
-
-    private fun resetErrorContainerState() {
-        linearLayoutErrorContainer.visibility = View.GONE
-        textViewErrorMessage.text = ""
-        imageViewError.setImageResource(0)
-        coordinatorLayoutTweetsListContent.visibility = View.VISIBLE
-    }
-
-    private fun showErrorState(it: Throwable) = when (it) {
-        is TwitterError.EmptyResponse -> showEmptyState()
-        is TwitterError.UserNotFound -> showUserNotFoundState()
-        else -> showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_loading_timeline)
-    }
-
-    private fun showEmptyState() =
-        showErrorFeedback(R.drawable.ic_feedback_neutral, R.string.empty_tweet_timeline)
-
-    private fun showUserNotFoundState() =
-        showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_user_not_found)
-
-    private fun showLoading() {
-        loadingHolder.visibility = View.VISIBLE
-        disableComponents()
-    }
-
-    private fun disableComponents() {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        )
-    }
-
-    private fun hideLoading() {
-        loadingHolder.visibility = View.GONE
-        enableComponents()
-    }
-
-    private fun enableComponents() {
-        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        hideRunningAnalysis()
     }
 
     private fun showUserProfile(user: User) {
-        hideLoading()
-
         collapsingToolbarLayoutTweetsList.title = user.name
 
         Picasso.get().load(user.profilePictureUrl).into(imageViewProfilePicture)
@@ -283,31 +176,86 @@ class TweetsListActivity : BaseActivity() {
         supportStartPostponedEnterTransition()
     }
 
-    private fun askConfirmationToSelectOtherUser() {
+    private fun displayTweetsList(tweetsList: List<Tweet>) {
+        tweetsListAdapter.setTweetsList(tweetsList)
+    }
+
+    private fun displayLoadingContent() {
+        swipeRefreshLayoutRoot.isRefreshing = true
+        disableComponents()
+    }
+
+    private fun hideLoadingContent() {
+        swipeRefreshLayoutRoot.isRefreshing = false
+        enableComponents()
+    }
+
+    private fun showErrorState(it: Throwable) = when (it) {
+        is TwitterError.EmptyResponse -> showEmptyState()
+        is TwitterError.UserNotFound -> showUserNotFoundState()
+        else -> showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_loading_timeline)
+    }
+
+    private fun showEmptyState() =
+        showErrorFeedback(R.drawable.ic_feedback_neutral, R.string.empty_tweet_timeline)
+
+    private fun showUserNotFoundState() =
+        showErrorFeedback(R.drawable.ic_feedback_sad, R.string.error_user_not_found)
+
+    private fun showErrorFeedback(errorImageResource: Int, errorStringResource: Int) {
+        hideLoadingContent()
+        hideRunningAnalysis()
+        linearLayoutErrorContainer.visibility = View.VISIBLE
+        imageViewError.setImageResource(errorImageResource)
+        textViewErrorMessage.text = getString(errorStringResource)
+        coordinatorLayoutTweetsListContent.visibility = View.GONE
+    }
+
+    private fun resetErrorContainerState() {
+        linearLayoutErrorContainer.visibility = View.GONE
+        textViewErrorMessage.text = ""
+        imageViewError.setImageResource(0)
+        coordinatorLayoutTweetsListContent.visibility = View.VISIBLE
+    }
+
+    private fun displayRunningAnalysis() {
+        loadingHolder.visibility = View.VISIBLE
+        disableComponents()
+    }
+
+    private fun hideRunningAnalysis() {
+        loadingHolder.visibility = View.GONE
+        enableComponents()
+    }
+
+    private fun enableComponents() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    }
+
+    private fun disableComponents() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+        )
+    }
+
+    private fun displaySelectOtherUserConfirmation() {
         val dialogBuilder = AlertDialog.Builder(this)
 
         dialogBuilder
             .setTitle(R.string.select_other_user)
             .setMessage(R.string.select_other_user_dialog_message)
-            .setPositiveButton(R.string.ok) { _, _ -> confirmedToChangeUser() }
+            .setPositiveButton(R.string.ok) { _, _ ->
+                viewModel.onViewEvent(TweetsListViewEvent.SelectOtherUserConfirmed)
+            }
             .setNegativeButton(R.string.cancel, null)
 
         val dialog = dialogBuilder.create()
         dialog.show()
     }
 
-    private fun confirmedToChangeUser() {
-        val subscription = tweetsListViewModel
-            .clearCurrentUserSettings()
-            .doOnComplete { navigateToApplicationHome() }
-            .doOnError { Timber.e(it) }
-            .subscribe()
-
-        registerDisposable(subscription)
-    }
-
-    private fun showAnalyzeTweetErrorMessage() {
-        hideLoading()
+    private fun displayErrorDuringAnalysisMessage() {
+        hideRunningAnalysis()
         val dialogBuilder = AlertDialog.Builder(this)
 
         dialogBuilder
@@ -319,7 +267,7 @@ class TweetsListActivity : BaseActivity() {
         dialog.show()
     }
 
-    private fun navigateToApplicationHome() {
+    private fun closeScreen() {
         finish()
     }
 

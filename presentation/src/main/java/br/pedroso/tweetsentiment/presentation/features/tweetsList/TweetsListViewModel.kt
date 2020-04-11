@@ -1,25 +1,21 @@
 package br.pedroso.tweetsentiment.presentation.features.tweetsList
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.pedroso.tweetsentiment.domain.entities.Tweet
-import br.pedroso.tweetsentiment.domain.entities.ViewState
+import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.AnalyseTweetSentiment
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.ClearCurrentUserSettings
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetCurrentUser
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetTweetsFromCurrentUser
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.SyncUserData
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.viewStateTransformers.GetCurrentUserStateTransformer
-import br.pedroso.tweetsentiment.presentation.features.tweetsList.viewStateTransformers.GetTweetsFromCurrentUserStateTransformer
-import io.reactivex.Completable
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Scheduler
-import kotlinx.coroutines.rx2.asFlowable
-import kotlinx.coroutines.rx2.rxCompletable
-import kotlinx.coroutines.rx2.rxObservable
+import com.hadilq.liveevent.LiveEvent
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class TweetsListViewModel(
-    private val uiScheduler: Scheduler,
     private val syncUserData: SyncUserData,
     private val getCurrentUser: GetCurrentUser,
     private val getTweetsFromCurrentUser: GetTweetsFromCurrentUser,
@@ -27,45 +23,93 @@ class TweetsListViewModel(
     private val analyseTweetSentiment: AnalyseTweetSentiment
 ) : ViewModel() {
 
-    fun analyzeTweet(tweet: Tweet): Observable<ViewState> {
-        return rxObservable {
-            try {
-                send(ViewState.Loading)
+    private val _singleEvents = LiveEvent<TweetsListSingleEvent>()
+    val singleEvents: LiveData<TweetsListSingleEvent>
+        get() = _singleEvents
 
-                analyseTweetSentiment.execute(tweet)
+    private val _viewState = MutableLiveData<TweetsListViewState>()
+    val viewState: LiveData<TweetsListViewState>
+        get() = _viewState
 
-                send(ViewState.Success)
-            } catch (exception: Exception) {
-                send(ViewState.Error(exception))
+    private val _userState = MutableLiveData<User>()
+    val userState: LiveData<User>
+        get() = _userState
+
+    private val _tweetsListState = MutableLiveData<List<Tweet>>()
+    val tweetsListState: LiveData<List<Tweet>>
+        get() = _tweetsListState
+
+    init {
+        initUserStateBinding()
+        initTweetsListStateBinding()
+        refreshData()
+    }
+
+    fun onViewEvent(viewEvent: TweetsListViewEvent) {
+        when (viewEvent) {
+            TweetsListViewEvent.RequestedRefresh -> refreshData()
+            is TweetsListViewEvent.AnalyseTweet -> analyseTweet(viewEvent.tweet)
+            TweetsListViewEvent.PressedBackButton -> handleBackButton()
+            TweetsListViewEvent.RequestedToSelectOtherUser -> handleRequestedToSelectOtherUser()
+            TweetsListViewEvent.SelectOtherUserConfirmed -> cleanCurrentUserAndCloseScreen()
+        }
+    }
+
+    private fun initUserStateBinding() {
+        viewModelScope.launch {
+            getCurrentUser.execute().collect { user ->
+                _userState.value = user
             }
-            close()
-        }.observeOn(uiScheduler)
+        }
     }
 
-    fun syncUserData(): Completable {
-        return rxCompletable {
-            syncUserData.execute()
-        }.observeOn(uiScheduler)
+    private fun initTweetsListStateBinding() {
+        viewModelScope.launch {
+            getTweetsFromCurrentUser.execute().collect { tweetsList ->
+                _tweetsListState.value = tweetsList
+            }
+        }
     }
 
-    fun getCurrentUser(): Flowable<ViewState> {
-        return getCurrentUser
-            .execute()
-            .asFlowable()
-            .compose(GetCurrentUserStateTransformer())
-            .observeOn(uiScheduler)
+    private fun refreshData() {
+        viewModelScope.launch {
+            try {
+                _viewState.value = TweetsListViewState.LoadingContent
+                syncUserData.execute()
+                _viewState.value = TweetsListViewState.Ready
+            } catch (error: Throwable) {
+                _viewState.value = TweetsListViewState.Error(error)
+            }
+        }
     }
 
-    fun getTweetsFromCurrentUser(): Flowable<ViewState> {
-        return getTweetsFromCurrentUser
-            .execute()
-            .asFlowable()
-            .compose(GetTweetsFromCurrentUserStateTransformer())
-            .observeOn(uiScheduler)
+    private fun analyseTweet(tweet: Tweet) {
+        viewModelScope.launch {
+            try {
+                _viewState.value = TweetsListViewState.RunningAnalysis
+                analyseTweetSentiment.execute(tweet)
+            } catch (error: Throwable) {
+                _singleEvents.value = TweetsListSingleEvent.DisplayErrorDuringAnalysisMessage
+            } finally {
+                _viewState.value = TweetsListViewState.Ready
+            }
+        }
     }
 
-    fun clearCurrentUserSettings(): Completable {
-        return Completable.fromAction { clearCurrentUserSettings.execute() }
-            .observeOn(uiScheduler)
+    private fun cleanCurrentUserAndCloseScreen() {
+        clearCurrentUserSettings.execute()
+        _singleEvents.value = TweetsListSingleEvent.CloseScreen
+    }
+
+    private fun handleRequestedToSelectOtherUser() {
+        _singleEvents.value = TweetsListSingleEvent.DisplaySelectOtherUserConfirmation
+    }
+
+    private fun handleBackButton() {
+        if (_viewState.value is TweetsListViewState.Error) {
+            cleanCurrentUserAndCloseScreen()
+        } else {
+            _singleEvents.value = TweetsListSingleEvent.DisplaySelectOtherUserConfirmation
+        }
     }
 }

@@ -6,10 +6,4 @@
         android:orderInCategory="100"
         android:title="@string/select_other_user"
         app:showAsAction="never" />
-
-
-    <item
-        android:id="@+id/action_refresh"
-        android:title="@string/menu_refresh"
-        app:showAsAction="never" />
 </menu>

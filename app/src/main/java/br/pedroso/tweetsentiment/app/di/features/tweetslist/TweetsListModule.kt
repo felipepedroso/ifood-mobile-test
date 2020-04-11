@@ -1,6 +1,5 @@
 package br.pedroso.tweetsentiment.app.di.features.tweetslist
 
-import br.pedroso.tweetsentiment.app.di.DependenciesTags.UI_SCHEDULER
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.TweetsListViewModel
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.AnalyseTweetSentiment
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.ClearCurrentUserSettings
@@ -8,13 +7,11 @@ import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetCu
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetTweetsFromCurrentUser
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.SyncUserData
 import org.koin.android.viewmodel.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val tweetsListModule = module {
     viewModel {
         TweetsListViewModel(
-            uiScheduler = get(named(UI_SCHEDULER)),
             syncUserData = get(),
             getCurrentUser = get(),
             getTweetsFromCurrentUser = get(),
