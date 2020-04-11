@@ -74,11 +74,11 @@ ext {
     roomCompiler = "androidx.room:room-compiler:$roomVersion"
 
     // Architecture components
-    architectureComponentsVersion = '2.0.0-rc01'
+    architectureComponentsVersion = '2.2.0'
 
     architectureComponentsDependencies = [
-            "androidx.lifecycle:lifecycle-runtime:$architectureComponentsVersion",
-            "androidx.lifecycle:lifecycle-extensions:$architectureComponentsVersion"
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:$architectureComponentsVersion",
+            "androidx.lifecycle:lifecycle-livedata-ktx:$architectureComponentsVersion"
     ]
 
     //  Test
@@ -124,7 +124,9 @@ ext {
     appDependencies.addAll(architectureComponentsDependencies)
 
     //  Presentation Module
-    presentationDependencies = []
+    presentationDependencies = [
+            "com.github.hadilq.liveevent:liveevent:1.2.0"
+    ]
 
     presentationDependencies.addAll(kotlinDependencies)
     presentationDependencies.addAll(rxJavaAndroidDependencies)
