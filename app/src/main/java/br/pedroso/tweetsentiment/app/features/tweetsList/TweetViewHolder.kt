@@ -1,10 +1,7 @@
 package br.pedroso.tweetsentiment.app.features.tweetsList
 
-import android.graphics.drawable.GradientDrawable
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import br.pedroso.tweetsentiment.app.features.tweetsList.utils.TweetTimestampFormatter
 import br.pedroso.tweetsentiment.app.features.tweetsList.utils.resourceColor
 import br.pedroso.tweetsentiment.app.features.tweetsList.utils.resourceIcon
 import br.pedroso.tweetsentiment.domain.entities.Sentiment
@@ -13,9 +10,8 @@ import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_tweet_content.buttonAnalyzeSentiment
 import kotlinx.android.synthetic.main.item_tweet_content.textViewTweetContent
 import kotlinx.android.synthetic.main.item_tweet_content.textViewTweetTimestamp
-import kotlinx.android.synthetic.main.sentiment_chip.chipRoot
-import kotlinx.android.synthetic.main.sentiment_chip.imageViewSentiment
-import kotlinx.android.synthetic.main.sentiment_chip.textViewSentiment
+import kotlinx.android.synthetic.main.item_tweet_content.tweetSentimentChip
+import net.danlew.android.joda.DateUtils
 
 class TweetViewHolder(
     override val containerView: View,
@@ -24,38 +20,27 @@ class TweetViewHolder(
     fun bind(tweet: Tweet) {
         with(tweet) {
             textViewTweetContent.text = text
-            textViewTweetTimestamp.text =
-                TweetTimestampFormatter.format(
-                    containerView.context,
-                    creationTimestamp
-                )
-
-            val color = ContextCompat.getColor(
+            textViewTweetTimestamp.text = DateUtils.getRelativeTimeSpanString(
                 containerView.context,
-                sentiment.resourceColor
+                creationTimestamp,
+                DateUtils.FORMAT_ABBREV_RELATIVE
             )
 
-            val chipRootDrawable = chipRoot.background as GradientDrawable
-            chipRootDrawable.setColor(color)
-
-            textViewSentiment.text = sentiment.name
-
-            imageViewSentiment.setImageResource(sentiment.resourceIcon)
+            tweetSentimentChip.apply {
+                text = sentiment.name
+                setChipBackgroundColorResource(sentiment.resourceColor)
+                setChipIconResource(sentiment.resourceIcon)
+                visibility = View.INVISIBLE
+            }
 
             if (sentiment == Sentiment.NotAnalyzed) {
                 buttonAnalyzeSentiment.setOnClickListener {
-                    buttonAnalyzeSentimentClickListener(
-                        tweet
-                    )
+                    buttonAnalyzeSentimentClickListener(tweet)
                 }
-                buttonAnalyzeSentiment.visibility =
-                    View.VISIBLE
-
-                chipRoot.visibility = View.INVISIBLE
+                buttonAnalyzeSentiment.visibility = View.VISIBLE
             } else {
-                buttonAnalyzeSentiment.visibility =
-                    View.INVISIBLE
-                chipRoot.visibility = View.VISIBLE
+                buttonAnalyzeSentiment.visibility =                    View.INVISIBLE
+                tweetSentimentChip.visibility = View.VISIBLE
             }
         }
     }

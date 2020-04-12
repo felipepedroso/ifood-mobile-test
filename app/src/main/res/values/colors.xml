@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00dfe7</color>
-    <color name="colorPrimaryDark">#00adb5</color>
-    <color name="colorAccent">#0288D1</color>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#536DFE</color>
     <color name="colorSentimentHappy">#ffff00</color>
     <color name="colorSentimentSad">#00B0FF</color>
     <color name="colorSentimentNeutral">#bdbdbd</color>
+    <color name="loadingBackground">#000000</color>
+    <color name="loadingLabel">#FFFFFF</color>
 
 </resources>

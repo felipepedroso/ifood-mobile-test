@@ -1,10 +1,10 @@
 package br.pedroso.tweetsentiment.domain.entities
 
-import java.util.Date
+import org.joda.time.DateTime
 
 data class Tweet(
     val id: Long,
     val text: String,
-    val creationTimestamp: Date,
+    val creationTimestamp: DateTime,
     val sentiment: Sentiment = Sentiment.NotAnalyzed
 )

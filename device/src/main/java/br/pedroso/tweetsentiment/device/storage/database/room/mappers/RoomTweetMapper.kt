@@ -4,7 +4,7 @@ import br.pedroso.tweetsentiment.device.storage.database.room.entities.RoomTweet
 import br.pedroso.tweetsentiment.domain.entities.Sentiment
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
-import java.util.Date
+import org.joda.time.DateTime
 
 class RoomTweetMapper {
 
@@ -14,7 +14,7 @@ class RoomTweetMapper {
                 return RoomTweet(
                     id = id,
                     text = text,
-                    createdAtTimestamp = creationTimestamp.time,
+                    createdAtTimestamp = creationTimestamp.millis,
                     sentiment = sentiment.name,
                     userId = user.id
                 )
@@ -26,7 +26,7 @@ class RoomTweetMapper {
                 return Tweet(
                     id = id,
                     text = text,
-                    creationTimestamp = Date(createdAtTimestamp),
+                    creationTimestamp = DateTime(createdAtTimestamp),
                     sentiment = Sentiment.valueOf(sentiment)
                 )
             }

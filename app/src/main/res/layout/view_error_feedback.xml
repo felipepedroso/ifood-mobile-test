@@ -45,14 +45,13 @@
         app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/textViewErrorTitle" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonGoBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/twenty_four_dp"
         android:paddingEnd="@dimen/twenty_four_dp"
         android:text="@string/return_home"
-        android:theme="@style/AppTheme.Button"
         app:layout_constraintBottom_toTopOf="@+id/horizontalGuidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineRight"
         app:layout_constraintStart_toStartOf="@+id/verticalGuidelineLeft" />
