@@ -13,12 +13,12 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun startActivity(intent: Intent?) {
         super.startActivity(intent)
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     protected fun disableControls() {

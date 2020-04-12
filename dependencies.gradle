@@ -95,6 +95,7 @@ ext {
     appDependencies = [
             "androidx.appcompat:appcompat:${supportLibraryVersion}",
             "androidx.core:core-ktx:1.2.0",
+            "androidx.fragment:fragment-ktx:1.2.4",
             "androidx.constraintlayout:constraintlayout:2.0.0-beta4",
             "androidx.recyclerview:recyclerview:${supportLibraryVersion}",
             "androidx.cardview:cardview:1.0.0",
