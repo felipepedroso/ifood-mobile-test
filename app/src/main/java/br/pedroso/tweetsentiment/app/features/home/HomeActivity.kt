@@ -170,16 +170,15 @@ class HomeActivity : BaseActivity() {
         viewModel.onViewEvent(SubmitTwitterUsername(username))
     }
 
-    override fun onBackPressed() = Unit
-
     private fun openTweetListScreen() {
         TweetsListActivity.navigateHere(this)
     }
 
     companion object {
+        fun createIntent(context: Context) = Intent(context, HomeActivity::class.java)
+
         fun navigateHere(context: Context) {
-            val intent = Intent(context, HomeActivity::class.java)
-            context.startActivity(intent)
+            context.startActivity(createIntent(context))
         }
     }
 }

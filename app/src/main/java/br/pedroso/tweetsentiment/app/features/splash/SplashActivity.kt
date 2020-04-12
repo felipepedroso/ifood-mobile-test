@@ -31,9 +31,11 @@ class SplashActivity : BaseActivity() {
 
     private fun openHomeScreen() {
         HomeActivity.navigateHere(this)
+        finish()
     }
 
     private fun openTweetListScreen() {
-        TweetsListActivity.navigateHere(this)
+        TweetsListActivity.navigateHereWithHomeAtBackstack(this)
+        finish()
     }
 }

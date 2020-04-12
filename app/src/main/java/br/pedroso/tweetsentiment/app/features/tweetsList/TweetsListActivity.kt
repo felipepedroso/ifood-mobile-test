@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.palette.graphics.Palette
 import br.pedroso.tweetsentiment.R
 import br.pedroso.tweetsentiment.app.base.BaseActivity
+import br.pedroso.tweetsentiment.app.features.home.HomeActivity
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
@@ -271,9 +272,19 @@ class TweetsListActivity : BaseActivity() {
     }
 
     companion object {
+        fun createIntent(context: Context) = Intent(context, TweetsListActivity::class.java)
+
         fun navigateHere(context: Context) {
-            val intent = Intent(context, TweetsListActivity::class.java)
-            context.startActivity(intent)
+            context.startActivity(createIntent(context))
+        }
+
+        fun navigateHereWithHomeAtBackstack(context: Context) {
+            context.startActivities(
+                arrayOf(
+                    HomeActivity.createIntent(context),
+                    createIntent(context)
+                )
+            )
         }
     }
 }
