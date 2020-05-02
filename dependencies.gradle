@@ -11,7 +11,7 @@ ext {
 
     // Kotlin
     kotlinJVMTarget = "1.8"
-    kotlinVersion = kotlin_version
+    kotlinVersion = "1.3.72"
 
     kotlinDependencies = [
             "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
