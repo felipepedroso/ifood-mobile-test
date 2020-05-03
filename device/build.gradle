@@ -1,15 +1,16 @@
+import br.pedroso.tweetsentiment.buildsrc.AndroidConfig
+import br.pedroso.tweetsentiment.buildsrc.Dependencies
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration["compileSDK"]
+    compileSdkVersion AndroidConfig.compileSdk
 
     defaultConfig {
-        minSdkVersion globalConfiguration["minSDK"]
-        targetSdkVersion globalConfiguration["targetSDK"]
+        minSdkVersion AndroidConfig.minSdk
+        targetSdkVersion AndroidConfig.targetSdk
     }
 
     dexOptions {
@@ -19,8 +20,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     lintOptions {
@@ -42,11 +43,8 @@ dependencies {
     implementation project(':domain')
     implementation project(':presentation')
 
-    def libs = rootProject.ext
-
-    libs.deviceDependencies.each { implementation it }
-    kapt libs.roomCompiler
-
-    libs.testDependencies.each { testImplementation it }
-    libs.androidTestDependencies.each { androidTestImplementation it }
+    Dependencies.deviceDependencies.each { implementation it }
+    kapt Dependencies.roomCompiler
+    Dependencies.testDependencies.each { testImplementation it }
+    Dependencies.androidTestDependencies.each { androidTestImplementation it }
 }

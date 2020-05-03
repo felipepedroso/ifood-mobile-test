@@ -1,3 +1,6 @@
+import br.pedroso.tweetsentiment.buildsrc.AndroidConfig
+import br.pedroso.tweetsentiment.buildsrc.Dependencies
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -5,14 +8,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion rootProject.ext.compileSDK
+    compileSdkVersion AndroidConfig.compileSdk
     defaultConfig {
-        applicationId "br.pedroso.tweetsentiment"
-        minSdkVersion rootProject.ext.minSDK
-        targetSdkVersion rootProject.ext.targetSDK
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId AndroidConfig.applicationId
+        minSdkVersion AndroidConfig.minSdk
+        targetSdkVersion AndroidConfig.targetSdk
+        versionCode AndroidConfig.versionCode
+        versionName AndroidConfig.versionName
+        testInstrumentationRunner AndroidConfig.testInstrumentationRunner
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -49,10 +52,8 @@ dependencies {
     implementation project(':domain')
     implementation project(':presentation')
 
-    def libs = rootProject.ext
 
-    libs.appDependencies.each { implementation it }
-
-    libs.testDependencies.each { testImplementation it }
-    libs.androidTestDependencies.each { androidTestImplementation it }
+    Dependencies.appDependencies.each { implementation it }
+    Dependencies.testDependencies.each { testImplementation it }
+    Dependencies.androidTestDependencies.each { androidTestImplementation it }
 }

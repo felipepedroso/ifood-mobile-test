@@ -11,8 +11,6 @@ buildscript {
     }
 }
 
-apply(from = "dependencies.gradle")
-
 allprojects {
     repositories {
         google()

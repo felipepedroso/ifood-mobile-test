@@ -1,22 +1,22 @@
+import br.pedroso.tweetsentiment.buildsrc.Dependencies
+import br.pedroso.tweetsentiment.buildsrc.Versions
+
 apply plugin: 'kotlin'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    def libs = rootProject.ext
-
-    libs.domainDependencies.each { implementation it }
-
-    libs.testDependencies.each { testImplementation it }
+    Dependencies.domainDependencies.each { implementation it }
+    Dependencies.testDependencies.each { testImplementation it }
 }
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = rootProject.ext.kotlinJVMTarget
+        jvmTarget = Versions.kotlinJvmTarget
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = rootProject.ext.kotlinJVMTarget
+        jvmTarget = Versions.kotlinJvmTarget
     }
 }
