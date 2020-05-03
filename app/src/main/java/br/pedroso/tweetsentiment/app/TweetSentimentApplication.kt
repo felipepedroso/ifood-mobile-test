@@ -10,15 +10,12 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
-import timber.log.Timber
 
 class TweetSentimentApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         initializeKoin()
-        initializeTimber()
     }
 
     private fun initializeKoin() {
@@ -32,9 +29,5 @@ class TweetSentimentApplication : Application() {
             modules(featuresModules)
             modules(dispatchersModule)
         }
-    }
-
-    private fun initializeTimber() {
-        Timber.plant(Timber.DebugTree())
     }
 }

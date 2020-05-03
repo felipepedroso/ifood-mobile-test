@@ -22,10 +22,6 @@ object Dependencies {
         "com.squareup.okhttp3:logging-interceptor:3.8.0"
     )
 
-    private val timber = arrayOf(
-        "com.jakewharton.timber:timber:4.7.1"
-    )
-
     private val room = arrayOf(
         "androidx.room:room-runtime:${Versions.room}",
         "androidx.room:room-ktx:${Versions.room}",
@@ -66,7 +62,6 @@ object Dependencies {
         addAll(kotlin)
         addAll(koin)
         addAll(coroutines)
-        addAll(timber)
         addAll(retrofit)
         addAll(room)
         addAll(architectureComponents)
@@ -80,14 +75,12 @@ object Dependencies {
         addAll(kotlin)
         addAll(coroutines)
         addAll(architectureComponents)
-        addAll(timber)
     }.toList()
 
     val networkDependencies = mutableListOf<String>().apply {
         addAll(retrofit)
         addAll(kotlin)
         addAll(coroutines)
-        addAll(timber)
         addAll(joda)
     }.toList()
 
@@ -98,7 +91,6 @@ object Dependencies {
         addAll(coroutines)
         addAll(joda)
         addAll(room)
-        addAll(timber)
     }.toList()
 
     val domainDependencies = mutableListOf<String>().apply {

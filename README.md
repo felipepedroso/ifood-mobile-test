@@ -23,7 +23,7 @@ You can try the debug application [here](https://drive.google.com/file/d/1buphfr
 * 100% developed using Kotlin
 * Offline-first application, where the UI consider a database as a Single Source of Truth and the syncronization is made by a background service. The UI is subscribed to the DB and updates everytime a new data is available.
 * Reactive architecture using MVVM. 
-* Dependency Injection using Kodein
+* Dependency Injection using Koin
 * The project aims to create a concise and easy to understand code, always trying to be aligned with Clean principles.
 
 ## Architecture
@@ -47,10 +47,8 @@ The goal of this modularization is to isolate the modules that use the Android C
 ## Libraries used
 * Coroutines
 * Retrofit
-* Kodein
-* Firebase Job Dispatcher
+* Koin
 * Room (Architecture Components)
-* Timber
 * CircleImageView
 * Picasso
 * Hawk (properties)
