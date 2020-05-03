@@ -14,7 +14,7 @@ class HawkApplicationSettings(context: Context) : ApplicationSettings {
     }
 
     override fun retrieveUsernameToSync(): String {
-        return Hawk.get<String>(CURRENT_USERNAME, "")
+        return Hawk.get(CURRENT_USERNAME, "")
     }
 
     override fun cleanUsernameToSync() {

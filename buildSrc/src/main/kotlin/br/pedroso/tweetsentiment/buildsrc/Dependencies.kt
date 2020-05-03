@@ -22,17 +22,17 @@ object Dependencies {
         "com.squareup.okhttp3:logging-interceptor:3.8.0"
     )
 
-    val timber = arrayOf(
+    private val timber = arrayOf(
         "com.jakewharton.timber:timber:4.7.1"
     )
 
-    val room = arrayOf(
+    private val room = arrayOf(
         "androidx.room:room-runtime:${Versions.room}",
         "androidx.room:room-ktx:${Versions.room}",
         "androidx.room:room-ktx:${Versions.room}"
     )
 
-    val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
+    const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
 
     private val architectureComponents = arrayOf(
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.architectureComponents}",
