@@ -46,7 +46,7 @@ object Dependencies {
         "androidx.test:runner:${Versions.expressoTools}",
         "androidx.test.espresso:espresso-core:${Versions.expressoCore}"
     )
-    private val appDependencies = mutableListOf(
+    val appDependencies = mutableListOf(
         "androidx.appcompat:appcompat:1.1.0",
         "androidx.core:core-ktx:1.2.0",
         "androidx.fragment:fragment-ktx:1.2.4",
