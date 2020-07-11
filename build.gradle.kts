@@ -1,4 +1,7 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.8.0")
+}
+
 buildscript {
     repositories {
         google()
@@ -11,10 +14,16 @@ buildscript {
     }
 }
 
+
+
 allprojects {
     repositories {
         google()
         jcenter()
+    }
+
+    apply {
+        plugin("io.gitlab.arturbosch.detekt")
     }
 }
 

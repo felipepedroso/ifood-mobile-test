@@ -3,7 +3,7 @@ package br.pedroso.tweetsentiment.network.twitter
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.entities.Tweet
 import br.pedroso.tweetsentiment.domain.entities.User
-import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterDataSource
+import br.pedroso.tweetsentiment.domain.network.dataSources.TwitterRepository
 import br.pedroso.tweetsentiment.domain.network.errors.TwitterError
 import br.pedroso.tweetsentiment.network.twitter.retrofit.mappers.TweetMapper
 import br.pedroso.tweetsentiment.network.twitter.retrofit.mappers.UserMapper
@@ -13,12 +13,12 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 
-class RetrofitTwitterDataSource(
+class RetrofitTwitterRepository(
     private val dispatcher: CoroutineDispatcher,
     private val twitterAuthService: TwitterAuthService,
     private val twitterService: TwitterService,
     private val applicationSettings: ApplicationSettings
-) : TwitterDataSource {
+) : TwitterRepository {
 
     override suspend fun getUser(userName: String): User {
         try {

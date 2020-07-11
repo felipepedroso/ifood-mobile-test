@@ -6,20 +6,18 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
 
-class TweetMapper {
-    companion object {
-        private const val TWITTER_DATE_FORMAT = "EEE MMM dd HH:mm:ss Z yyyy"
+object TweetMapper {
+    private const val TWITTER_DATE_FORMAT = "EEE MMM dd HH:mm:ss Z yyyy"
 
-        fun mapTwitterApiToDomain(retrofitTweet: RetrofitTweet): Tweet {
-            with(retrofitTweet) {
-                val creationTimestamp =
-                    DateTime.parse(createdAt, DateTimeFormat.forPattern(TWITTER_DATE_FORMAT))
-                return Tweet(
-                    id = id,
-                    text = text,
-                    creationTimestamp = creationTimestamp
-                )
-            }
+    fun mapTwitterApiToDomain(retrofitTweet: RetrofitTweet): Tweet {
+        with(retrofitTweet) {
+            val creationTimestamp =
+                DateTime.parse(createdAt, DateTimeFormat.forPattern(TWITTER_DATE_FORMAT))
+            return Tweet(
+                id = id,
+                text = text,
+                creationTimestamp = creationTimestamp
+            )
         }
     }
 }
