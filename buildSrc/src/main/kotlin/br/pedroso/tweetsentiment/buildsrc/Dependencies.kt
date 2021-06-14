@@ -114,9 +114,9 @@ object Versions {
 }
 
 object AndroidConfig {
-    const val minSdk = 21
-    const val targetSdk = 29
-    const val compileSdk = 29
+    const val minSdk = 23
+    const val targetSdk = 30
+    const val compileSdk = 30
     const val applicationId = "br.pedroso.tweetsentiment"
     const val versionCode = 1
     const val versionName = "1.0"
