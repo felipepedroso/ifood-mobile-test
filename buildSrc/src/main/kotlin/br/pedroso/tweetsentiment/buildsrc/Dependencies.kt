@@ -100,8 +100,8 @@ object Dependencies {
 }
 
 object Versions {
-    const val kotlin = "1.3.72"
-    const val coroutines = "1.3.5"
+    const val kotlin = "1.5.10"
+    const val coroutines = "1.5.0"
     const val koin = "3.1.0"
     const val retrofit = "2.6.0"
     const val room = "2.2.5"
