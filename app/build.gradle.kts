@@ -19,10 +19,12 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas".toString(),
-                    "room.incremental" to "true",
-                    "room.expandProjection" to "true"
+                arguments(
+                    mapOf(
+                        "room.schemaLocation" to "$projectDir/schemas".toString(),
+                        "room.incremental" to "true",
+                        "room.expandProjection" to "true"
+                    )
                 )
             }
         }

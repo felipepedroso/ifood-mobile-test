@@ -6,7 +6,7 @@ import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.Clear
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetCurrentUser
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.GetTweetsFromCurrentUser
 import br.pedroso.tweetsentiment.presentation.features.tweetsList.usecases.SyncUserData
-import org.koin.android.viewmodel.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val tweetsListModule = module {

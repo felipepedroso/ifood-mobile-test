@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_home.editTextTwitterAccount
 import kotlinx.android.synthetic.main.fragment_home.textInputLayoutTwitterAccount
 import kotlinx.android.synthetic.main.fragment_home.textViewErrorMessage
 import kotlinx.android.synthetic.main.view_loading_feedback.loadingHolder
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: HomeViewModel by viewModel()
