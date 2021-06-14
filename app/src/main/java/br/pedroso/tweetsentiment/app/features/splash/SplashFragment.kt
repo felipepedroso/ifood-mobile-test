@@ -9,7 +9,7 @@ import br.pedroso.tweetsentiment.app.features.home.HomeActivity
 import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
 import br.pedroso.tweetsentiment.presentation.features.splash.SplashSingleEvent
 import br.pedroso.tweetsentiment.presentation.features.splash.SplashViewModel
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
     private val splashViewModel: SplashViewModel by viewModel()

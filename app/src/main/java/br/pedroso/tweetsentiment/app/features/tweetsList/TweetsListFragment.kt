@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.view_error_feedback.imageViewError
 import kotlinx.android.synthetic.main.view_error_feedback.linearLayoutErrorContainer
 import kotlinx.android.synthetic.main.view_error_feedback.textViewErrorMessage
 import kotlinx.android.synthetic.main.view_loading_feedback.loadingHolder
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TweetsListFragment : Fragment(R.layout.fragment_tweets_list) {
 

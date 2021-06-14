@@ -104,7 +104,7 @@ object Versions {
     const val coroutines = "1.5.0"
     const val koin = "3.1.0"
     const val retrofit = "2.6.0"
-    const val room = "2.2.5"
+    const val room = "2.3.0"
     const val architectureComponents = "2.2.0"
     const val junit = "4.12"
     const val mockitoKotlin = "2.1.0"
