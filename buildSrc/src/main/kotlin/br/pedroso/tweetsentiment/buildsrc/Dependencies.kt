@@ -12,8 +12,7 @@ object Dependencies {
     )
 
     private val koin = arrayOf(
-        "org.koin:koin-android:${Versions.koin}",
-        "org.koin:koin-android-viewmodel:${Versions.koin}"
+        "io.insert-koin:koin-android:${Versions.koin}"
     )
 
     private val retrofit = arrayOf(
@@ -103,7 +102,7 @@ object Dependencies {
 object Versions {
     const val kotlin = "1.3.72"
     const val coroutines = "1.3.5"
-    const val koin = "2.1.5"
+    const val koin = "3.1.0"
     const val retrofit = "2.6.0"
     const val room = "2.2.5"
     const val architectureComponents = "2.2.0"
