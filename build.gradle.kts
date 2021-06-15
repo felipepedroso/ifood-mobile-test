@@ -22,4 +22,9 @@ tasks {
     val clean by registering(Delete::class) {
         delete(buildDir)
     }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+        kotlinOptions.freeCompilerArgs += "-Xopt-in=org.mylibrary.OptInAnnotation"
+    }
 }
+
+
