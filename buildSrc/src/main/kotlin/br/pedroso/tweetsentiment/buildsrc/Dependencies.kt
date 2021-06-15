@@ -18,7 +18,7 @@ object Dependencies {
     private val retrofit = arrayOf(
         "com.squareup.retrofit2:retrofit:${Versions.retrofit}",
         "com.squareup.retrofit2:converter-gson:${Versions.retrofit}",
-        "com.squareup.okhttp3:logging-interceptor:3.8.0"
+        "com.squareup.okhttp3:logging-interceptor:4.9.1"
     )
 
     private val room = arrayOf(
@@ -38,26 +38,27 @@ object Dependencies {
 
     val testDependencies = arrayOf(
         "junit:junit:${Versions.junit}",
-        "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
+        "org.mockito.kotlin:mockito-kotlin:${Versions.mockitoKotlin}",
+        "com.google.truth:truth:1.1.3"
     )
 
     val androidTestDependencies = arrayOf(
         "androidx.test:runner:${Versions.expressoTools}",
         "androidx.test.espresso:espresso-core:${Versions.expressoCore}"
     )
-    val appDependencies = mutableListOf(
-        "androidx.appcompat:appcompat:1.1.0",
-        "androidx.core:core-ktx:1.2.0",
-        "androidx.fragment:fragment-ktx:1.2.4",
-        "androidx.constraintlayout:constraintlayout:2.0.0-beta4",
-        "androidx.recyclerview:recyclerview:1.1.0",
-        "androidx.cardview:cardview:1.0.0",
-        "androidx.legacy:legacy-support-v4:1.0.0",
-        "com.google.android.material:material:1.1.0",
-        "com.squareup.picasso:picasso:2.71828",
-        "androidx.palette:palette:1.0.0",
-        "de.hdodenhof:circleimageview:3.0.0"
-    ).apply {
+
+    @OptIn(ExperimentalStdlibApi::class)
+    val appDependencies = buildList {
+        add("androidx.appcompat:appcompat:1.3.0")
+        add("androidx.core:core-ktx:1.5.0")
+        add("androidx.fragment:fragment-ktx:1.3.4")
+        add("androidx.constraintlayout:constraintlayout:2.0.4")
+        add("androidx.recyclerview:recyclerview:1.2.1")
+        add("androidx.legacy:legacy-support-v4:1.0.0")
+        add("com.google.android.material:material:1.3.0")
+        add("com.squareup.picasso:picasso:2.8")
+        add("androidx.palette:palette:1.0.0")
+        add("de.hdodenhof:circleimageview:3.1.0")
         addAll(kotlin)
         addAll(koin)
         addAll(coroutines)
@@ -65,49 +66,51 @@ object Dependencies {
         addAll(room)
         addAll(architectureComponents)
         addAll(joda)
-    }.toList()
+    }
 
-
-    val presentationDependencies = mutableListOf(
-        "com.github.hadilq.liveevent:liveevent:1.2.0"
-    ).apply {
+    @OptIn(ExperimentalStdlibApi::class)
+    val presentationDependencies = buildList {
+        add("com.github.hadilq.liveevent:liveevent:1.2.0")
         addAll(kotlin)
         addAll(coroutines)
         addAll(architectureComponents)
-    }.toList()
+    }
 
-    val networkDependencies = mutableListOf<String>().apply {
+    @OptIn(ExperimentalStdlibApi::class)
+    val networkDependencies = buildList {
         addAll(retrofit)
         addAll(kotlin)
         addAll(coroutines)
         addAll(joda)
-    }.toList()
+    }
 
-    val deviceDependencies = mutableListOf(
-        "com.orhanobut:hawk:2.0.1"
-    ).apply {
+    @OptIn(ExperimentalStdlibApi::class)
+    val deviceDependencies = buildList {
+        add("com.orhanobut:hawk:2.0.1")
         addAll(kotlin)
         addAll(coroutines)
         addAll(joda)
         addAll(room)
-    }.toList()
+    }
 
-    val domainDependencies = mutableListOf<String>().apply {
+
+    @OptIn(ExperimentalStdlibApi::class)
+    val domainDependencies = buildList {
         addAll(kotlin)
         addAll(coroutines)
         addAll(joda)
-    }.toList()
+    }
 }
 
 object Versions {
     const val kotlin = "1.5.10"
     const val coroutines = "1.5.0"
     const val koin = "3.1.0"
-    const val retrofit = "2.6.0"
+    const val retrofit = "2.9.0"
     const val room = "2.3.0"
-    const val architectureComponents = "2.2.0"
-    const val junit = "4.12"
-    const val mockitoKotlin = "2.1.0"
+    const val architectureComponents = "2.3.1"
+    const val junit = "4.13.2"
+    const val mockitoKotlin = "3.2.0"
     const val expressoCore = "3.1.0"
     const val expressoTools = "1.1.0"
     const val kotlinJvmTarget = "1.8"
