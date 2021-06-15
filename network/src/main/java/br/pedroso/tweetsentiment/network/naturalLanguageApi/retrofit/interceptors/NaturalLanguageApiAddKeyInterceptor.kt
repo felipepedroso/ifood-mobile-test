@@ -6,7 +6,7 @@ import okhttp3.Response
 class NaturalLanguageApiAddKeyInterceptor(private val naturalLanguageApiKey: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
-        val originalUrl = originalRequest.url()
+        val originalUrl = originalRequest.url
 
         val urlWithApiKey = originalUrl.newBuilder()
             .addQueryParameter(KEY_QUERY_PARAMETER, naturalLanguageApiKey)
