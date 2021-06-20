@@ -1,7 +1,7 @@
-package br.pedroso.tweetsentiment.app.di.features.splash
+package br.pedroso.tweetsentiment.features.splash.di
 
-import br.pedroso.tweetsentiment.presentation.features.splash.SplashViewModel
-import br.pedroso.tweetsentiment.presentation.features.splash.usecases.SplashSyncRegisteredUser
+import br.pedroso.tweetsentiment.features.splash.SplashViewModel
+import br.pedroso.tweetsentiment.features.splash.usecases.SplashSyncRegisteredUser
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

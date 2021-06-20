@@ -78,6 +78,22 @@ object Dependencies {
     }
 
     @OptIn(ExperimentalStdlibApi::class)
+    val splashDependencies = buildList {
+        add("com.github.hadilq.liveevent:liveevent:1.2.0")
+        add("androidx.appcompat:appcompat:1.3.0")
+        add("androidx.core:core-ktx:1.5.0")
+        add("androidx.fragment:fragment-ktx:1.3.4")
+        add("androidx.constraintlayout:constraintlayout:2.0.4")
+        add("androidx.recyclerview:recyclerview:1.2.1")
+        add("androidx.legacy:legacy-support-v4:1.0.0")
+        add("com.google.android.material:material:1.3.0")
+        addAll(kotlin)
+        addAll(koin)
+        addAll(coroutines)
+        addAll(architectureComponents)
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
     val networkDependencies = buildList {
         addAll(retrofit)
         addAll(kotlin)

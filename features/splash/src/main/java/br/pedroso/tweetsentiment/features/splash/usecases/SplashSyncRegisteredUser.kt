@@ -1,4 +1,4 @@
-package br.pedroso.tweetsentiment.presentation.features.splash.usecases
+package br.pedroso.tweetsentiment.features.splash.usecases
 
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.entities.User
