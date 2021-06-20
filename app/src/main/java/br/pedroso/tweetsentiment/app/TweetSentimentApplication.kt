@@ -4,6 +4,7 @@ import android.app.Application
 import br.pedroso.tweetsentiment.BuildConfig
 import br.pedroso.tweetsentiment.app.di.dispatchers.dispatchersModule
 import br.pedroso.tweetsentiment.app.di.features.featuresModules
+import br.pedroso.tweetsentiment.app.di.navigation.navigationModule
 import br.pedroso.tweetsentiment.app.di.network.networkModule
 import br.pedroso.tweetsentiment.app.di.storage.storageModules
 import org.koin.android.ext.koin.androidContext
@@ -28,6 +29,7 @@ class TweetSentimentApplication : Application() {
             modules(networkModule)
             modules(featuresModules)
             modules(dispatchersModule)
+            modules(navigationModule)
         }
     }
 }

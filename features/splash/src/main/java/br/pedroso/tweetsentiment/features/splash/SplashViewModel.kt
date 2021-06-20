@@ -1,11 +1,11 @@
-package br.pedroso.tweetsentiment.presentation.features.splash
+package br.pedroso.tweetsentiment.features.splash
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.pedroso.tweetsentiment.presentation.features.splash.SplashSingleEvent.NavigateToHomeScreen
-import br.pedroso.tweetsentiment.presentation.features.splash.SplashSingleEvent.NavigateToTweetsListScreen
-import br.pedroso.tweetsentiment.presentation.features.splash.usecases.SplashSyncRegisteredUser
+import br.pedroso.tweetsentiment.features.splash.SplashSingleEvent.NavigateToHomeScreen
+import br.pedroso.tweetsentiment.features.splash.SplashSingleEvent.NavigateToTweetsListScreen
+import br.pedroso.tweetsentiment.features.splash.usecases.SplashSyncRegisteredUser
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.launch
 

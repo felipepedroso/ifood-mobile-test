@@ -61,7 +61,7 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    val dependenciesModules = arrayOf(":device", ":network", ":domain", ":presentation")
+    val dependenciesModules = arrayOf(":device", ":network", ":domain", ":presentation", ":features:splash")
 
     dependenciesModules.forEach { module -> implementation(project(module)) }
 
