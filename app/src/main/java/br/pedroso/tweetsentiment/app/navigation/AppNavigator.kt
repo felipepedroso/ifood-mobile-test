@@ -1,19 +1,21 @@
 package br.pedroso.tweetsentiment.app.navigation
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import br.pedroso.tweetsentiment.app.features.home.HomeActivity
-import br.pedroso.tweetsentiment.app.features.tweetsList.TweetsListActivity
+import br.pedroso.tweetsentiment.features.tweetslist.TweetsListActivity
 import br.pedroso.tweetsentiment.domain.navigation.Navigator
+import br.pedroso.tweetsentiment.features.home.HomeActivity
 
 class AppNavigator(private val context: Context) : Navigator {
+
+    private fun createHomeIntent() = Intent(context, HomeActivity::class.java)
+
     override fun openHome() {
-        context.startActivity(Intent(context, HomeActivity::class.java))
+        context.startActivity(createHomeIntent())
     }
 
     private fun createTweetsListIntent(context: Context) =
-        Intent(context, TweetsListActivity::class.java)
+        Intent(context, br.pedroso.tweetsentiment.features.tweetslist.TweetsListActivity::class.java)
 
     override fun openTweetsList() {
         context.startActivity(createTweetsListIntent(context))
@@ -22,7 +24,7 @@ class AppNavigator(private val context: Context) : Navigator {
     override fun openTweetsListWithHomeOnBackstack() {
         context.startActivities(
             arrayOf(
-                HomeActivity.createIntent(context),
+                createHomeIntent(),
                 createTweetsListIntent(context)
             )
         )

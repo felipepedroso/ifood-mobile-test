@@ -36,21 +36,13 @@ android {
         exclude("META-INF/NOTICE")
         exclude("META-INF/LICENSE")
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    val dependenciesModules = arrayOf(":domain", ":network", ":presentation", ":commons-resources")
-
-    dependenciesModules.forEach { module -> implementation(project(module)) }
-
     with(Dependencies) {
-        splashDependencies.forEach { implementation(it) }
+        commonAndroidDependencies.forEach { implementation(it) }
         testDependencies.forEach { testImplementation(it) }
         androidTestDependencies.forEach { androidTestImplementation(it) }
     }

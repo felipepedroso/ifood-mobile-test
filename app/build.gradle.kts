@@ -56,12 +56,26 @@ android {
             buildType.buildConfigField("String", constantName, value)
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    val dependenciesModules = arrayOf(":device", ":network", ":domain", ":presentation", ":features:splash")
+    val dependenciesModules = arrayOf(
+        ":device",
+        ":network",
+        ":domain",
+        ":presentation",
+        ":features:splash",
+        ":features:home",
+        ":features:tweetslist",
+        ":commons-android",
+        ":commons-resources"
+    )
 
     dependenciesModules.forEach { module -> implementation(project(module)) }
 

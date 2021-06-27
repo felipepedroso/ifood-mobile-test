@@ -45,12 +45,13 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    val dependenciesModules = arrayOf(":domain", ":network", ":presentation", ":commons-resources")
+    val dependenciesModules =
+        arrayOf(":domain", ":network", ":presentation", ":commons-android", ":commons-resources")
 
     dependenciesModules.forEach { module -> implementation(project(module)) }
 
     with(Dependencies) {
-        splashDependencies.forEach { implementation(it) }
+        tweetsListDependencies.forEach { implementation(it) }
         testDependencies.forEach { testImplementation(it) }
         androidTestDependencies.forEach { androidTestImplementation(it) }
     }
