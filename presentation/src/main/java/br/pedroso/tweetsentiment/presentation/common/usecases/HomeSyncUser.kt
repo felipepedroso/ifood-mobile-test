@@ -1,9 +1,8 @@
-package br.pedroso.tweetsentiment.presentation.features.home.usecases
+package br.pedroso.tweetsentiment.presentation.common.usecases
 
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.entities.User
 import br.pedroso.tweetsentiment.domain.errors.UiError
-import br.pedroso.tweetsentiment.presentation.common.usecases.SyncUser
 
 class HomeSyncUser(
     private val syncUser: SyncUser,
