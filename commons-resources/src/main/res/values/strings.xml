@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Tweet Sentiment</string>
+    <string name="empty_tweet_timeline">Unfortunately this user doesn\'t have any tweets to show.</string>
+    <string name="error_loading_timeline">An error occurred loading this user, please try again later.</string>
+    <string name="error_user_not_found">We couldn\'t find this user on Twitter. Please try again with a valid username.</string>
+    <string name="analyse_sentiment">Analyze Sentiment</string>
+    <string name="continue_button">Continue</string>
+    <string name="hint_type_twitter_account">Twitter account</string>
+    <string name="error_empty_twitter_account">This field cannot be empty.</string>
+    <string name="error_generic">Unfortunately we couldn\'t reach the information you requested. Please try again later.</string>
+    <string name="select_other_user">Select Other User…</string>
+    <string name="select_other_user_dialog_message">Do you want to select another Twitter user?</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="onboarding_introduction">Type a Twitter user to analyse the sentiment of their tweets</string>
+    <string name="welcome_tweet_sentiment">Welcome to TweetSentiment</string>
+    <string name="return_home">Go Back</string>
+    <string name="sorry">Sorry!</string>
+    <string name="natural_language_api_error_title">Sorry…</string>
+    <string name="natural_language_api_error_message">We couldn\'t analyse this tweet now. Please try again later.</string>
+    <string name="content_description_app_logo">The application logo: a blue bird chirping.</string>
+    <string name="content_description_app_logo_error">A bird chirping that an error happened.</string>
+    <string name="content_description_user_background">Twitter user background photo</string>
+    <string name="content_description_user_photo">Twitter user profile photo</string>
+    <string name="loading">Loading…</string>
+</resources>
