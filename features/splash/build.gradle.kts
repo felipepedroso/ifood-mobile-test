@@ -36,12 +36,16 @@ android {
         exclude("META-INF/NOTICE")
         exclude("META-INF/LICENSE")
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    val dependenciesModules = arrayOf(":domain", ":network", ":presentation")
+    val dependenciesModules = arrayOf(":domain", ":network", ":presentation", ":commons-resources")
 
     dependenciesModules.forEach { module -> implementation(project(module)) }
 

@@ -2,7 +2,7 @@ package br.pedroso.tweetsentiment.features.splash.usecases
 
 import br.pedroso.tweetsentiment.domain.device.storage.ApplicationSettings
 import br.pedroso.tweetsentiment.domain.entities.User
-import br.pedroso.tweetsentiment.presentation.features.home.usecases.HomeSyncUser
+import br.pedroso.tweetsentiment.presentation.common.usecases.HomeSyncUser
 
 class SplashSyncRegisteredUser(
     private val applicationSettings: ApplicationSettings,
